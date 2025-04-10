@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* FONTS */
+@import url('../../../public/fonts/Luciole/stylesheet.css');
+@import url('../../../public/fonts/Outfit/stylesheet.css');
+@import url('../../../public/fonts/DM/stylesheet.css');
+
+@layer base {
+  :root {
+    --background: 217 100% 95%;
+    --foreground: 217 5% 0%;
+    --card: 217 50% 90%;
+    --card-foreground: 217 5% 10%;
+    --popover: 217 100% 95%;
+    --popover-foreground: 217 100% 0%;
+    --primary: 217 46% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 30% 70%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 179 30% 85%;
+    --muted-foreground: 217 5% 35%;
+    --accent: 179 30% 80%;
+    --accent-foreground: 217 5% 10%;
+    --destructive: 0 100% 30%;
+    --destructive-foreground: 217 5% 90%;
+    --border: 217 30% 50%;
+    --input: 217 30% 18%;
+    --ring: 217 46% 35%;
+    --radius: 0.5rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  /* overscroll-behavior: none; */
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.kIQkHS {
+  min-width: 100% !important;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.scrollbar-white::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.scrollbar-white::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 5em;
+}
+
+.noise {
+  background: linear-gradient(
+      to bottom left,
+
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.6) 60%
+    ),
+    url('/svg/noise.svg');
+  background-attachment: fixed;
+  background-size: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .noise {
+    background: linear-gradient(
+        to bottom left,
+
+        rgba(0, 0, 0, 0.75) 60%,
+        rgba(0, 0, 0, 0.75) 60%
+      ),
+      url('/svg/noise.svg');
+    background-attachment: fixed;
+    background-size: 100%;
+  }
+}
+
+@supports (
+  (text-stroke: 1px black) or (-webkit-text-stroke: 1.5px hsl(var(--red)))
+) {
+  .outline-text-red {
+    color: transparent;
+    -webkit-text-stroke: 1.5px hsl(var(--red));
+    text-stroke: 1.5px hsl(var(--red));
+    text-shadow: none;
+  }
+}

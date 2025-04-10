@@ -1,0 +1,22 @@
+{
+  "langage": "fr",
+  "generics": {
+    "copyright": "Copyright © 2023 - Starter-template - Tous droits réservés",
+    "designed": "Conçu et développé par ",
+    "logout": "Déconnexion",
+    "next": "Suivant",
+    "back": "Retour",
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "step": "Étape",
+    "update": "Mettre à jour",
+    "cancel": "Annuler",
+    "add": "Ajouter"
+  },
+  "home": {
+    "name": "home",
+    "subTitle": "C'est la page d'accueil",
+    "title": "Bienvenu sur le starter-template ! 👋",
+    "link": "A propos"
+  }
+}

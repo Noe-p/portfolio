@@ -1,0 +1,41 @@
+---
+- name: Déploiement de l'application avec Docker Compose
+  hosts: noep@shocase-template.fr
+
+  tasks:
+    - name: Créer le répertoire shocase-template s'il n'existe pas
+      become_user: noep
+      file:
+        path: ~/shocase-template
+        state: directory
+      register: create_directory_result
+      ignore_errors: yes
+
+    - name: Copier le fichier docker-compose.web.yml
+      become_user: noep
+      copy:
+        src: docker-compose.web.yml
+        dest: ~/shocase-template/docker-compose.web.yml
+      register: copy_docker_compose_result
+      ignore_errors: yes
+
+    - name: Arrêter le service Docker
+      become_user: noep
+      command: docker compose -f ~/shocase-template/docker-compose.web.yml down
+      ignore_errors: yes
+
+    - name: Pull de l'image Docker
+      become_user: noep
+      command: docker pull noephilippe/shocase-template-web:latest
+      ignore_errors: yes
+
+    - name: Démarrer Docker Compose
+      become_user: noep
+      command: docker compose -f ~/shocase-template/docker-compose.web.yml up -d
+      register: docker_compose_result
+      ignore_errors: yes
+
+    - name: 'Nettoyage des images Docker'
+      become_user: noep
+      command: 'docker image prune -f'
+      ignore_errors: yes

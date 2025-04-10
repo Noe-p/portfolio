@@ -1,0 +1,15 @@
+version: '3.8'
+
+networks:
+  sakana-san-network:
+    driver: bridge
+
+services:
+  sakana-san-web:
+    image: 'noephilippe/showcase-template:latest'
+    container_name: showcase-template
+    restart: always
+    ports:
+      - '3000:3000'
+    networks:
+      - sakana-san-network
