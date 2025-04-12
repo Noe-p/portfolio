@@ -1,6 +1,5 @@
 import { Col, H1, P16, P24, Row, RowBetween, Title } from '@/components';
 import { motion } from 'framer-motion';
-import { useTranslation } from 'next-i18next';
 import React from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
@@ -11,7 +10,6 @@ interface HeaderProps {
 
 export function Header(props: HeaderProps): React.JSX.Element {
   const { className } = props;
-  const { t } = useTranslation();
 
   return (
     <Main className={className}>
