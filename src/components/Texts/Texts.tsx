@@ -127,6 +127,7 @@ const TitleStyled = tw.h1`
   font-black
   uppercase
   text-foreground
+  leading-none
 `;
 
 const H1Styled = tw.h1`
@@ -134,6 +135,7 @@ const H1Styled = tw.h1`
   font-title
   font-black
   uppercase
+  leading-none
   text-foreground
 `;
 
@@ -143,6 +145,8 @@ const H2Styled = tw.h2`
   font-black
   uppercase
   text-foreground
+  leading-none
+
 `;
 
 const H3Styled = tw.h3`
@@ -151,6 +155,7 @@ const H3Styled = tw.h3`
   font-black
   uppercase
   text-foreground
+  leading-none
 `;
 
 const H4Styled = tw.h4`
@@ -163,42 +168,42 @@ const H4Styled = tw.h4`
 
 const P24Styled = tw.p`
   text-[18px] md:text-[24px]
-  font-sans
+  font-mono
   font-normal
   text-foreground
 `;
 
 const P18Styled = tw.p`
   text-[15px] md:text-[18px]
-  font-sans
+  font-mono
   font-normal
   text-foreground
 `;
 
 const P16Styled = tw.p`
   text-[16px] 
-  font-sans
+  font-mono
   font-normal
   text-foreground
 `;
 
 const P14Styled = tw.p`
   text-[14px]
-  font-sans
+  font-mono
   font-normal
   text-foreground
 `;
 
 const P12Styled = tw.p`
   text-[12px]
-  font-sans
+  font-mono
   font-normal
   text-foreground
 `;
 
 const P10Styled = tw.p`
   text-[10px]
-  font-sans
+  font-mono
   font-normal
   text-foreground
 `;

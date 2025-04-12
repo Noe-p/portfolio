@@ -1,8 +1,9 @@
-import { H1, P18 } from '@/components/Texts';
-import { Image } from '@/components/Medias';
+import { Col, H1, P16, P24, Row, RowBetween, Title } from '@/components';
+import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import tw from 'tailwind-styled-components';
+import { Macaron } from '../Macaron';
 
 interface HeaderProps {
   className?: string;
@@ -11,22 +12,68 @@ interface HeaderProps {
 export function Header(props: HeaderProps): React.JSX.Element {
   const { className } = props;
   const { t } = useTranslation();
-  const [isAnimated, setIsAnimated] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsAnimated(true);
-    }, 100);
-  }, []);
 
   return (
     <Main className={className}>
-      <Filter />
-      <ImageBackground>
-        <Image className='rounded-none' src='/images/header.jpg' alt='header' />
-      </ImageBackground>
-      <Title $isAnimated={isAnimated}>{t('home.name')}</Title>
-      <SubTitle $isAnimated={isAnimated}>{t('home.subTitle')}</SubTitle>
+      <Col className='items-center mt-20 md:mt-25 w-full '>
+        <motion.div
+          initial={{ opacity: 0, x: 200 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, ease: 'backOut' }}
+        >
+          <Title className='text-[100px] md:text-[200px] leading-none translate-x-5 md:translate-x-10'>
+            {'Noé'}
+          </Title>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.7, ease: 'backOut' }}
+        >
+          <Title className='text-[40px] md:text-[85px] leading-none -translate-x-5 md:-translate-x-10'>
+            {'PHILIPPE'}
+          </Title>
+        </motion.div>
+      </Col>
+      <Col className='flex md:hidden items-center px-5'>
+        <P24 className=' mt-5 text-foreground/70 normal-case'>
+          {'Full Stack Developer'}
+        </P24>
+        <Row className='justify-around top-10 w-full mt-10'>
+          <img
+            className='w-40 h-min rounded'
+            src='/images/header.jpg'
+            alt='philippe'
+          />
+          <Macaron className='w-25 h-25' />
+        </Row>
+        <P16 className='text-foreground text-justify mt-2'>
+          {
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500."
+          }
+        </P16>
+      </Col>
+
+      <RowBetween className=' mt-10 justify-around w-full hidden md:flex'>
+        <Macaron className='top-10 left-20 hidden md:flex' />
+        <Col>
+          <H1 className='text-foreground/70 normal-case'>
+            {'Full Stack Developer'}
+          </H1>
+          <RowBetween className='mt-5 gap-5'>
+            <img
+              className='w-70 h-min rounded'
+              src='/images/header.jpg'
+              alt='philippe'
+            />
+            <P16 className='text-foreground w-70 text-justify mt-5'>
+              {
+                "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500."
+              }
+            </P16>
+          </RowBetween>
+        </Col>
+      </RowBetween>
     </Main>
   );
 }
@@ -34,67 +81,7 @@ export function Header(props: HeaderProps): React.JSX.Element {
 const Main = tw.div`
   flex
   flex-col
-  items-center
-  justify-center
-  h-screen
   w-screen
+  items-center
   z-0
-`;
-const Filter = tw.div`
-  absolute
-  top-0
-  left-0
-  bottom-0
-  right-0
-  w-full
-  h-full
-  bg-black
-  opacity-20
-  z-10
-`;
-
-const ImageBackground = tw.div`
-  absolute
-  top-0
-  left-0
-  right-0
-  bottom-0
-  w-full
-  h-full
-  z-0
-`;
-
-const Title = tw(H1)<{ $isAnimated: boolean }>`
-  text-white
-  text-4xl
-  lg:text-6xl
-  font-bold
-  text-center
-  transform
-  transition-all
-  duration-1000
-  delay-100
-  ease-in-out
-  ${(props) => (props.$isAnimated ? 'translate-y-0' : '-translate-y-50')}
-  ${(props) => (props.$isAnimated ? 'opacity-100' : 'opacity-0')}
-  line-height-1
-  z-20
-`;
-
-const SubTitle = tw(P18)<{ $isAnimated: boolean }>`
-  text-white
-  text-2xl
-  lg:text-4xl
-  font-bold
-  text-center
-  transform
-  transition-all
-  duration-1000
-  delay-100
-  ease-in-out
-  ${(props) => (props.$isAnimated ? 'translate-y-0' : '-translate-y-40')}
-  ${(props) => (props.$isAnimated ? 'opacity-100' : 'opacity-0')}
-  line-height-1
-  z-20
-
 `;

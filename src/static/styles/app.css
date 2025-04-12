@@ -6,28 +6,39 @@
 @import url('../../../public/fonts/Luciole/stylesheet.css');
 @import url('../../../public/fonts/Outfit/stylesheet.css');
 @import url('../../../public/fonts/DM/stylesheet.css');
+@import url('../../../public/fonts/Monda/stylesheet.css');
+@import url('../../../public/fonts/Dela_Gothic_One/stylesheet.css');
 
 @layer base {
   :root {
-    --background: 217 100% 95%;
-    --foreground: 217 5% 0%;
-    --card: 217 50% 90%;
-    --card-foreground: 217 5% 10%;
-    --popover: 217 100% 95%;
-    --popover-foreground: 217 100% 0%;
-    --primary: 217 46% 35%;
+    --background: 0 0% 11%; /* #1C1C1C */
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 11%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 267 50% 55%; /* Violet doux */
     --primary-foreground: 0 0% 100%;
-    --secondary: 217 30% 70%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 179 30% 85%;
-    --muted-foreground: 217 5% 35%;
-    --accent: 179 30% 80%;
-    --accent-foreground: 217 5% 10%;
-    --destructive: 0 100% 30%;
-    --destructive-foreground: 217 5% 90%;
-    --border: 217 30% 50%;
-    --input: 217 30% 18%;
-    --ring: 217 46% 35%;
+
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 25%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 200 100% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 100% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 267 50% 55%;
+
     --radius: 0.5rem;
   }
 }
@@ -69,39 +80,25 @@ body {
   border-radius: 5em;
 }
 
-.noise {
-  background: linear-gradient(
-      to bottom left,
-
-      rgba(0, 0, 0, 0.8),
-      rgba(0, 0, 0, 0.6) 60%
-    ),
-    url('/svg/noise.svg');
-  background-attachment: fixed;
-  background-size: 100%;
-}
-
-@media screen and (max-width: 768px) {
-  .noise {
-    background: linear-gradient(
-        to bottom left,
-
-        rgba(0, 0, 0, 0.75) 60%,
-        rgba(0, 0, 0, 0.75) 60%
-      ),
-      url('/svg/noise.svg');
-    background-attachment: fixed;
-    background-size: 100%;
+@keyframes gradientMove {
+  0% {
+    --x: 30%;
+    --y: 30%;
   }
-}
-
-@supports (
-  (text-stroke: 1px black) or (-webkit-text-stroke: 1.5px hsl(var(--red)))
-) {
-  .outline-text-red {
-    color: transparent;
-    -webkit-text-stroke: 1.5px hsl(var(--red));
-    text-stroke: 1.5px hsl(var(--red));
-    text-shadow: none;
+  25% {
+    --x: 70%;
+    --y: 40%;
+  }
+  50% {
+    --x: 60%;
+    --y: 80%;
+  }
+  75% {
+    --x: 20%;
+    --y: 60%;
+  }
+  100% {
+    --x: 30%;
+    --y: 30%;
   }
 }

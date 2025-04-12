@@ -18,5 +18,8 @@
     "subTitle": "C'est la page d'accueil",
     "title": "Bienvenu sur le starter-template ! 👋",
     "link": "A propos"
+  },
+  "header": {
+    "status": "Dispo pour travailler"
   }
 }

@@ -1,17 +1,17 @@
-import tw from 'tailwind-styled-components';
+import { DRAWER_VARIANTS } from '@/services/motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { X } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import tw from 'tailwind-styled-components';
 import { Button } from '../ui/button';
 import {
-  CarouselApi,
-  useDotButton,
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   PaginationDot,
+  useDotButton,
 } from '../ui/carousel';
-import { X } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
-import { DRAWER_VARIANTS } from '@/services/motion';
 
 interface ImageFullScreenProps {
   images: string[];

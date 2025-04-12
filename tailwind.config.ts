@@ -164,7 +164,8 @@ const config = {
       },
       fontFamily: {
         sans: ['Luciole', 'Outfit', ...defaultTheme.fontFamily.sans],
-        title: ['DM', 'Outfit', ...defaultTheme.fontFamily.sans],
+        title: ['Dela', 'DM', 'Outfit', ...defaultTheme.fontFamily.sans],
+        mono: ['Monda', 'Roboto Mono', 'monospace'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -201,20 +202,23 @@ const config = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
-
-      keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
-          to: { height: 'var(--radix-accordion-content-height)' },
-        },
-        'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: '0' },
-        },
-      },
       animation: {
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
+        'spin-slow': 'spin 8s linear infinite',
+        'spin-fast-once': 'spin 0.5s linear 1',
+        floatingGradient: 'floating 40s ease-in-out infinite',
+      },
+      keyframes: {
+        floating: {
+          '0%': { transform: 'translate(0%, 0%) scale(1)' },
+          '25%': { transform: 'translate(40%, -10%) scale(1.3)' },
+          '50%': { transform: 'translate(20%, 30%) scale(1.5)' },
+          '75%': { transform: 'translate(-20%, 10%) scale(1.1)' },
+          '100%': { transform: 'translate(0%, 0%) scale(1)' },
+        },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
       },
     },
   },
