@@ -13,7 +13,5 @@ export function HomePage(): React.JSX.Element {
 const Main = tw.div`
   flex
   flex-col
-  items-center
-  justify-center
   w-full md:w-2/3
 `;

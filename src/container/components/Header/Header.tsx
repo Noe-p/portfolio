@@ -1,6 +1,8 @@
 import { Col, H1, P16, P24, Row, RowBetween, Title } from '@/components';
-import { motion } from 'framer-motion';
-import React from 'react';
+import { Button } from '@/components/ui/button';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useTranslation } from 'next-i18next';
+import React, { useRef } from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
 
@@ -8,67 +10,37 @@ interface HeaderProps {
   className?: string;
 }
 
-export function Header(props: HeaderProps): React.JSX.Element {
-  const { className } = props;
+export function Header({ className }: HeaderProps): React.JSX.Element {
+  const { t } = useTranslation();
 
   return (
     <Main className={className}>
-      <Col className='items-center mt-20 md:mt-25 w-full '>
-        <motion.div
-          initial={{ opacity: 0, x: 200 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: 'backOut' }}
-        >
-          <Title className='text-[100px] md:text-[200px] leading-none translate-x-5 md:translate-x-10'>
-            {'Noé'}
-          </Title>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, ease: 'backOut' }}
-        >
-          <Title className='text-[40px] md:text-[85px] leading-none -translate-x-5 md:-translate-x-10'>
-            {'PHILIPPE'}
-          </Title>
-        </motion.div>
-      </Col>
-      <Col className='flex md:hidden items-center px-5'>
-        <P24 className=' mt-5 text-foreground/70 normal-case'>
-          {'Full Stack Developer'}
-        </P24>
-        <Row className='justify-around top-10 w-full mt-10'>
-          <img
-            className='w-40 h-min rounded'
-            src='/images/header.jpg'
-            alt='philippe'
-          />
-          <Macaron className='w-25 h-25' />
-        </Row>
-        <P16 className='text-foreground text-justify mt-2'>
-          {
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500."
-          }
-        </P16>
+      <Col className='items-center mt-20 md:mt-25 w-full'>
+        <HeaderTitle />
       </Col>
 
-      <RowBetween className=' mt-10 justify-around w-full hidden md:flex'>
-        <Macaron className='top-10 left-20 hidden md:flex' />
+      {/* Mobile version */}
+      <Col className='flex md:hidden items-center px-5'>
+        <P24 className='mt-5 text-foreground/70 normal-case'>
+          {t('header.position')}
+        </P24>
+        <Row className='justify-left relative w-full mt-10'>
+          <HeaderImage />
+          <Macaron className='w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28' />
+        </Row>
+        <HeaderContent />
+      </Col>
+
+      {/* Desktop version */}
+      <RowBetween className='mt-10 justify-around w-full hidden md:flex'>
+        <Macaron className='top-10 left-20' />
         <Col>
           <H1 className='text-foreground/70 normal-case'>
-            {'Full Stack Developer'}
+            {t('header.position')}
           </H1>
           <RowBetween className='mt-5 gap-5'>
-            <img
-              className='w-70 h-min rounded'
-              src='/images/header.jpg'
-              alt='philippe'
-            />
-            <P16 className='text-foreground w-70 text-justify mt-5'>
-              {
-                "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500."
-              }
-            </P16>
+            <HeaderImage />
+            <HeaderContent />
           </RowBetween>
         </Col>
       </RowBetween>
@@ -76,10 +48,70 @@ export function Header(props: HeaderProps): React.JSX.Element {
   );
 }
 
+// Title animations
+const HeaderTitle = () => {
+  const ref = useRef(null);
+  const { scrollY } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+
+  const yNoe = useTransform(scrollY, [0, 300], [0, -10]);
+  const yPhilippe = useTransform(scrollY, [0, 300], [0, -20]);
+
+  return (
+    <div ref={ref}>
+      <motion.div style={{ y: yNoe }}>
+        <Title className='text-[100px] md:text-[200px] leading-none translate-x-5 md:translate-x-10'>
+          {'Noé'}
+        </Title>
+      </motion.div>
+      <motion.div style={{ y: yPhilippe }}>
+        <Title className='text-[40px] md:text-[85px] leading-none -translate-x-5 md:-translate-x-10'>
+          {'PHILIPPE'}
+        </Title>
+      </motion.div>
+    </div>
+  );
+};
+
+const HeaderImage = () => {
+  const ref = useRef(null);
+  const { scrollY } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  });
+
+  // Déplacement vertical doux selon le scroll
+  const y = useTransform(scrollY, [0, 300], [0, -20]);
+
+  return (
+    <motion.img
+      ref={ref}
+      src='/images/header.jpg'
+      alt='philippe'
+      className='w-[200px] md:w-70 h-min rounded object-cover'
+      style={{ y }}
+    />
+  );
+};
+
+// Text + button
+const HeaderContent = () => {
+  const { t } = useTranslation();
+  return (
+    <Col>
+      <P16 className='text-foreground md:w-80 text-justify mt-4'>
+        {t('about.description')}
+      </P16>
+      <Button className='w-fit mt-2' variant='outline'>
+        {t('generics.seeMore')}
+      </Button>
+    </Col>
+  );
+};
+
+// Styled components
 const Main = tw.div`
-  flex
-  flex-col
-  w-screen
-  items-center
-  z-0
+  flex flex-col w-screen items-center z-0
 `;

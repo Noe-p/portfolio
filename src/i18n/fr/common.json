@@ -1,25 +1,18 @@
 {
   "langage": "fr",
   "generics": {
-    "copyright": "Copyright © 2023 - Starter-template - Tous droits réservés",
+    "copyright": "Copyright © 2024 - Portfolio - Tous droits réservés",
     "designed": "Conçu et développé par ",
-    "logout": "Déconnexion",
-    "next": "Suivant",
-    "back": "Retour",
-    "login": "Se connecter",
-    "register": "S'inscrire",
-    "step": "Étape",
-    "update": "Mettre à jour",
-    "cancel": "Annuler",
-    "add": "Ajouter"
+    "seeMore": "Voir plus"
   },
   "home": {
-    "name": "home",
-    "subTitle": "C'est la page d'accueil",
-    "title": "Bienvenu sur le starter-template ! 👋",
-    "link": "A propos"
+    "name": "home"
   },
   "header": {
-    "status": "Dispo pour travailler"
+    "status": "Prêt à travailler",
+    "position": "Développeur Fullstack"
+  },
+  "about": {
+    "description": "Je suis un développeur fullstack passionné avec un fort intérêt pour le développement web. J'aime créer des applications web dynamiques et réactives en utilisant des technologies modernes. Mon objectif est de fournir des solutions de haute qualité qui répondent aux besoins des utilisateurs et des entreprises."
   }
 }

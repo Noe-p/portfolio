@@ -1,12 +1,18 @@
 {
   "language": "en",
+  "generics": {
+    "copyright": "Copyright © 2024 - Portfolio - All rights reserved",
+    "designed": "Designed and developed by ",
+    "seeMore": "See more"
+  },
   "home": {
-    "name": "home",
-    "subTitle": "This is the home page",
-    "title": "Welcome to the starter-template! 👋",
-    "link": "About"
+    "name": "home"
   },
   "header": {
-    "status": "Available to work"
+    "status": "Available for work",
+    "position": "Fullstack Developer"
+  },
+  "about": {
+    "description": "I am a passionate fullstack developer with a strong interest in web development. I enjoy creating dynamic and responsive web applications using modern technologies. My goal is to deliver high-quality solutions that meet the needs of users and businesses."
   }
 }

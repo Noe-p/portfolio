@@ -20,14 +20,11 @@ export function Layout(props: LayoutProps): React.JSX.Element {
 
   // Fonction pour changer la langue
   const handleLanguageChange = (lang: string) => {
-    console.log('[D] Layout', lang);
-    i18n.changeLanguage(lang).then(() => {
-      // Redirige vers l'URL avec la nouvelle langue
-      router.push(
-        `/${lang}${router.asPath.includes(lang) ? '' : router.asPath}`
-      );
-    });
+    const { pathname, query } = router;
+    router.push({ pathname, query }, undefined, { locale: lang });
+    i18n.changeLanguage(lang);
   };
+
   return (
     <div
       key={i18n.language}
@@ -39,20 +36,15 @@ export function Layout(props: LayoutProps): React.JSX.Element {
         } as React.CSSProperties
       }
     >
-      <div
-        className='absolute top-0 hidden md:flex  left-0 w-[80vw] h-[80vw] rounded-full pointer-events-none blur-3xl opacity-30 animate-floatingGradient z-0'
-        style={{
-          background:
-            'radial-gradient(circle, rgba(136,58,255,0.8) 0%, transparent 70%)',
-        }}
-      />
-      <div
-        className='absolute md:hidden top-0 left-0 w-[100vw] h-[100vw] rounded-full pointer-events-none blur-3xl opacity-30 animate-floatingGradient z-0'
-        style={{
-          background:
-            'radial-gradient(circle, rgba(136,58,255,1) 0%, transparent 100%)',
-        }}
-      />
+      <div className='absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0'>
+        <div
+          className={cn(
+            'absolute w-[150vw] h-[150vw] rounded-full blur-3xl opacity-30 animate-floatingGradient',
+            'md:bg-[radial-gradient(circle,rgba(136,58,255,0.8)_0%,transparent_70%)]',
+            'bg-[radial-gradient(circle,rgba(136,58,255,1)_0%,transparent_100%)]'
+          )}
+        />
+      </div>
       <NavBar isClose={isNavClose} />
       <Row className='hidden md:flex absolute z-10 gap-2 top-5 right-10'>
         <P16
@@ -84,7 +76,6 @@ const Page = tw.div`
   flex
   flex-col
   items-center
-  justify-center
   z-0
   min-h-screen
   mb-5 md:mb-20
