@@ -15,16 +15,16 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
 
   return (
     <Main className={className}>
-      <Col className='items-center mt-20 md:mt-25 w-full'>
+      <Col className='items-center mt-25 w-full'>
         <HeaderTitle />
       </Col>
 
       {/* Mobile version */}
       <Col className='flex md:hidden items-center px-5'>
-        <P24 className='mt-5 text-foreground/70 normal-case'>
+        <P24 className='mt-7 text-foreground/70 normal-case'>
           {t('header.position')}
         </P24>
-        <Row className='justify-left relative w-full mt-10'>
+        <Row className='justify-left relative w-full mt-7'>
           <HeaderImage />
           <Macaron className='w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28' />
         </Row>

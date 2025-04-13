@@ -46,20 +46,25 @@ export function Layout(props: LayoutProps): React.JSX.Element {
         />
       </div>
       <NavBar isClose={isNavClose} />
-      <Row className='hidden md:flex absolute z-10 gap-2 top-5 right-10'>
+      <Row className='hidden md:flex absolute z-10 gap-1 top-5 right-10'>
         <P16
           className={cn(
-            'cursor-pointer',
-            i18n.language === 'fr' ? 'text-primary' : 'text-foreground/50'
+            'cursor-pointer transition duration-300',
+            i18n.language === 'fr'
+              ? 'text-primary'
+              : 'text-foreground/50 hover:text-foreground/80'
           )}
           onClick={() => handleLanguageChange('fr')}
         >
           {'Fr'}
         </P16>
+        <P16 className='text-foreground/50'>{'/'}</P16>
         <P16
           className={cn(
-            'cursor-pointer',
-            i18n.language === 'en' ? 'text-primary' : 'text-foreground/50'
+            'cursor-pointer transition duration-300',
+            i18n.language === 'en'
+              ? 'text-primary'
+              : 'text-foreground/50 hover:text-foreground/80'
           )}
           onClick={() => handleLanguageChange('en')}
         >
