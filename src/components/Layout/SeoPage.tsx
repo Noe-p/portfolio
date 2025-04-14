@@ -3,14 +3,14 @@ import { pageview } from '@/services/analytics';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect } from 'react';
 
-interface LayoutPageProps {
+interface SeoPageProps {
   children?: ReactNode;
   title?: string;
   description?: string;
   keywords?: string;
 }
 
-export function LayoutPage(props: LayoutPageProps): JSX.Element {
+export function SeoPage(props: SeoPageProps): JSX.Element {
   const { children, title, description, keywords } = props;
 
   const router = useRouter();

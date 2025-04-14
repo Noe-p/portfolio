@@ -14,5 +14,10 @@
   },
   "about": {
     "description": "I am a passionate fullstack developer with a strong interest in web development. I enjoy creating dynamic and responsive web applications using modern technologies. My goal is to deliver high-quality solutions that meet the needs of users and businesses."
+  },
+  "nav": {
+    "ABOUT": "Who am I?",
+    "PROJECTS": "Discover my projects",
+    "MUSIC": "Listen to my music"
   }
 }

@@ -14,5 +14,10 @@
   },
   "about": {
     "description": "Je suis un développeur fullstack passionné avec un fort intérêt pour le développement web. J'aime créer des applications web dynamiques et réactives en utilisant des technologies modernes. Mon objectif est de fournir des solutions de haute qualité qui répondent aux besoins des utilisateurs et des entreprises."
+  },
+  "nav": {
+    "ABOUT": "Qui suis-je ?",
+    "PROJECTS": "Découvrir mes projets",
+    "MUSIC": "Écouter ma musique"
   }
 }

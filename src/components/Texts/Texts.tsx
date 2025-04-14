@@ -178,6 +178,7 @@ const P18Styled = tw.p`
   font-mono
   font-normal
   text-foreground
+  leading-5
 `;
 
 const P16Styled = tw.p`
@@ -185,6 +186,7 @@ const P16Styled = tw.p`
   font-mono
   font-normal
   text-foreground
+  leading-5
 `;
 
 const P14Styled = tw.p`
@@ -192,6 +194,7 @@ const P14Styled = tw.p`
   font-mono
   font-normal
   text-foreground
+  leading-5
 `;
 
 const P12Styled = tw.p`
@@ -199,6 +202,7 @@ const P12Styled = tw.p`
   font-mono
   font-normal
   text-foreground
+  leading-5
 `;
 
 const P10Styled = tw.p`
@@ -206,6 +210,7 @@ const P10Styled = tw.p`
   font-mono
   font-normal
   text-foreground
+  leading-5
 `;
 
 const LinkStyled = tw.a`
@@ -215,4 +220,5 @@ const LinkStyled = tw.a`
   group 
   cursor-pointer
   w-fit
+  leading-5
 `;

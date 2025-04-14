@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next';
 import React, { useRef } from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
+import { NavKeys } from '../Navbar';
 
 interface HeaderProps {
   className?: string;
@@ -14,7 +15,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
   const { t } = useTranslation();
 
   return (
-    <Main className={className}>
+    <Main className={className} id={NavKeys.HOME}>
       <Col className='items-center mt-25 w-full'>
         <HeaderTitle />
       </Col>
@@ -101,7 +102,7 @@ const HeaderContent = () => {
   const { t } = useTranslation();
   return (
     <Col>
-      <P16 className='text-foreground md:w-80 text-justify mt-4'>
+      <P16 className='text-foreground md:w-70 mt-4'>
         {t('about.description')}
       </P16>
       <Button className='w-fit mt-2' variant='outline'>

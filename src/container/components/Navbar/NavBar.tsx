@@ -5,6 +5,7 @@ import { H3, P14, P16 } from '@/components/Texts';
 import { cn, scrollTo } from '@/services/utils';
 import { MEDIA_QUERIES } from '@/static/constants';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
@@ -24,7 +25,7 @@ export enum NavKeys {
 
 export enum MenuKeys {
   ABOUT = 'ABOUT',
-  PROJECT = 'PROJECT',
+  PROJECTS = 'PROJECTS',
   MUSIC = 'MUSIC',
 }
 
@@ -35,7 +36,8 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
   const isMobile = useMediaQuery(MEDIA_QUERIES.SM);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuContentVisible, setIsMenuContentVisible] = useState(false);
-  const [selectedNavItem, setSelectedNavItem] = useState<string>(NavKeys.HOME);
+  const [selectedNavItem, setSelectedNavItem] = useState<string | null>(null);
+  const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
   const { lock, unlock } = useScrollLock({ autoLock: false });
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -81,6 +83,24 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
     i18n.changeLanguage(lang);
   };
 
+  const redirectTo = (path: MenuKeys) => {
+    const { query } = router;
+    router.push({ pathname: `/${path.toLowerCase()}`, query }, undefined, {
+      locale: i18n.language,
+    });
+  };
+
+  useEffect(() => {
+    const actualRoute = router.asPath.split('/')[1].toUpperCase();
+    if (Object.values(MenuKeys).includes(actualRoute as MenuKeys)) {
+      setSelectedMenuItem(actualRoute);
+      setSelectedNavItem(null);
+    } else {
+      setSelectedNavItem(actualRoute);
+      setSelectedMenuItem(null);
+    }
+  }, [router]);
+
   return (
     <Main ref={menuRef} className={cn(className)} $isOpen={isMenuOpen}>
       <Row className='justify-around items-center'>
@@ -90,6 +110,11 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
             onClick={() => {
               setSelectedNavItem(nav);
               scrollTo(nav);
+              if (nav === NavKeys.HOME) {
+                router.push('/', undefined, {
+                  locale: i18n.language,
+                });
+              }
               if (nav === NavKeys.MENU) {
                 setIsMenuOpen(!isMenuOpen);
               } else {
@@ -103,7 +128,7 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
         ))}
       </Row>
 
-      <Col className='justify-center h-full gap-3 items-center flex-col'>
+      <Col className='justify-center h-full gap-3 items-center flex-col '>
         <AnimatePresence>
           {isMenuContentVisible &&
             Object.values(MenuKeys).map((menu, index) => (
@@ -113,16 +138,42 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ delay: 0.05 * index, duration: 0.3 }}
+                className='flex flex-col items-start w-2/3 md:w-1/2 '
               >
-                <H3
-                  className='text-2xl md:text-xl text-center text-foreground/50 hover:text-foreground cursor-pointer'
-                  onClick={() => {
-                    setSelectedNavItem(menu);
-                    scrollTo(menu);
-                  }}
-                >
-                  {t(`enums:${menu}`)}
-                </H3>
+                <Row className='w-full items-center gap-3'>
+                  <ChevronRight
+                    className={cn(
+                      'text-primary',
+                      selectedMenuItem === menu ? 'opacity-100' : 'opacity-0'
+                    )}
+                    size={25}
+                  />
+                  <Col
+                    className=' group items-start w-fit'
+                    onClick={() => {
+                      setSelectedMenuItem(menu);
+                      scrollTo(menu);
+                      redirectTo(menu);
+                    }}
+                  >
+                    <H3
+                      className={cn(
+                        'text-2xl md:text-xl text-center text-foreground/70 cursor-pointer group-hover:text-foreground transition duration-300',
+                        selectedMenuItem === menu && 'text-foreground'
+                      )}
+                    >
+                      {t(`enums:${menu}`)}
+                    </H3>
+                    <P14
+                      className={cn(
+                        'text-primary/70 text-center cursor-pointer group-hover:text-primary transition duration-300',
+                        selectedMenuItem === menu && 'text-primary'
+                      )}
+                    >
+                      {t(`nav.${menu}`)}
+                    </P14>
+                  </Col>
+                </Row>
               </motion.div>
             ))}
         </AnimatePresence>
@@ -161,7 +212,7 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
 
 const Main = tw.div<{ $isOpen?: boolean }>`
   fixed
-  top-0
+  top-3
   left-1/2
   -translate-x-1/2
   z-30
@@ -174,13 +225,12 @@ const Main = tw.div<{ $isOpen?: boolean }>`
   border
   shadow-md
   rounded
-  mt-3
   transition-all
   duration-500
   overflow-hidden
   ${(props) =>
     props.$isOpen
-      ? 'h-60 border-primary/60 bg-secondary/80 backdrop-blur-lg'
+      ? 'h-80 border-primary/60 bg-secondary/90 backdrop-blur-lg'
       : 'h-10 border-border bg-secondary/50 backdrop-blur-md'}
   p-2
 `;
