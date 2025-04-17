@@ -1,9 +1,14 @@
+import { AppProvider } from '@/contexts';
+import { appWithTranslation } from 'next-i18next';
 import { AppProps } from 'next/app';
 import '../static/styles/app.css';
-import { appWithTranslation } from 'next-i18next';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  return (
+    <AppProvider>
+      <Component {...pageProps} />
+    </AppProvider>
+  );
 }
 
 export default appWithTranslation(MyApp);

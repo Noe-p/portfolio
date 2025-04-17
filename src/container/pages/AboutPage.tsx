@@ -5,17 +5,13 @@ import tw from 'tailwind-styled-components';
 
 export function AboutPage(): React.JSX.Element {
   const router = useRouter();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Layout className='mt-18 ' isNavClose={false}>
       <Row className=' w-full gap-1'>
         <P16
-          onClick={() =>
-            router.push('/', undefined, {
-              locale: i18n.language,
-            })
-          }
+          onClick={() => router.push('/')}
           className='text-foreground/50 hover:text-foreground cursor-pointer transition duration-300'
         >
           {t('enums:HOME')}

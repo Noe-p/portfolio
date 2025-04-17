@@ -2,6 +2,7 @@
 
 import { Col, Row } from '@/components';
 import { H3, P14, P16 } from '@/components/Texts';
+import { useAppContext } from '@/contexts';
 import { cn, scrollTo } from '@/services/utils';
 import { MEDIA_QUERIES } from '@/static/constants';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -14,7 +15,6 @@ import { useMediaQuery, useScrollLock } from 'usehooks-ts';
 
 interface NavBarProps {
   className?: string;
-  isClose?: boolean;
 }
 
 export enum NavKeys {
@@ -29,8 +29,7 @@ export enum MenuKeys {
   MUSIC = 'MUSIC',
 }
 
-export function NavBar(props: NavBarProps): React.JSX.Element {
-  const { className } = props;
+export function NavBar({ className }: NavBarProps): React.JSX.Element {
   const { t, i18n } = useTranslation();
   const router = useRouter();
   const isMobile = useMediaQuery(MEDIA_QUERIES.SM);
@@ -39,26 +38,24 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
   const [selectedNavItem, setSelectedNavItem] = useState<string | null>(null);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
   const { lock, unlock } = useScrollLock({ autoLock: false });
+  const { setIsLoaderPageOpen } = useAppContext();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isMobile) {
-      isMenuOpen ? lock() : unlock();
-    }
+    isMobile && (isMenuOpen ? lock() : unlock());
   }, [isMenuOpen, isMobile]);
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (e: Event) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setIsMenuOpen(false);
       }
     };
 
-    if (isMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    } else {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
+    document[isMenuOpen ? 'addEventListener' : 'removeEventListener'](
+      'mousedown',
+      handleClickOutside
+    );
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
@@ -66,29 +63,20 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
   }, [isMenuOpen]);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: NodeJS.Timeout | null = null;
+
     if (isMenuOpen) {
       timeout = setTimeout(() => {
         setIsMenuContentVisible(true);
-      }, 500); // délai pour laisser le menu s'ouvrir
+      }, 500);
     } else {
       setIsMenuContentVisible(false);
     }
-    return () => clearTimeout(timeout);
+
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
   }, [isMenuOpen]);
-
-  const handleLanguageChange = (lang: string) => {
-    const { pathname, query } = router;
-    router.push({ pathname, query }, undefined, { locale: lang });
-    i18n.changeLanguage(lang);
-  };
-
-  const redirectTo = (path: MenuKeys) => {
-    const { query } = router;
-    router.push({ pathname: `/${path.toLowerCase()}`, query }, undefined, {
-      locale: i18n.language,
-    });
-  };
 
   useEffect(() => {
     const actualRoute = router.asPath.split('/')[1].toUpperCase();
@@ -101,26 +89,89 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
     }
   }, [router]);
 
+  const handleLanguageChange = (lang: string) => {
+    const { pathname, query } = router;
+    router.push({ pathname, query }, undefined, { locale: lang });
+    i18n.changeLanguage(lang);
+  };
+
+  const handleNavClick = (nav: NavKeys) => {
+    setSelectedNavItem(nav);
+    scrollTo(nav);
+    if (nav === NavKeys.HOME) {
+      setIsLoaderPageOpen(true);
+      setTimeout(() => {
+        setIsLoaderPageOpen(false);
+        router.push({
+          pathname: '/',
+          query: router.query,
+        });
+      }, 1000);
+    }
+    nav === NavKeys.MENU ? setIsMenuOpen(!isMenuOpen) : setIsMenuOpen(false);
+  };
+
+  const redirectTo = (path: MenuKeys) => {
+    setIsLoaderPageOpen(true);
+    setTimeout(() => {
+      setIsLoaderPageOpen(false);
+      router.push({ pathname: `/${path.toLowerCase()}`, query: router.query });
+    }, 1000);
+  };
+
+  const MenuItem = ({ menu, index }: { menu: MenuKeys; index: number }) => (
+    <motion.div
+      key={menu}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ delay: 0.05 * index, duration: 0.3 }}
+      className='flex flex-col items-start w-2/3 md:w-1/2'
+    >
+      <Row className='w-full items-center gap-3'>
+        <ChevronRight
+          className={cn(
+            'text-primary',
+            selectedMenuItem === menu ? 'opacity-100' : 'opacity-0'
+          )}
+          size={25}
+        />
+        <Col
+          className='group items-start w-fit'
+          onClick={() => {
+            setSelectedMenuItem(menu);
+            scrollTo(menu);
+            redirectTo(menu);
+          }}
+        >
+          <H3
+            className={cn(
+              'text-2xl md:text-xl text-center text-foreground/70 cursor-pointer group-hover:text-foreground transition duration-300',
+              selectedMenuItem === menu && 'text-foreground'
+            )}
+          >
+            {t(`enums:${menu}`)}
+          </H3>
+          <P14
+            className={cn(
+              'text-primary/70 text-center cursor-pointer group-hover:text-primary transition duration-300',
+              selectedMenuItem === menu && 'text-primary'
+            )}
+          >
+            {t(`nav.${menu}`)}
+          </P14>
+        </Col>
+      </Row>
+    </motion.div>
+  );
+
   return (
     <Main ref={menuRef} className={cn(className)} $isOpen={isMenuOpen}>
       <Row className='justify-around items-center'>
         {Object.values(NavKeys).map((nav) => (
           <TextNavigation
             key={nav}
-            onClick={() => {
-              setSelectedNavItem(nav);
-              scrollTo(nav);
-              if (nav === NavKeys.HOME) {
-                router.push('/', undefined, {
-                  locale: i18n.language,
-                });
-              }
-              if (nav === NavKeys.MENU) {
-                setIsMenuOpen(!isMenuOpen);
-              } else {
-                setIsMenuOpen(false);
-              }
-            }}
+            onClick={() => handleNavClick(nav)}
             $selected={selectedNavItem === nav}
           >
             {t(`enums:${nav}`)}
@@ -128,82 +179,33 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
         ))}
       </Row>
 
-      <Col className='justify-center h-full gap-3 items-center flex-col '>
+      <Col className='justify-center h-full gap-3 items-center flex-col'>
         <AnimatePresence>
           {isMenuContentVisible &&
             Object.values(MenuKeys).map((menu, index) => (
-              <motion.div
-                key={menu}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ delay: 0.05 * index, duration: 0.3 }}
-                className='flex flex-col items-start w-2/3 md:w-1/2 '
-              >
-                <Row className='w-full items-center gap-3'>
-                  <ChevronRight
-                    className={cn(
-                      'text-primary',
-                      selectedMenuItem === menu ? 'opacity-100' : 'opacity-0'
-                    )}
-                    size={25}
-                  />
-                  <Col
-                    className=' group items-start w-fit'
-                    onClick={() => {
-                      setSelectedMenuItem(menu);
-                      scrollTo(menu);
-                      redirectTo(menu);
-                    }}
-                  >
-                    <H3
-                      className={cn(
-                        'text-2xl md:text-xl text-center text-foreground/70 cursor-pointer group-hover:text-foreground transition duration-300',
-                        selectedMenuItem === menu && 'text-foreground'
-                      )}
-                    >
-                      {t(`enums:${menu}`)}
-                    </H3>
-                    <P14
-                      className={cn(
-                        'text-primary/70 text-center cursor-pointer group-hover:text-primary transition duration-300',
-                        selectedMenuItem === menu && 'text-primary'
-                      )}
-                    >
-                      {t(`nav.${menu}`)}
-                    </P14>
-                  </Col>
-                </Row>
-              </motion.div>
+              <MenuItem key={menu} menu={menu} index={index} />
             ))}
         </AnimatePresence>
       </Col>
 
       {isMenuContentVisible && (
         <Row className='w-full items-start gap-1 ml-1'>
-          <P16
-            className={cn(
-              'cursor-pointer transition duration-300',
-              i18n.language === 'fr'
-                ? 'text-primary'
-                : 'text-foreground/50 hover:text-foreground/80'
-            )}
-            onClick={() => handleLanguageChange('fr')}
-          >
-            {'Fr'}
-          </P16>
-          <P16 className='text-foreground/50'>{'/'}</P16>
-          <P16
-            className={cn(
-              'cursor-pointer transition duration-300',
-              i18n.language === 'en'
-                ? 'text-primary'
-                : 'text-foreground/50 hover:text-foreground/80'
-            )}
-            onClick={() => handleLanguageChange('en')}
-          >
-            {'En'}
-          </P16>
+          {['fr', 'en'].map((lang) => (
+            <React.Fragment key={lang}>
+              <P16
+                className={cn(
+                  'cursor-pointer transition duration-300',
+                  i18n.language === lang
+                    ? 'text-primary'
+                    : 'text-foreground/50 hover:text-foreground/80'
+                )}
+                onClick={() => handleLanguageChange(lang)}
+              >
+                {lang.toUpperCase()}
+              </P16>
+              {lang === 'fr' && <P16 className='text-foreground/50'>/</P16>}
+            </React.Fragment>
+          ))}
         </Row>
       )}
     </Main>
@@ -211,41 +213,19 @@ export function NavBar(props: NavBarProps): React.JSX.Element {
 }
 
 const Main = tw.div<{ $isOpen?: boolean }>`
-  fixed
-  top-3
-  left-1/2
-  -translate-x-1/2
-  z-30
-  w-11/12
-  md:w-1/3
-  flex
-  flex-col
-  justify-between
-  
-  border
-  shadow-md
-  rounded
-  transition-all
-  duration-500
-  overflow-hidden
-  ${(props) =>
-    props.$isOpen
+  fixed top-3 left-1/2 -translate-x-1/2 z-30 w-11/12 md:w-1/3 flex flex-col justify-between
+  border shadow-md rounded transition-all duration-500 overflow-hidden p-2
+  ${(p) =>
+    p.$isOpen
       ? 'h-80 border-primary/60 bg-secondary/90 backdrop-blur-lg'
       : 'h-10 border-border bg-secondary/50 backdrop-blur-md'}
-  p-2
 `;
 
 const TextNavigation = tw(P14)<{ $selected?: boolean }>`
-  ${(props) => (props.$selected ? 'opacity-100' : 'opacity-50')}
-  hover:opacity-80
-  transition-all
-  duration-300
-  cursor-pointer
-  font-light
-  h-fit
-  uppercase
-  ${(props) =>
-    props.$selected
+  ${(p) => (p.$selected ? 'opacity-100' : 'opacity-50')}
+  hover:opacity-80 transition-all duration-300 cursor-pointer font-light h-fit uppercase
+  ${(p) =>
+    p.$selected
       ? 'border-b-2 border-primary hover:opacity-100'
       : 'border-b-2 border-transparent'}
   hover:border-primary

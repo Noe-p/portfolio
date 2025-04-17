@@ -14,7 +14,7 @@ interface LayoutProps {
 }
 
 export function Layout(props: LayoutProps): React.JSX.Element {
-  const { children, className, isNavClose } = props;
+  const { children, className } = props;
   const { i18n } = useTranslation(); // Le hook pour la traduction
   const router = useRouter(); // Hook pour router
 
@@ -45,7 +45,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
           )}
         />
       </div>
-      <NavBar isClose={isNavClose} />
+      <NavBar />
       <Row className='hidden md:flex absolute z-10 gap-1 top-5 right-10'>
         <P16
           className={cn(

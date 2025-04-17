@@ -1,7 +1,9 @@
 import { Col, H1, P16, P24, Row, RowBetween, Title } from '@/components';
 import { Button } from '@/components/ui/button';
+import { ROUTES } from '@/routes';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
@@ -100,12 +102,17 @@ const HeaderImage = () => {
 // Text + button
 const HeaderContent = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   return (
     <Col>
       <P16 className='text-foreground md:w-70 mt-4'>
         {t('about.description')}
       </P16>
-      <Button className='w-fit mt-2' variant='outline'>
+      <Button
+        onClick={() => router.push(ROUTES.about)}
+        className='w-fit mt-2'
+        variant='outline'
+      >
         {t('generics.seeMore')}
       </Button>
     </Col>
