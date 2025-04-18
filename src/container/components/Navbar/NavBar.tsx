@@ -38,7 +38,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
   const [selectedNavItem, setSelectedNavItem] = useState<string | null>(null);
   const [selectedMenuItem, setSelectedMenuItem] = useState<string | null>(null);
   const { lock, unlock } = useScrollLock({ autoLock: false });
-  const { setIsLoaderPageOpen } = useAppContext();
+  const { setIsTransitionStartOpen } = useAppContext();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -99,9 +99,8 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
     setSelectedNavItem(nav);
     scrollTo(nav);
     if (nav === NavKeys.HOME) {
-      setIsLoaderPageOpen(true);
+      setIsTransitionStartOpen(true);
       setTimeout(() => {
-        setIsLoaderPageOpen(false);
         router.push({
           pathname: '/',
           query: router.query,
@@ -112,9 +111,8 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
   };
 
   const redirectTo = (path: MenuKeys) => {
-    setIsLoaderPageOpen(true);
+    setIsTransitionStartOpen(true);
     setTimeout(() => {
-      setIsLoaderPageOpen(false);
       router.push({ pathname: `/${path.toLowerCase()}`, query: router.query });
     }, 1000);
   };

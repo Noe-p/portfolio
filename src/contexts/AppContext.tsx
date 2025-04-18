@@ -4,33 +4,35 @@ import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 interface State {
-  isLoaderPageOpen: boolean;
+  isTransitionStartOpen: boolean;
 }
 
 interface Context extends State {
-  setIsLoaderPageOpen: (isLoaderPageOpen: boolean) => void;
+  setIsTransitionStartOpen: (isTransitionStartOpen: boolean) => void;
 }
 
 const defaultState: State = {
-  isLoaderPageOpen: false,
+  isTransitionStartOpen: false,
 };
 
 const AppContext = React.createContext<Context>({
   ...defaultState,
-  setIsLoaderPageOpen: () => {
-    throw new Error('AppContext.setIsLoaderPageOpen has not been set');
+  setIsTransitionStartOpen: () => {
+    throw new Error('AppContext.setIsTransitionStartOpen has not been set');
   },
 });
 
 function useAppProvider() {
-  const [isLoaded, setIsLoaded] = useState<State['isLoaderPageOpen']>(
-    defaultState.isLoaderPageOpen
+  const [isLoaded, setIsLoaded] = useState<State['isTransitionStartOpen']>(
+    defaultState.isTransitionStartOpen
   );
 
   return {
-    isLoaderPageOpen: isLoaded,
-    setIsLoaderPageOpen: (isLoaderPageOpen: State['isLoaderPageOpen']) => {
-      setIsLoaded(isLoaderPageOpen);
+    isTransitionStartOpen: isLoaded,
+    setIsTransitionStartOpen: (
+      isTransitionStartOpen: State['isTransitionStartOpen']
+    ) => {
+      setIsLoaded(isTransitionStartOpen);
     },
   };
 }
@@ -45,10 +47,10 @@ export const AppProvider = ({ children }: Props): JSX.Element => {
   return (
     <AppContext.Provider value={context}>
       <AnimatePresence>
-        {context.isLoaderPageOpen && (
+        {context.isTransitionStartOpen && (
           <MotionLoaderPage
             key='loader'
-            initial={{ y: '100%' }}
+            initial={{ y: '100%' }} // Animation du bas vers le haut
             animate={{ y: 0 }}
             exit={{ y: '-100%' }}
             transition={{ duration: 0.6, ease: 'easeInOut' }}
