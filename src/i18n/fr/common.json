@@ -7,12 +7,15 @@
   },
   "status": "Prêt à travailler",
   "position": "Développeur Fullstack",
+  "location": "Actuellement à Quimper, France",
   "hey": "Hey you!",
   "home": {
     "name": "home"
   },
 
   "about": {
+    "andMore": "(Mais pas que)",
+    "smallDesc": "Salut ! Moi c’est Noé, développeur fullstack… mais pas que ! Passionné de photo, de musique et de sport, je suis toujours partant pour apprendre et créer. N’hésite pas à scroller pour en découvrir plus sur moi ! 👇",
     "description": "Je suis un développeur fullstack passionné avec un fort intérêt pour le développement web. J'aime créer des applications web dynamiques et réactives en utilisant des technologies modernes. Mon objectif est de fournir des solutions de haute qualité qui répondent aux besoins des utilisateurs et des entreprises."
   },
   "nav": {

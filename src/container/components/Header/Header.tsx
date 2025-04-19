@@ -19,7 +19,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
 
   return (
     <Main className={className} id={NavKeys.HOME}>
-      <Col className='items-center mt-25 w-full'>
+      <Col className='items-center mt-25 md:mt-30 w-full'>
         <HeaderTitle />
       </Col>
 
@@ -36,7 +36,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
       </Col>
 
       {/* Desktop version */}
-      <RowBetween className='mt-10 justify-around w-full hidden md:flex'>
+      <RowBetween className='mt-15 justify-around w-full hidden md:flex'>
         <Macaron className='top-10 left-20' />
         <Col>
           <H1 className='text-foreground/70 normal-case'>{t('position')}</H1>
@@ -58,18 +58,18 @@ const HeaderTitle = () => {
     offset: ['start end', 'end start'],
   });
 
-  const yNoe = useTransform(scrollY, [0, 300], [0, -10]);
-  const yPhilippe = useTransform(scrollY, [0, 300], [0, -20]);
+  const yNoe = useTransform(scrollY, [0, 100], [0, -10]);
+  const yPhilippe = useTransform(scrollY, [0, 200], [0, -20]);
 
   return (
     <div ref={ref}>
       <motion.div style={{ y: yNoe }}>
-        <Title className='text-[100px] md:text-[200px] leading-none translate-x-5 md:translate-x-10'>
+        <Title className='text-[100px] md:text-[180px] translate-x-5 md:translate-x-10 leading-none'>
           {'Noé'}
         </Title>
       </motion.div>
       <motion.div style={{ y: yPhilippe }}>
-        <Title className='text-[40px] md:text-[85px] leading-none -translate-x-5 md:-translate-x-10'>
+        <Title className='text-[40px] md:text-[75px] -translate-x-5 md:-translate-x-10 leading-none'>
           {'PHILIPPE'}
         </Title>
       </motion.div>

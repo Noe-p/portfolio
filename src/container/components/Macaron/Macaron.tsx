@@ -66,9 +66,9 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
             lengthAdjust='spacing'
           >
             {t('status')}
-            <tspan className='text-primary'>{' • '}</tspan>
+            <tspan className='text-green-400'>{' • '}</tspan>
             {t('status')}
-            <tspan className='text-primary'>{' • '}</tspan>
+            <tspan className='text-green-400'>{' • '}</tspan>
           </textPath>
         </text>
       </motion.svg>
