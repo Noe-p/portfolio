@@ -1,5 +1,6 @@
 import { Col, H1, P16, P24, Row, RowBetween, Title } from '@/components';
 import { Button } from '@/components/ui/button';
+import { useAppContext } from '@/contexts';
 import { ROUTES } from '@/routes';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
@@ -25,7 +26,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
       {/* Mobile version */}
       <Col className='flex md:hidden items-center px-5'>
         <P24 className='mt-7 text-foreground/70 normal-case'>
-          {t('header.position')}
+          {t('position')}
         </P24>
         <Row className='justify-left relative w-full mt-7'>
           <HeaderImage />
@@ -38,9 +39,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
       <RowBetween className='mt-10 justify-around w-full hidden md:flex'>
         <Macaron className='top-10 left-20' />
         <Col>
-          <H1 className='text-foreground/70 normal-case'>
-            {t('header.position')}
-          </H1>
+          <H1 className='text-foreground/70 normal-case'>{t('position')}</H1>
           <RowBetween className='mt-5 gap-5'>
             <HeaderImage />
             <HeaderContent />
@@ -103,13 +102,20 @@ const HeaderImage = () => {
 const HeaderContent = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const { setIsTransitionStartOpen } = useAppContext();
+
   return (
     <Col>
       <P16 className='text-foreground md:w-70 mt-4'>
         {t('about.description')}
       </P16>
       <Button
-        onClick={() => router.push(ROUTES.about)}
+        onClick={() => {
+          setIsTransitionStartOpen(true);
+          setTimeout(() => {
+            router.push(ROUTES.about);
+          }, 700);
+        }}
         className='w-fit mt-2'
         variant='outline'
       >

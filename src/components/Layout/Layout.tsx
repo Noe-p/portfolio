@@ -1,4 +1,4 @@
-import { Footer, NavBar } from '@/container/components';
+import { Footer, NavBar, TransitionPage } from '@/container/components';
 import { useAppContext } from '@/contexts';
 import { cn } from '@/services/utils';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import React, { ReactNode, useEffect, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { Row } from '../Helpers';
-import { H1, P16 } from '../Texts';
+import { P16 } from '../Texts';
 
 interface LayoutProps {
   children?: ReactNode;
@@ -26,7 +26,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
     setIsTransitionStartOpen(false);
     setTimeout(() => {
       setIsTransitionEndOpen(false);
-    }, 1000);
+    }, 700);
   }, []);
 
   // Fonction pour changer la langue
@@ -46,7 +46,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
             exit={{ y: '-100%' }}
             transition={{ duration: 0.6, ease: 'easeInOut' }}
           >
-            <H1>{'Ca charge'}</H1>
+            <TransitionPage />
           </MotionLoaderPage>
         )}
       </AnimatePresence>

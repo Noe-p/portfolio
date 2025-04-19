@@ -1,4 +1,4 @@
-import { H1 } from '@/components';
+import { TransitionPage } from '@/container/components';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react';
 import tw from 'tailwind-styled-components';
@@ -55,7 +55,7 @@ export const AppProvider = ({ children }: Props): JSX.Element => {
             exit={{ y: '-100%' }}
             transition={{ duration: 0.6, ease: 'easeInOut' }}
           >
-            <H1>{'Ca charge'}</H1>
+            <TransitionPage />
           </MotionLoaderPage>
         )}
       </AnimatePresence>

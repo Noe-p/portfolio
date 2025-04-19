@@ -122,12 +122,14 @@ export function Link(props: LinksProps): React.JSX.Element {
 }
 
 const TitleStyled = tw.h1`
+  
   text-4xl md:text-6xl
   font-title
   font-black
   uppercase
   text-foreground
   leading-none
+  shadow-primary
 `;
 
 const H1Styled = tw.h1`

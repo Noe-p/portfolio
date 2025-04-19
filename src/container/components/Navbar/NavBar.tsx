@@ -98,23 +98,28 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
   const handleNavClick = (nav: NavKeys) => {
     setSelectedNavItem(nav);
     scrollTo(nav);
-    if (nav === NavKeys.HOME) {
+    if (nav === NavKeys.HOME && router.asPath !== '/') {
       setIsTransitionStartOpen(true);
       setTimeout(() => {
         router.push({
           pathname: '/',
           query: router.query,
         });
-      }, 1000);
+      }, 700);
     }
     nav === NavKeys.MENU ? setIsMenuOpen(!isMenuOpen) : setIsMenuOpen(false);
   };
 
   const redirectTo = (path: MenuKeys) => {
-    setIsTransitionStartOpen(true);
-    setTimeout(() => {
-      router.push({ pathname: `/${path.toLowerCase()}`, query: router.query });
-    }, 1000);
+    if (router.asPath !== `/${path.toLowerCase()}`) {
+      setIsTransitionStartOpen(true);
+      setTimeout(() => {
+        router.push({
+          pathname: `/${path.toLowerCase()}`,
+          query: router.query,
+        });
+      }, 700);
+    }
   };
 
   const MenuItem = ({ menu, index }: { menu: MenuKeys; index: number }) => (
@@ -188,20 +193,22 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
 
       {isMenuContentVisible && (
         <Row className='w-full items-start gap-1 ml-1'>
-          {['fr', 'en'].map((lang) => (
+          {['Fr', 'En'].map((lang) => (
             <React.Fragment key={lang}>
               <P16
                 className={cn(
                   'cursor-pointer transition duration-300',
-                  i18n.language === lang
+                  i18n.language === lang.toLowerCase()
                     ? 'text-primary'
                     : 'text-foreground/50 hover:text-foreground/80'
                 )}
-                onClick={() => handleLanguageChange(lang)}
+                onClick={() => handleLanguageChange(lang.toLowerCase())}
               >
-                {lang.toUpperCase()}
+                {lang}
               </P16>
-              {lang === 'fr' && <P16 className='text-foreground/50'>/</P16>}
+              {lang.toLowerCase() === 'fr' && (
+                <P16 className='text-foreground/50'>{'/'}</P16>
+              )}
             </React.Fragment>
           ))}
         </Row>

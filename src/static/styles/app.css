@@ -102,3 +102,7 @@ body {
     --y: 30%;
   }
 }
+
+.shadow-primary {
+  text-shadow: 3px 3px 0 hsl(var(--primary)); /* ombre nette et bien visible */
+}

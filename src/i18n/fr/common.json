@@ -5,13 +5,13 @@
     "designed": "Conçu et développé par ",
     "seeMore": "Voir plus"
   },
+  "status": "Prêt à travailler",
+  "position": "Développeur Fullstack",
+  "hey": "Hey you!",
   "home": {
     "name": "home"
   },
-  "header": {
-    "status": "Prêt à travailler",
-    "position": "Développeur Fullstack"
-  },
+
   "about": {
     "description": "Je suis un développeur fullstack passionné avec un fort intérêt pour le développement web. J'aime créer des applications web dynamiques et réactives en utilisant des technologies modernes. Mon objectif est de fournir des solutions de haute qualité qui répondent aux besoins des utilisateurs et des entreprises."
   },
@@ -19,5 +19,37 @@
     "ABOUT": "Qui suis-je ?",
     "PROJECTS": "Découvrir mes projets",
     "MUSIC": "Écouter ma musique"
+  },
+  "funFacts": {
+    "fact1": "Les wombats laissent des crottes cubiques.",
+    "fact2": "Ton ADN est à 60 % identique à celui d’une banane.",
+    "fact3": "Il pleut du métal sur certaines planètes.",
+    "fact4": "Une girafe ne fait pas de bruit : elle n’a pas de cordes vocales.",
+    "fact5": "Les arbres parlent. Lentement, sous la terre.",
+    "fact6": "Le chocolat, c’était de l’argent chez les Aztèques.",
+    "fact7": "La Lune s’éloigne. De 3,8 cm. Chaque année.",
+    "fact8": "Les tortues peuvent respirer… par les fesses.",
+    "fact9": "Un jour sur Vénus est plus long qu’une année.",
+    "fact10": "Les koalas ont des empreintes digitales quasi humaines.",
+    "fact11": "Une minute de silence dure souvent 61 secondes.",
+    "fact12": "Le cerveau pèse 2 % du corps, mais consomme 20 % de son énergie.",
+    "fact13": "Le miel ne périme pas. Vraiment. Même dans 3 000 ans.",
+    "fact14": "Les nuages peuvent peser 500 tonnes. Et ils flottent tranquille.",
+    "fact15": "Le mot “alphabet” est né d’Alpha et Bêta.",
+    "fact16": "Les pieuvres ont trois cœurs.",
+    "fact17": "Les bananes sont des baies. Pas les fraises.",
+    "fact18": "Les requins existaient avant les arbres.",
+    "fact19": "Il existe une méduse capable de vivre éternellement.",
+    "fact20": "Les humains brillent dans le noir, mais la lumière est trop faible pour être vue.",
+    "fact21": "Les paresseux peuvent retenir leur souffle plus longtemps que les dauphins.",
+    "fact22": "La pluie a une odeur. On l’appelle le pétrichor.",
+    "fact23": "L’espace a une odeur de viande grillée.",
+    "fact24": "Les vaches ont des meilleures amies et stressent quand elles sont séparées.",
+    "fact25": "L’eau peut bouillir et geler en même temps.",
+    "fact26": "Une cuillère à café d’étoile à neutrons pèserait six milliards de tonnes.",
+    "fact27": "Certaines tortues peuvent vivre sans oxygène pendant des mois.",
+    "fact28": "Il y a plus d’étoiles dans l’univers que de grains de sable sur Terre.",
+    "fact29": "La tour Eiffel grandit en été.",
+    "fact30": "Les oiseaux sont les plus proches parents vivants des dinosaures."
   }
 }

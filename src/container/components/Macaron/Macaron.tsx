@@ -65,9 +65,9 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
             spacing='50'
             lengthAdjust='spacing'
           >
-            {t('header.status')}
+            {t('status')}
             <tspan className='text-primary'>{' • '}</tspan>
-            {t('header.status')}
+            {t('status')}
             <tspan className='text-primary'>{' • '}</tspan>
           </textPath>
         </text>
