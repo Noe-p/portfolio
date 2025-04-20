@@ -63,12 +63,22 @@ const HeaderTitle = () => {
 
   return (
     <div ref={ref}>
-      <motion.div style={{ y: yNoe }}>
+      <motion.div
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 1.3, duration: 0.3 }}
+        style={{ y: yNoe }}
+      >
         <Title className='text-[100px] md:text-[180px] translate-x-5 md:translate-x-10 leading-none'>
           {'Noé'}
         </Title>
       </motion.div>
-      <motion.div style={{ y: yPhilippe }}>
+      <motion.div
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 1.3, duration: 0.3 }}
+        style={{ y: yPhilippe }}
+      >
         <Title className='text-[40px] md:text-[75px] -translate-x-5 md:-translate-x-10 leading-none'>
           {'PHILIPPE'}
         </Title>
@@ -90,7 +100,7 @@ const HeaderImage = () => {
   return (
     <motion.img
       ref={ref}
-      src='/images/header.jpg'
+      src='/images/header.webP'
       alt='philippe'
       className='w-[200px] md:w-70 h-min rounded object-cover'
       style={{ y }}

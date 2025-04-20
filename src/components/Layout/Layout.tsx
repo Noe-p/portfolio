@@ -60,7 +60,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
           } as React.CSSProperties
         }
       >
-        <div className='absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0'>
+        <div className='absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-10'>
           <div
             className={cn(
               'absolute w-[150vw] h-[150vw] rounded-full blur-3xl opacity-30 animate-floatingGradient',
@@ -106,7 +106,7 @@ const Page = tw.div`
   flex
   flex-col
   items-center
-  z-0
+  z-10
   min-h-screen
   mb-5 md:mb-20
   px-5 md:px-20

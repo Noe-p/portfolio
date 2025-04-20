@@ -34,6 +34,7 @@ export function TransitionPage(props: TransitionPageProps): JSX.Element {
         alt='logo'
         blurDataURL='/icons/logo_144x144.webp'
         loading='lazy'
+        quality={30}
       />
       <RowBetween className='h-15 items-center border-t border-foreground/50 w-full'>
         <P16 className='text-foreground/70'>{'Noé PHILIPPE'}</P16>
