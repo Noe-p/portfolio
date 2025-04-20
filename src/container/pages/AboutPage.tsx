@@ -33,16 +33,18 @@ export function AboutPage(): React.JSX.Element {
       <Main>
         <Col className='h-[calc(100vh-95px)] md:px-20'>
           <Col className='items-end w-full'>
-            <Title className='mt-20 md:w-2/3 text-right'>{t('position')}</Title>
+            <Title className='mt-5 md:mt-20 md:w-2/3 text-right'>
+              {t('position')}
+            </Title>
             <P16 className='mt-3 text-foreground/80'>{t('about.andMore')}</P16>
           </Col>
-          <Col className='h-full justify-end gap-10 md:gap-0'>
+          <Col className='md:h-full justify-end gap-10 md:gap-0'>
             <Col className='md:flex-row w-full items-center justify-between'>
               <P16 className='md:w-1/3 mt-20 order-2 md:order-1'>
                 {t('about.smallDesc')}
               </P16>
               <Image
-                src='/logo.webp'
+                src='/logo.webP'
                 width={300}
                 height={300}
                 alt='logo'

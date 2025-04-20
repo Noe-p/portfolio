@@ -28,7 +28,7 @@ export function TransitionPage(props: TransitionPageProps): JSX.Element {
       </Title>
       <div />
       <Image
-        src='/logo.webp'
+        src='/logo.webP'
         width={150}
         height={150}
         alt='logo'
