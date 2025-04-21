@@ -104,5 +104,9 @@ body {
 }
 
 .shadow-primary {
-  text-shadow: 3px 3px 0 hsl(var(--primary)); /* ombre nette et bien visible */
+  text-shadow: 3px 3px 0 hsl(var(--primary));
+
+  @media (max-width: 640px) {
+    text-shadow: 2px 2px 0 hsl(var(--primary));
+  }
 }

@@ -1,9 +1,8 @@
-import { Col, Layout, P16, P18, Row, RowBetween, Title } from '@/components';
+import { Col, Layout, P16, P18, Row, Title } from '@/components';
 import { useAppContext } from '@/contexts';
 import { ROUTES } from '@/routes';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import tw from 'tailwind-styled-components';
 
@@ -15,9 +14,6 @@ export function AboutPage(): React.JSX.Element {
 
   // Parallax translation for the title
   const yTitle = useTransform(scrollY, [0, 300], [0, -50]);
-  const yImage = useTransform(scrollY, [0, 400], [0, 50]);
-  const opacityFirstImage = useTransform(scrollY, [400, 500], [1, 0]);
-  const opacitySecondImage = useTransform(scrollY, [500, 600], [0, 1]);
 
   return (
     <Layout className='mt-18 ' isNavClose={false}>
@@ -39,81 +35,48 @@ export function AboutPage(): React.JSX.Element {
         </P16>
       </Row>
       <Main>
-        <Col className='h-[calc(100vh-90px)]'>
-          <Col className='items-start w-full'>
-            <motion.div
-              className='w-full flex flex-row justify-start'
-              style={{ y: yTitle }}
-            >
-              <Title className='mt-5 md:text-[100px] leading-none text-left md:mt-20 md:w-2/3'>
-                {t('position')}
-              </Title>
-            </motion.div>
+        <Col className='items-start md:px-10 z-10  mt-10 md:mt-20'>
+          <motion.div
+            className='w-full flex flex-row justify-start'
+            style={{ y: yTitle }}
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.3, duration: 0.3 }}
+          >
+            <Title className='md:text-[100px] leading-none text-left md:w-2/3'>
+              {t('position')}
+            </Title>
+          </motion.div>
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.7, duration: 0.3 }}
+          >
             <P16 className='text-foreground/80 mt-2'>{t('about.andMore')}</P16>
-          </Col>
-          <Col className='md:h-full justify-end gap-10 md:gap-0'>
-            <Col className='md:flex-row w-full items-center justify-between'>
-              <P18 className='md:w-1/3 mt-20 order-2 md:order-1'>
-                {t('about.smallDesc')}
-              </P18>
-              <motion.div style={{ y: yImage }} className='order-1 md:order-2'>
-                <Image
-                  src='/logo.webP'
-                  width={300}
-                  height={300}
-                  alt='logo'
-                  blurDataURL='/icons/logo_144x144.webp'
-                  loading='lazy'
-                />
-              </motion.div>
-            </Col>
-            <RowBetween className='h-10 md:h-20 items-center justify-end md:justify-between border-t border-foreground/50 w-full'>
-              <P16 className='text-foreground/70 hidden md:block'>
-                {t('location')}
-              </P16>
-              <Row className='items-center gap-2'>
-                <div className='h-2 w-2 bg-green-400 rounded-full translate-y-0.5' />
-                <P16 className='text-foreground/70'>{t('status')}</P16>
-              </Row>
-            </RowBetween>
-          </Col>
+          </motion.div>
         </Col>
-        <BackgroundSection>
-          <Title className='z-10'>{t('generics.aboutMe')}</Title>
-          <RowBetween className='flex-col md:flex-row items-center gap-20 md:px-20'>
-            <P16 className='md:w-1/2 mt-105 md:mt-0'>
-              {t('about.description')}
-            </P16>
-            <motion.div
-              style={{ opacity: opacityFirstImage }}
-              className='absolute md:top-0 md:right-40 z-0 transition-all duration-300'
-            >
-              <Image
-                src='/images/plage.webP'
-                alt='Noé dos à la plage'
-                width={300}
-                height={1000}
-                objectFit='cover'
-                className='rounded'
-              />
-            </motion.div>
-
-            {/* Deuxième image qui prend le relais */}
-            <motion.div
-              style={{ opacity: opacitySecondImage }}
-              className='absolute md:top-0 md:right-40 z-0 transition-all duration-300'
-            >
-              <Image
-                src='/images/combi.webP'
-                alt='Noé à en Combi'
-                width={300}
-                height={1000}
-                objectFit='cover'
-                className='rounded'
-              />
-            </motion.div>
-          </RowBetween>
-        </BackgroundSection>
+        <Col className='md:flex-row w-full items-center justify-between gap-5 md:px-10 border-b border-foreground/30 pb-20 md:pb-0'>
+          <motion.div
+            className=' order-2 md:order-1 md:w-1/3'
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.7, duration: 0.3 }}
+          >
+            <P18>{t('about.smallDesc')}</P18>
+          </motion.div>
+          <motion.div
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.3 }}
+            className='order-1 md:order-2'
+          >
+            <motion.img
+              src='/images/plage.webP'
+              alt='Noé dos à la plage'
+              className='rounded md:-translate-y-25 -translate-y-15 md:-translate-x-15 translate-x-15 z-0 w-60 md:w-80 h-auto'
+            />
+          </motion.div>
+        </Col>
       </Main>
     </Layout>
   );
@@ -123,12 +86,5 @@ const Main = tw.div`
   flex
   flex-col
   md:px-20
-  z-10
-`;
-
-const BackgroundSection = tw(Col)`
-  gap-10
-  md:mt-10
-  relative
-  h-400
+  z-20
 `;

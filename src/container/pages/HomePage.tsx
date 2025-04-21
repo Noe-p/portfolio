@@ -14,4 +14,5 @@ const Main = tw.div`
   flex
   flex-col
   w-full md:w-2/3
+  z-20
 `;

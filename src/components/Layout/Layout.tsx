@@ -46,7 +46,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
             exit={{ y: '-100%' }}
             transition={{ duration: 0.6, ease: 'easeInOut' }}
           >
-            <TransitionPage />
+            <TransitionPage isEnd={true} />
           </MotionLoaderPage>
         )}
       </AnimatePresence>
@@ -60,7 +60,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
           } as React.CSSProperties
         }
       >
-        <div className='absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-10'>
+        <div className='absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0'>
           <div
             className={cn(
               'absolute w-[150vw] h-[150vw] rounded-full blur-3xl opacity-30 animate-floatingGradient',

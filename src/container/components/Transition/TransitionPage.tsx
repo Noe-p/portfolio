@@ -1,16 +1,16 @@
-import { Col, P16, RowBetween, Title } from '@/components';
+import { Col } from '@/components';
 import { cn } from '@/services/utils';
-import { useTranslation } from 'next-i18next';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
 
 interface TransitionPageProps {
   className?: string;
+  isEnd?: boolean;
 }
 
 export function TransitionPage(props: TransitionPageProps): JSX.Element {
-  const { className } = props;
-  const { t } = useTranslation();
+  const { className, isEnd = false } = props;
 
   return (
     <Main className={className}>
@@ -23,32 +23,29 @@ export function TransitionPage(props: TransitionPageProps): JSX.Element {
           )}
         />
       </div>
-      <Title className='w-full absolute top-30 left-5 md:left-20'>
-        {t('hey')}
-      </Title>
-      <div />
-      <Image
-        src='/logo.webP'
-        width={150}
-        height={150}
-        alt='logo'
-        blurDataURL='/icons/logo_144x144.webp'
-        loading='lazy'
-        quality={30}
-      />
-      <RowBetween className='h-15 items-center border-t border-foreground/50 w-full'>
-        <P16 className='text-foreground/70'>{'Noé PHILIPPE'}</P16>
-        <P16 className='text-foreground/70'>{t('position')}</P16>
-      </RowBetween>
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={{ opacity: isEnd ? 0 : 1 }}
+        exit={{ opacity: isEnd ? 1 : 0 }}
+        transition={{ duration: 0.3, delay: 0.4 }}
+        className='w-full h-full flex items-center justify-center'
+      >
+        <Image
+          src='/logo.webP'
+          width={150}
+          height={150}
+          alt='logo'
+          quality={30}
+          priority
+          className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10'
+        />
+      </motion.div>
     </Main>
   );
 }
 
 const Main = tw(Col)`
-  items-center
-  justify-between
   h-full
   w-full
-  px-5
   relative
 `;
