@@ -1,4 +1,12 @@
-import { Col, Layout, P16, P18, Row, Title } from '@/components';
+import {
+  Col,
+  Layout,
+  P16,
+  P18,
+  Row,
+  ScrollSections,
+  Title,
+} from '@/components';
 import { useAppContext } from '@/contexts';
 import { ROUTES } from '@/routes';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -14,10 +22,42 @@ export function AboutPage(): React.JSX.Element {
 
   // Parallax translation for the title
   const yTitle = useTransform(scrollY, [0, 300], [0, -50]);
+  const yText = useTransform(scrollY, [0, 300], [0, 30]);
+
+  const sections = [
+    {
+      title: t('about.description.part1.part'),
+      content: {
+        title: t('about.description.part1.title'),
+        text: t('about.description.part1.text'),
+      },
+    },
+    {
+      title: t('about.description.part2.part'),
+      content: {
+        title: t('about.description.part2.title'),
+        text: t('about.description.part2.text'),
+      },
+    },
+    {
+      title: t('about.description.part3.part'),
+      content: {
+        title: t('about.description.part3.title'),
+        text: t('about.description.part3.text'),
+      },
+    },
+    {
+      title: t('about.description.part4.part'),
+      content: {
+        title: t('about.description.part4.title'),
+        text: t('about.description.part4.text'),
+      },
+    },
+  ];
 
   return (
-    <Layout className='mt-18 ' isNavClose={false}>
-      <Row className=' w-full gap-1'>
+    <Layout className='' isNavClose={false}>
+      <Row className='absolute top-20 md:top-10 left-5 md:left-10 w-full gap-1'>
         <P16
           onClick={() => {
             setIsTransitionStartOpen(true);
@@ -35,47 +75,56 @@ export function AboutPage(): React.JSX.Element {
         </P16>
       </Row>
       <Main>
-        <Col className='items-start md:px-10 z-10  mt-10 md:mt-20'>
-          <motion.div
-            className='w-full flex flex-row justify-start'
-            style={{ y: yTitle }}
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.3, duration: 0.3 }}
-          >
-            <Title className='md:text-[100px] leading-none text-left md:w-2/3'>
-              {t('position')}
-            </Title>
-          </motion.div>
-          <motion.div
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.7, duration: 0.3 }}
-          >
-            <P16 className='text-foreground/80 mt-2'>{t('about.andMore')}</P16>
-          </motion.div>
-        </Col>
-        <Col className='md:flex-row w-full items-center justify-between gap-5 md:px-10 border-b border-foreground/30 pb-20 md:pb-0'>
-          <motion.div
-            className=' order-2 md:order-1 md:w-1/3'
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.7, duration: 0.3 }}
-          >
-            <P18>{t('about.smallDesc')}</P18>
-          </motion.div>
-          <motion.div
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.5, duration: 0.3 }}
-            className='order-1 md:order-2'
-          >
-            <motion.img
-              src='/images/plage.webP'
-              alt='Noé dos à la plage'
-              className='rounded md:-translate-y-25 -translate-y-15 md:-translate-x-15 translate-x-15 z-0 w-60 md:w-80 h-auto'
-            />
-          </motion.div>
+        <Header>
+          <Col className='z-10'>
+            <motion.div
+              className='w-full flex flex-row justify-start'
+              style={{ y: yTitle }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.3, duration: 0.3 }}
+            >
+              <Title className='md:text-[100px] leading-none text-left md:w-2/3'>
+                {t('position')}
+              </Title>
+            </motion.div>
+            <motion.div
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.7, duration: 0.3 }}
+            >
+              <P16 className='text-foreground/80 mt-2'>
+                {t('about.andMore')}
+              </P16>
+            </motion.div>
+          </Col>
+          <Col className='md:flex-row w-full items-center justify-between gap-5 md:px-10'>
+            <motion.div
+              className=' order-2 md:order-1 md:w-1/3'
+              style={{ y: yText }}
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.7, duration: 0.3 }}
+            >
+              <P18>{t('about.smallDesc')}</P18>
+            </motion.div>
+            <motion.div
+              initial={{ y: 40, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.5, duration: 0.3 }}
+              className='order-1 md:order-2'
+            >
+              <motion.img
+                src='/images/plage.webP'
+                alt='Noé dos à la plage'
+                className='rounded md:-translate-y-25 -translate-y-15 md:-translate-x-15 translate-x-15 z-0 w-60 md:w-80 h-auto'
+              />
+            </motion.div>
+          </Col>
+        </Header>
+        <ScrollSections sections={sections} />
+        <Col className='w-full items-center justify-start border-t border-foreground/30 pt-20 md:pt-10 h-100'>
+          <P16 className='text-foreground/80'>{t('about.credits')}</P16>
         </Col>
       </Main>
     </Layout>
@@ -87,4 +136,16 @@ const Main = tw.div`
   flex-col
   md:px-20
   z-20
+  relative
+`;
+
+const Header = tw(Col)`
+  items-center
+  justify-center
+  h-screen
+  w-full
+  border-b 
+  border-foreground/30
+  md:pt-20
+  md:px-10
 `;

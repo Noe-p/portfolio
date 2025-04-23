@@ -16,7 +16,29 @@
   "about": {
     "andMore": "(but that's not all)",
     "smallDesc": "Hey! I'm Noé, a fullstack developer — but that's not all! I'm passionate about photography, music, and sports. Feel free to scroll down to learn more about me! 👇",
-    "description": "I am a passionate fullstack developer with a strong interest in web development. I enjoy creating dynamic and responsive web applications using modern technologies. My goal is to deliver high-quality solutions that meet the needs of users and businesses."
+    "resume": "I'm a curious and creative fullstack developer with a strong technical background and a genuine passion for visuals, music, and interactive experiences. After a year-long road trip through New Zealand and several years working in a web agency, I'm open to new projects, whether freelance or collaborative. Feel free to reach out if you'd like to build something together.",
+    "description": {
+      "part1": {
+        "part": "About me",
+        "title": "Hey there! I'm Noé",
+        "text": "I just got back from a one-year van road trip across New Zealand! A unique break where I stepped away from development to slow down, explore, meet people, and reconnect with nature. It was also a great opportunity to improve my English (it needed some work, let's be honest) and dive into photography. Over there, it's almost too easy — the landscapes are stunning at every turn."
+      },
+      "part2": {
+        "part": "My studies",
+        "title": "From Math Teacher to Developer",
+        "text": "Before heading to New Zealand, I was studying for a Master's degree in Digital Project Management in Rennes, through a work-study program. I specialized in fullstack development and gained hands-on experience across the entire web production pipeline. Originally, I wanted to become a math teacher. I loved the logic, structure, and elegance of mathematics, but I was looking for something more tangible. Coding became the perfect balance between technical skills, logic, and creativity."
+      },
+      "part3": {
+        "part": "My Experience",
+        "title": "3 Years at Bob le Développeur",
+        "text": "My professional journey took shape at Bob le Développeur, a web agency based in Paris, where I spent three years as a work-study developer. I worked on a variety of projects using stacks like Next.js and Nest.js, explored many different libraries, communicated with clients, and managed projects from start to finish. It was an incredibly valuable experience within a close-knit team."
+      },
+      "part4": {
+        "part": "My Interests",
+        "title": "What Drives Me Outside of Code",
+        "text": "Outside of development, I'm deeply passionate about music and photography. I love composing, playing in bands, exploring sound, and capturing moments through a lens. To me, these creative disciplines blend perfectly with coding — they all require precision, attention to detail, and imagination. And after hours spent in front of a screen, swimming and climbing are my go-to activities to stay balanced and energized."
+      }
+    }
   },
   "nav": {
     "ABOUT": "Who am I?",

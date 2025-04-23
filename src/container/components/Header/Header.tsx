@@ -116,9 +116,7 @@ const HeaderContent = () => {
 
   return (
     <Col>
-      <P16 className='text-foreground md:w-70 mt-4'>
-        {t('about.description')}
-      </P16>
+      <P16 className='text-foreground md:w-70 mt-4'>{t('about.resume')}</P16>
       <Button
         onClick={() => {
           setIsTransitionStartOpen(true);
