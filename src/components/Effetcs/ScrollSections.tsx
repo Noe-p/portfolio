@@ -9,7 +9,7 @@ import {
 } from 'framer-motion';
 import { useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { Col } from '../Helpers';
+import { Col, Row } from '../Helpers';
 import { P18, P24, Title } from '../Texts';
 
 interface ScrollSectionsProps {
@@ -49,31 +49,40 @@ export function ScrollSections(props: ScrollSectionsProps): React.JSX.Element {
     }
   });
 
+  const progress = (currentIndex / (sections.length - 1)) * 100;
+
   return (
     <Wrapper ref={containerRef} className={cn(className)}>
       <FixedContent
         $isFixed={position === 'fixed'}
         $isAbsolute={position === 'absolute'}
       >
-        <AnimatePresence mode='wait'>
-          <Slide
-            key={currentIndex}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.5 }}
-          >
-            <Title>{sections[currentIndex].title}</Title>
-            <Col className='w-full md:w-1/2'>
-              <P24 className='font-bold'>
-                {sections[currentIndex].content.title}
-              </P24>
-              <P18 className='mt-1 md:mt-2'>
-                {sections[currentIndex].content.text}
-              </P18>
-            </Col>
-          </Slide>
-        </AnimatePresence>
+        <Row className='w-full'>
+          <AnimatePresence mode='wait'>
+            <Slide
+              key={currentIndex}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Col className='w-full h-full flex items-start md:items-center justify-center relative'>
+                <LineStepContainer>
+                  <LineStep style={{ width: `${progress}%` }} />
+                </LineStepContainer>
+                <Title>{sections[currentIndex].title}</Title>
+              </Col>
+              <Col className='w-full'>
+                <P24 className='font-bold'>
+                  {sections[currentIndex].content.title}
+                </P24>
+                <P18 className='mt-1 md:mt-2'>
+                  {sections[currentIndex].content.text}
+                </P18>
+              </Col>
+            </Slide>
+          </AnimatePresence>
+        </Row>
       </FixedContent>
 
       <div style={{ height: `${sections.length * 50}vh` }} />
@@ -88,20 +97,42 @@ const Wrapper = tw.section`
 
 const FixedContent = tw.div<{ $isFixed?: boolean; $isAbsolute?: boolean }>`
   ${(p) =>
-    p.$isFixed
-      ? 'fixed md:left-40 md:right-36 left-4 right-5 translate-x-1 top-2'
-      : 'static'}
-  ${(p) => p.$isAbsolute && 'absolute top-[800px] w-full -translate-x-1'}
-   h-screen flex items-center justify-center
+    p.$isFixed ? 'fixed md:left-40 md:right-36 left-4 right-5 top-0' : 'static'}
+  ${(p) => p.$isAbsolute && 'absolute top-[790px] w-full'}
+   h-screen flex flex-col items-center justify-center gap-20
 `;
 
 const Slide = tw(motion.div)`
-  flex 
-  flex-col 
-  md:items-center 
-  md:justify-between justify-center
+  grid
+  grid-cols-1
+  md:grid-cols-2
+  items-center
   h-full 
   w-full
   md:flex-row 
   gap-8 md:gap-4
+`;
+
+const LineStepContainer = tw.div`
+  flex
+  items-center
+  justify-center
+  w-full md:w-2/3
+  h-1
+  bg-foreground/20
+  md:absolute
+  mb-10 md:mb-0
+  rounded
+  top-4
+`;
+
+const LineStep = tw.div`
+  h-1
+  bg-primary
+  absolute
+  top-0
+  left-0
+  transition-all
+  duration-500
+  rounded
 `;

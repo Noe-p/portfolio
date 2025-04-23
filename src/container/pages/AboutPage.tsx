@@ -57,7 +57,7 @@ export function AboutPage(): React.JSX.Element {
 
   return (
     <Layout className='' isNavClose={false}>
-      <Row className='absolute top-20 md:top-10 left-5 md:left-10 w-full gap-1'>
+      <Row className='absolute top-20 md:top-5 left-5 md:left-10 w-full gap-1'>
         <P16
           onClick={() => {
             setIsTransitionStartOpen(true);
