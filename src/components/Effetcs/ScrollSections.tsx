@@ -35,18 +35,21 @@ export function ScrollSections(props: ScrollSectionsProps): React.JSX.Element {
 
   useMotionValueEvent(scrollY, 'change', (y) => {
     const screenHeight = window.innerHeight;
-    setPosition(y > screenHeight ? 'fixed' : 'static');
+    const totalScrollableHeight = sections.length * 0.5 * screenHeight; // même logique que le `div` de fin
 
-    const sectionSpeed = 0.3; // Plus c’est petit, plus les sections changent vite
+    if (y < screenHeight) {
+      setPosition('static');
+    } else if (y >= totalScrollableHeight) {
+      setPosition('absolute');
+    } else {
+      setPosition('fixed');
+    }
+
+    const sectionSpeed = 0.3;
     const index = Math.floor(
       (y - screenHeight) / (screenHeight * sectionSpeed)
     );
     setCurrentIndex(Math.max(0, Math.min(index, sections.length - 1)));
-
-    // Set the absolute position of the last section
-    if (y > 1600) {
-      setPosition('absolute');
-    }
   });
 
   const progress = (currentIndex / (sections.length - 1)) * 100;
@@ -57,6 +60,17 @@ export function ScrollSections(props: ScrollSectionsProps): React.JSX.Element {
         $isFixed={position === 'fixed'}
         $isAbsolute={position === 'absolute'}
       >
+        {position !== 'static' && (
+          <LineStepContainer
+            key='line'
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <LineStep style={{ width: `${progress}%` }} />
+          </LineStepContainer>
+        )}
         <Row className='w-full'>
           <AnimatePresence mode='wait'>
             <Slide
@@ -66,12 +80,8 @@ export function ScrollSections(props: ScrollSectionsProps): React.JSX.Element {
               exit={{ opacity: 0, y: -40 }}
               transition={{ duration: 0.5 }}
             >
-              <Col className='w-full h-full flex items-start md:items-center justify-center relative'>
-                <LineStepContainer>
-                  <LineStep style={{ width: `${progress}%` }} />
-                </LineStepContainer>
-                <Title>{sections[currentIndex].title}</Title>
-              </Col>
+              <Title>{sections[currentIndex].title}</Title>
+
               <Col className='w-full'>
                 <P24 className='font-bold'>
                   {sections[currentIndex].content.title}
@@ -84,7 +94,6 @@ export function ScrollSections(props: ScrollSectionsProps): React.JSX.Element {
           </AnimatePresence>
         </Row>
       </FixedContent>
-
       <div style={{ height: `${sections.length * 50}vh` }} />
     </Wrapper>
   );
@@ -97,7 +106,7 @@ const Wrapper = tw.section`
 
 const FixedContent = tw.div<{ $isFixed?: boolean; $isAbsolute?: boolean }>`
   ${(p) =>
-    p.$isFixed ? 'fixed md:left-40 md:right-36 left-4 right-5 top-0' : 'static'}
+    p.$isFixed ? 'fixed md:left-40 md:right-36 left-5 right-5 top-0' : 'static'}
   ${(p) => p.$isAbsolute && 'absolute top-[790px] w-full'}
    h-screen flex flex-col items-center justify-center gap-20
 `;
@@ -113,17 +122,17 @@ const Slide = tw(motion.div)`
   gap-8 md:gap-4
 `;
 
-const LineStepContainer = tw.div`
+const LineStepContainer = tw(motion.div)`
   flex
   items-center
   justify-center
-  w-full md:w-2/3
+  w-full md:w-1/2
   h-1
   bg-foreground/20
-  md:absolute
-  mb-10 md:mb-0
   rounded
-  top-4
+  top-1/4 
+  -translate-y-7 md:translate-y-0
+  absolute
 `;
 
 const LineStep = tw.div`

@@ -55,6 +55,12 @@ body {
   scroll-behavior: smooth;
   width: 100vw;
   overflow-x: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer et Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .kIQkHS {
@@ -109,4 +115,8 @@ body {
   @media (max-width: 640px) {
     text-shadow: 2px 2px 0 hsl(var(--primary));
   }
+}
+
+.perspective-title {
+  perspective: 1000px;
 }
