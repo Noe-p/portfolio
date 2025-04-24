@@ -25,19 +25,60 @@
         "text": "Je reviens tout juste d’un road-trip d’un an en van à travers la Nouvelle-Zélande ! Une parenthèse unique pendant laquelle j’ai mis le développement un peu de côté pour prendre le temps de vivre, d’explorer, de faire des rencontres, et de me connecter à la nature. J’en ai profité pour améliorer mon anglais (il partait de loin, on va pas se mentir), et surtout pour m’adonner à la photographie. Là-bas, c’est presque triché : les paysages sont spectaculaires à chaque virage."
       },
       "part2": {
-        "part": "Mes études",
+        "part": "études",
         "title": "Du prof de maths au code",
         "text": "Avant de partir en Nouvelle-Zélande, j’étais en Master Manager de Projet Digitaux à Rennes, en alternance. Je me suis spécialisé en développement fullstack, ce qui m’a permis de monter en compétences sur toute la chaîne de production web. À la base, je voulais devenir professeur de mathématiques. J’aimais la logique, la rigueur et l’élégance des maths, mais j’ai vite eu envie de quelque chose de plus concret. Le développement s’est imposé comme un juste équilibre entre technique, logique et créativité."
       },
       "part3": {
-        "part": "Mon expérience",
+        "part": "expérience",
         "title": "3 ans chez Bob le Développeur",
         "text": "Mon aventure professionnelle s’est construite chez Bob Le Développeur, une agence web parisienne où j’ai passé trois années d’alternance. J’y ai travaillé sur une variété de projets avec des stacks comme Next.js et Nest.js, expérimenté de nombreuses librairies, échangé avec les clients et géré des projets du début à la fin. Une expérience ultra formatrice, dans une équipe à taille humaine."
       },
       "part4": {
-        "part": "Mes passions",
+        "part": "passions",
         "title": "Ce qui m’anime en dehors du code",
         "text": "En dehors du développement, j’ai une vraie passion pour la musique et la photo. J’aime composer, jouer en groupe, explorer des sons et capturer des images. Ce sont des disciplines qui, à mes yeux, se marient bien avec le code : elles demandent de la précision, de la créativité et un certain sens du détail. Et pour bouger après de longues heures devant l’écran, je me tourne vers la natation et l’escalade, mes deux sports de cœur."
+      }
+    },
+    "education": {
+      "title": "Parcours",
+      "item1": {
+        "diploma": "Master Manager de Projet Digitaux",
+        "school": "MyDigitalSchool",
+        "location": "Rennes, France",
+        "year": "2021 - 2024",
+        "url": "https://www.mydigitalschool.com/"
+      },
+      "item2": {
+        "diploma": "Licence Pro Développement Web et Mobile",
+        "school": "La Sorbonne",
+        "location": "Paris, France",
+        "year": "2020 - 2021",
+        "url": "https://www.sorbonne-universite.fr/"
+      },
+      "item3": {
+        "diploma": "Licence Mathétique, Physique et Informatique",
+        "school": "Université de Brest",
+        "location": "Brest, France",
+        "year": "2018 - 2020",
+        "url": ""
+      }
+    },
+    "experience": {
+      "title": "Expérience",
+      "item1": {
+        "company": "Bob le Développeur",
+        "location": "Paris, France",
+        "year": "2021 - 2024",
+        "description": "Développeur fullstack en alternance",
+        "url": "https://bobledeveloppeur.com/"
+      },
+      "item2": {
+        "company": "Tildev",
+        "location": "Rennes, France",
+        "year": "2024",
+        "description": "Développeur fullstack",
+        "url": "https://tildev.fr/"
       }
     }
   },

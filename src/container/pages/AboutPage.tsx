@@ -13,6 +13,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import tw from 'tailwind-styled-components';
+import { Education } from '../components';
 
 export function AboutPage(): React.JSX.Element {
   const router = useRouter();
@@ -23,37 +24,6 @@ export function AboutPage(): React.JSX.Element {
   // Parallax translation for the title
   const yTitle = useTransform(scrollY, [0, 300], [0, -50]);
   const yText = useTransform(scrollY, [0, 300], [0, 50]);
-
-  const sections = [
-    {
-      title: t('about.description.part1.part'),
-      content: {
-        title: t('about.description.part1.title'),
-        text: t('about.description.part1.text'),
-      },
-    },
-    {
-      title: t('about.description.part2.part'),
-      content: {
-        title: t('about.description.part2.title'),
-        text: t('about.description.part2.text'),
-      },
-    },
-    {
-      title: t('about.description.part3.part'),
-      content: {
-        title: t('about.description.part3.title'),
-        text: t('about.description.part3.text'),
-      },
-    },
-    {
-      title: t('about.description.part4.part'),
-      content: {
-        title: t('about.description.part4.title'),
-        text: t('about.description.part4.text'),
-      },
-    },
-  ];
 
   return (
     <Layout className='' isNavClose={false}>
@@ -100,7 +70,7 @@ export function AboutPage(): React.JSX.Element {
           </Col>
           <Col className='md:flex-row w-full items-center justify-between gap-5 md:px-10'>
             <motion.div
-              className=' order-2 md:order-1 md:w-1/3'
+              className=' order-2 md:order-1 md:w-1/2 mt-0 md:mt-15'
               style={{ y: yText }}
               initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -122,10 +92,8 @@ export function AboutPage(): React.JSX.Element {
             </motion.div>
           </Col>
         </Header>
-        <ScrollSections sections={sections} />
-        <Col className='w-full items-center justify-start border-t border-foreground/30 pt-20 md:pt-10 h-100'>
-          <P16 className='text-foreground/80'>{t('about.credits')}</P16>
-        </Col>
+        <ScrollSections />
+        <Education />
       </Main>
     </Layout>
   );

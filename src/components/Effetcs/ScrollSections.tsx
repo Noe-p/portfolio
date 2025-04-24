@@ -1,6 +1,5 @@
 'use client';
 
-import { cn } from '@/services/utils';
 import {
   AnimatePresence,
   motion,
@@ -8,28 +7,49 @@ import {
   useScroll,
 } from 'framer-motion';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import tw from 'tailwind-styled-components';
 import { Col, Row } from '../Helpers';
 import { P18, P24, Title } from '../Texts';
 
-interface ScrollSectionsProps {
-  sections: {
-    title: string;
-    content: {
-      title: string;
-      text: string;
-    };
-  }[];
-  className?: string;
-}
-
-export function ScrollSections(props: ScrollSectionsProps): React.JSX.Element {
-  const { sections, className } = props;
+export function ScrollSections(): React.JSX.Element {
   const containerRef = useRef(null);
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [position, setPosition] = useState<'static' | 'absolute' | 'fixed'>(
     'static'
   );
+
+  const sections = [
+    {
+      title: t('about.description.part1.part'),
+      content: {
+        title: t('about.description.part1.title'),
+        text: t('about.description.part1.text'),
+      },
+    },
+    {
+      title: t('about.description.part2.part'),
+      content: {
+        title: t('about.description.part2.title'),
+        text: t('about.description.part2.text'),
+      },
+    },
+    {
+      title: t('about.description.part3.part'),
+      content: {
+        title: t('about.description.part3.title'),
+        text: t('about.description.part3.text'),
+      },
+    },
+    {
+      title: t('about.description.part4.part'),
+      content: {
+        title: t('about.description.part4.title'),
+        text: t('about.description.part4.text'),
+      },
+    },
+  ];
 
   const { scrollY } = useScroll();
 
@@ -55,7 +75,7 @@ export function ScrollSections(props: ScrollSectionsProps): React.JSX.Element {
   const progress = (currentIndex / (sections.length - 1)) * 100;
 
   return (
-    <Wrapper ref={containerRef} className={cn(className)}>
+    <Wrapper ref={containerRef}>
       <FixedContent
         $isFixed={position === 'fixed'}
         $isAbsolute={position === 'absolute'}
@@ -73,23 +93,37 @@ export function ScrollSections(props: ScrollSectionsProps): React.JSX.Element {
         )}
         <Row className='w-full'>
           <AnimatePresence mode='wait'>
-            <Slide
-              key={currentIndex}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -40 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Title>{sections[currentIndex].title}</Title>
+            <Slide key={currentIndex}>
+              <motion.div
+                key={`title-${currentIndex}`}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -40 }}
+                transition={{ duration: 0.5, ease: 'backOut' }}
+              >
+                <Title>{sections[currentIndex].title}</Title>
+              </motion.div>
 
-              <Col className='w-full'>
-                <P24 className='font-bold'>
-                  {sections[currentIndex].content.title}
-                </P24>
-                <P18 className='mt-1 md:mt-2'>
-                  {sections[currentIndex].content.text}
-                </P18>
-              </Col>
+              <motion.div
+                key={`content-${currentIndex}`}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -40 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.2,
+                  ease: 'backOut',
+                }}
+              >
+                <Col className='w-full'>
+                  <P24 className='font-bold'>
+                    {sections[currentIndex].content.title}
+                  </P24>
+                  <P18 className='mt-1 md:mt-2'>
+                    {sections[currentIndex].content.text}
+                  </P18>
+                </Col>
+              </motion.div>
             </Slide>
           </AnimatePresence>
         </Row>
@@ -106,7 +140,7 @@ const Wrapper = tw.section`
 
 const FixedContent = tw.div<{ $isFixed?: boolean; $isAbsolute?: boolean }>`
   ${(p) =>
-    p.$isFixed ? 'fixed md:left-40 md:right-36 left-5 right-5 top-0' : 'static'}
+    p.$isFixed ? 'fixed md:left-40 md:right-40 left-5 right-5 top-0' : 'static'}
   ${(p) => p.$isAbsolute && 'absolute top-[790px] w-full'}
    h-screen flex flex-col items-center justify-center gap-20
 `;
