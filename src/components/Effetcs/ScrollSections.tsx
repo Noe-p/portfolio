@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 'use client';
 
 import { cn } from '@/services/utils';
@@ -74,7 +75,7 @@ export function ScrollSections(): React.JSX.Element {
 
     const scrollStart = isMobile ? screenHeight + 75 : screenHeight;
     const scrollEnd = isMobile
-      ? screenHeight +
+      ? screenHeight -
         75 +
         (sections.length - 1) * SPEED * screenHeight +
         screenHeight * SPEED
@@ -106,7 +107,11 @@ export function ScrollSections(): React.JSX.Element {
       <FixedContent
         style={
           position === 'absolute'
-            ? { top: `${absoluteTop - screenHeight}px` }
+            ? {
+                top: isMobile
+                  ? `${absoluteTop - screenHeight - 75}px`
+                  : `${absoluteTop - screenHeight}px`,
+              }
             : {}
         }
         className={cn(
