@@ -77,7 +77,7 @@ export function ScrollSections(): React.JSX.Element {
       ? screenHeight +
         (sections.length - 1) * SPEED * screenHeight +
         screenHeight * SPEED +
-        400
+        300
       : screenHeight +
         (sections.length - 1) * SPEED * screenHeight +
         screenHeight * SPEED;
