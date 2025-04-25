@@ -1,5 +1,5 @@
 import { Col, P14, P16, P18, P24, Row, RowBetween } from '@/components';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
 
 export function Education(): JSX.Element {
   const { t } = useTranslation();

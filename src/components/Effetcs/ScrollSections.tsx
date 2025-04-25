@@ -1,24 +1,28 @@
-'use client';
-
+import { cn } from '@/services/utils';
 import {
   AnimatePresence,
   motion,
   useMotionValueEvent,
   useScroll,
 } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'next-i18next';
+import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { Col, Row } from '../Helpers';
 import { P18, P24, Title } from '../Texts';
 
+const SPEED = 0.6;
+
 export function ScrollSections(): React.JSX.Element {
   const containerRef = useRef(null);
   const { t } = useTranslation();
+
+  const [screenHeight, setScreenHeight] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [position, setPosition] = useState<'static' | 'absolute' | 'fixed'>(
     'static'
   );
+  const [absoluteTop, setAbsoluteTop] = useState<number>(0);
 
   const sections = [
     {
@@ -53,32 +57,49 @@ export function ScrollSections(): React.JSX.Element {
 
   const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, 'change', (y) => {
-    const screenHeight = window.innerHeight;
-    const totalScrollableHeight = sections.length * 0.5 * screenHeight; // même logique que le `div` de fin
+  useEffect(() => {
+    const height = window.innerHeight;
+    setScreenHeight(height);
+    const scrollEnd = height + (sections.length - 1) * SPEED * height;
+    setAbsoluteTop(scrollEnd);
+  }, [sections.length]);
 
-    if (y < screenHeight) {
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    if (!screenHeight) return;
+
+    const scrollStart = screenHeight;
+    const scrollEnd =
+      screenHeight + (sections.length - 1) * SPEED * screenHeight;
+
+    if (y < scrollStart) {
       setPosition('static');
-    } else if (y >= totalScrollableHeight) {
+    } else if (y >= scrollEnd) {
       setPosition('absolute');
+      setAbsoluteTop(scrollEnd);
     } else {
       setPosition('fixed');
     }
 
-    const sectionSpeed = 0.3;
-    const index = Math.floor(
-      (y - screenHeight) / (screenHeight * sectionSpeed)
-    );
+    const index = Math.floor((y - scrollStart) / (screenHeight * SPEED));
     setCurrentIndex(Math.max(0, Math.min(index, sections.length - 1)));
   });
 
   const progress = (currentIndex / (sections.length - 1)) * 100;
+  const totalScrollHeight = (sections.length - 1) * SPEED * 100 + 100;
 
   return (
     <Wrapper ref={containerRef}>
       <FixedContent
-        $isFixed={position === 'fixed'}
-        $isAbsolute={position === 'absolute'}
+        style={
+          position === 'absolute'
+            ? { top: `${absoluteTop - screenHeight}px` }
+            : {}
+        }
+        className={cn(
+          position === 'fixed' &&
+            'fixed md:left-40 md:right-40 left-5 right-5 top-0',
+          position === 'absolute' && 'absolute w-full'
+        )}
       >
         {position !== 'static' && (
           <LineStepContainer
@@ -109,11 +130,7 @@ export function ScrollSections(): React.JSX.Element {
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -40 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.2,
-                  ease: 'backOut',
-                }}
+                transition={{ duration: 0.5, delay: 0.2, ease: 'backOut' }}
               >
                 <Col className='w-full'>
                   <P24 className='font-bold'>
@@ -128,21 +145,18 @@ export function ScrollSections(): React.JSX.Element {
           </AnimatePresence>
         </Row>
       </FixedContent>
-      <div style={{ height: `${sections.length * 50}vh` }} />
+
+      <div style={{ height: `${totalScrollHeight}vh` }} />
     </Wrapper>
   );
 }
 
-// Tailwind-styled-components
 const Wrapper = tw.section`
   relative
 `;
 
-const FixedContent = tw.div<{ $isFixed?: boolean; $isAbsolute?: boolean }>`
-  ${(p) =>
-    p.$isFixed ? 'fixed md:left-40 md:right-40 left-5 right-5 top-0' : 'static'}
-  ${(p) => p.$isAbsolute && 'absolute top-[790px] w-full'}
-   h-screen flex flex-col items-center justify-center gap-20
+const FixedContent = tw.div`
+  static h-screen flex flex-col items-center justify-center gap-20
 `;
 
 const Slide = tw(motion.div)`
