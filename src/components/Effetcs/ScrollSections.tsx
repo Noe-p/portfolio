@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@/services/utils';
 import {
   AnimatePresence,
@@ -8,6 +10,7 @@ import {
 import { useTranslation } from 'next-i18next';
 import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
+import { useMediaQuery } from 'usehooks-ts';
 import { Col, Row } from '../Helpers';
 import { P18, P24, Title } from '../Texts';
 
@@ -23,6 +26,8 @@ export function ScrollSections(): React.JSX.Element {
     'static'
   );
   const [absoluteTop, setAbsoluteTop] = useState<number>(0);
+  const [progress, setProgress] = useState(0);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const sections = [
     {
@@ -67,9 +72,19 @@ export function ScrollSections(): React.JSX.Element {
   useMotionValueEvent(scrollY, 'change', (y) => {
     if (!screenHeight) return;
 
-    const scrollStart = screenHeight;
-    const scrollEnd =
-      screenHeight + (sections.length - 1) * SPEED * screenHeight;
+    const scrollStart = isMobile ? screenHeight + 50 : screenHeight;
+    const scrollEnd = isMobile
+      ? screenHeight +
+        (sections.length - 1) * SPEED * screenHeight +
+        screenHeight * SPEED +
+        50
+      : screenHeight +
+        (sections.length - 1) * SPEED * screenHeight +
+        screenHeight * SPEED;
+
+    const percent = (y - scrollStart) / (scrollEnd - scrollStart);
+    const clampedPercent = Math.max(0, Math.min(percent, 1));
+    setProgress(clampedPercent);
 
     if (y < scrollStart) {
       setPosition('static');
@@ -84,8 +99,7 @@ export function ScrollSections(): React.JSX.Element {
     setCurrentIndex(Math.max(0, Math.min(index, sections.length - 1)));
   });
 
-  const progress = (currentIndex / (sections.length - 1)) * 100;
-  const totalScrollHeight = (sections.length - 1) * SPEED * 100 + 100;
+  const totalScrollHeight = (sections.length * SPEED + 1) * 100;
 
   return (
     <Wrapper ref={containerRef}>
@@ -109,7 +123,7 @@ export function ScrollSections(): React.JSX.Element {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <LineStep style={{ width: `${progress}%` }} />
+            <LineStep style={{ width: `${progress * 100}%` }} />
           </LineStepContainer>
         )}
         <Row className='w-full'>
@@ -189,7 +203,6 @@ const LineStep = tw.div`
   absolute
   top-0
   left-0
-  transition-all
-  duration-500
   rounded
+  
 `;
