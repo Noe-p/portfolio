@@ -75,9 +75,9 @@ export function ScrollSections(): React.JSX.Element {
     const scrollStart = isMobile ? screenHeight + 75 : screenHeight;
     const scrollEnd = isMobile
       ? screenHeight +
+        75 +
         (sections.length - 1) * SPEED * screenHeight +
-        screenHeight * SPEED -
-        100
+        screenHeight * SPEED
       : screenHeight +
         (sections.length - 1) * SPEED * screenHeight +
         screenHeight * SPEED;
