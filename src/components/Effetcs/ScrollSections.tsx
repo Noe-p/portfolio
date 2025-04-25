@@ -72,12 +72,12 @@ export function ScrollSections(): React.JSX.Element {
   useMotionValueEvent(scrollY, 'change', (y) => {
     if (!screenHeight) return;
 
-    const scrollStart = isMobile ? screenHeight + 50 : screenHeight;
+    const scrollStart = isMobile ? screenHeight + 100 : screenHeight;
     const scrollEnd = isMobile
       ? screenHeight +
         (sections.length - 1) * SPEED * screenHeight +
         screenHeight * SPEED +
-        50
+        150
       : screenHeight +
         (sections.length - 1) * SPEED * screenHeight +
         screenHeight * SPEED;
