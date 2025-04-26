@@ -16,6 +16,7 @@ import { Col, Row } from '../Helpers';
 import { P18, P24, Title } from '../Texts';
 
 const SPEED = 0.6;
+const MOBILE_GAP = 100;
 
 export function ScrollSections(): React.JSX.Element {
   const containerRef = useRef(null);
@@ -73,7 +74,7 @@ export function ScrollSections(): React.JSX.Element {
   useMotionValueEvent(scrollY, 'change', (y) => {
     if (!screenHeight) return;
 
-    const scrollStart = isMobile ? screenHeight + 75 : screenHeight;
+    const scrollStart = isMobile ? screenHeight + MOBILE_GAP : screenHeight;
     const scrollEnd = isMobile
       ? screenHeight +
         300 +
@@ -109,7 +110,7 @@ export function ScrollSections(): React.JSX.Element {
           position === 'absolute'
             ? {
                 top: isMobile
-                  ? `${absoluteTop - screenHeight - 75}px`
+                  ? `${absoluteTop - screenHeight - MOBILE_GAP}px`
                   : `${absoluteTop - screenHeight}px`,
               }
             : {}
