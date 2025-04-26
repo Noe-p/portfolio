@@ -23,7 +23,7 @@ export function AboutPage(): React.JSX.Element {
 
   // Parallax translation for the title
   const yTitle = useTransform(scrollY, [0, 300], [0, -50]);
-  const yText = useTransform(scrollY, [0, 300], [0, 50]);
+  const yText = useTransform(scrollY, [0, 400], [0, 30]);
 
   return (
     <Layout className='' isNavClose={false}>

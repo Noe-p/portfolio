@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 'use client';
 
 import { cn } from '@/services/utils';
@@ -18,18 +17,18 @@ import { P18, P24, Title } from '../Texts';
 const SPEED = 0.6;
 const MOBILE_GAP = 115;
 
-export function ScrollSections(): React.JSX.Element {
-  const containerRef = useRef(null);
+export function ScrollSections() {
   const { t } = useTranslation();
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const [screenHeight, setScreenHeight] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [position, setPosition] = useState<'static' | 'absolute' | 'fixed'>(
     'static'
   );
-  const [absoluteTop, setAbsoluteTop] = useState<number>(0);
+  const [absoluteTop, setAbsoluteTop] = useState(0);
   const [progress, setProgress] = useState(0);
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const { scrollY } = useScroll();
 
   const sections = [
     {
@@ -62,8 +61,6 @@ export function ScrollSections(): React.JSX.Element {
     },
   ];
 
-  const { scrollY } = useScroll();
-
   useEffect(() => {
     const height = window.innerHeight;
     setScreenHeight(height);
@@ -74,15 +71,12 @@ export function ScrollSections(): React.JSX.Element {
   useMotionValueEvent(scrollY, 'change', (y) => {
     if (!screenHeight) return;
 
-    const scrollStart = isMobile ? screenHeight + MOBILE_GAP : screenHeight;
-    const scrollEnd = isMobile
-      ? screenHeight +
-        350 +
-        (sections.length - 1) * SPEED * screenHeight +
-        screenHeight * SPEED
-      : screenHeight +
-        (sections.length - 1) * SPEED * screenHeight +
-        screenHeight * SPEED;
+    const scrollStart = screenHeight + (isMobile ? MOBILE_GAP : 0);
+    const scrollEnd =
+      scrollStart +
+      (sections.length - 1) * SPEED * screenHeight +
+      screenHeight * SPEED +
+      (isMobile ? 350 : 0);
 
     const percent = (y - scrollStart) / (scrollEnd - scrollStart);
     const clampedPercent = Math.max(0, Math.min(percent, 1));
@@ -106,17 +100,12 @@ export function ScrollSections(): React.JSX.Element {
   return (
     <Wrapper ref={containerRef}>
       <FixedContent
-        style={
-          position === 'absolute'
-            ? {
-                top: isMobile
-                  ? `${absoluteTop - screenHeight - MOBILE_GAP}px`
-                  : `${absoluteTop - screenHeight}px`,
-              }
-            : {
-                top: '0px',
-              }
-        }
+        style={{
+          top:
+            position === 'absolute'
+              ? `${absoluteTop - screenHeight - (isMobile ? MOBILE_GAP : 0)}px`
+              : '0px',
+        }}
         className={cn(position === 'fixed' && 'fixed')}
       >
         {position !== 'static' && (
@@ -130,6 +119,7 @@ export function ScrollSections(): React.JSX.Element {
             <LineStep style={{ width: `${progress * 100}%` }} />
           </LineStepContainer>
         )}
+
         <Row className='w-full'>
           <AnimatePresence mode='wait'>
             <Slide key={currentIndex}>
@@ -171,20 +161,25 @@ export function ScrollSections(): React.JSX.Element {
 
 const Wrapper = tw.section`
   relative
+  w-full
+  overflow-x-hidden
+  min-h-[200vh]
 `;
 
 const FixedContent = tw.div`
-  absolute 
-  w-screen 
-  h-screen 
-  flex 
-  flex-col 
-  items-center 
-  justify-center 
+  w-full
+  max-w-[100vw]
+  overflow-hidden
+  absolute
+  h-screen
+  flex
+  flex-col
+  items-center
+  justify-center
   gap-20
-  left-0 top-0 right-0 bottom-0
+  inset-0
   md:px-40
-  
+  px-5
 `;
 
 const Slide = tw(motion.div)`
@@ -192,10 +187,10 @@ const Slide = tw(motion.div)`
   grid-cols-1
   md:grid-cols-2
   items-center
-  h-full 
+  h-full
   w-full
-  md:flex-row 
-  gap-8 md:gap-4
+  gap-8
+  md:gap-4
 `;
 
 const LineStepContainer = tw(motion.div)`
@@ -206,10 +201,11 @@ const LineStepContainer = tw(motion.div)`
   h-1
   bg-foreground/20
   rounded-full
-  top-1/4
-  -translate-y-7 md:translate-y-0
   absolute
+  top-1/4
   w-5/6
+  -translate-y-7
+  md:translate-y-0
 `;
 
 const LineStep = tw.div`
