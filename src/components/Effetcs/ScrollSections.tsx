@@ -106,7 +106,7 @@ export function ScrollSections() {
               ? `${absoluteTop - screenHeight - (isMobile ? MOBILE_GAP : 0)}px`
               : '0px',
         }}
-        className={cn(position === 'fixed' && 'fixed')}
+        className={cn(position === 'fixed' && 'fixed -translate-x-1')}
       >
         {position !== 'static' && (
           <LineStepContainer
