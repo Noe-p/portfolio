@@ -63,7 +63,7 @@ export function Education(): JSX.Element {
       {/* Éducation */}
       <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 pb-20 border-t border-foreground/30 pt-20'>
         <P16>{t('about.education.title')}</P16>
-        <Col className='w-full gap-10 mt-10 md:mt-0'>
+        <Col className='w-full gap-5 md:gap-10 mt-10 md:mt-0'>
           <Item
             title={t('about.education.item1.school')}
             location={t('about.education.item1.location')}
@@ -91,7 +91,7 @@ export function Education(): JSX.Element {
       {/* Expérience */}
       <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 border-t border-b border-foreground/30 pt-20 pb-20'>
         <P16>{t('about.experience.title')}</P16>
-        <Col className='w-full gap-10 mt-10 md:mt-0'>
+        <Col className='w-full gap-5 md:gap-10 mt-10 md:mt-0'>
           <Item
             title={t('about.experience.item1.company')}
             location={t('about.experience.item1.location')}

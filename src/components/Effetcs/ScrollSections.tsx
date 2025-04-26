@@ -183,7 +183,8 @@ const FixedContent = tw.div`
   justify-center 
   gap-20
   left-0 top-0 right-0 bottom-0
-  px-5 md:px-40
+  md:px-40
+  
 `;
 
 const Slide = tw(motion.div)`

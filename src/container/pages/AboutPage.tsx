@@ -92,6 +92,7 @@ export function AboutPage(): React.JSX.Element {
             </motion.div>
           </Col>
         </Header>
+        <div className='border-b border-foreground/30 mx-5 md:mx-40' />
         <ScrollSections />
         <Education />
       </Main>
@@ -111,9 +112,6 @@ const Header = tw(Col)`
   justify-center
   h-screen
   w-full
-  border-b 
-  border-foreground/30
   md:pt-20
-  md:px-10
   px-5 md:px-40
 `;
