@@ -116,7 +116,8 @@ export function ScrollSections(): React.JSX.Element {
             : {}
         }
         className={cn(
-          position === 'fixed' && 'fixed md:left-40 md:right-40 top-0',
+          position === 'fixed' &&
+            'fixed md:left-40 md:right-40 top-0 left-5 right-5',
           position === 'absolute' && 'absolute w-full'
         )}
       >
