@@ -16,7 +16,7 @@ import { Col, Row } from '../Helpers';
 import { P18, P24, Title } from '../Texts';
 
 const SPEED = 0.6;
-const MOBILE_GAP = 110;
+const MOBILE_GAP = 115;
 
 export function ScrollSections(): React.JSX.Element {
   const containerRef = useRef(null);
@@ -116,8 +116,7 @@ export function ScrollSections(): React.JSX.Element {
             : {}
         }
         className={cn(
-          position === 'fixed' &&
-            'fixed md:left-40 md:right-40 left-4 right-4 top-0',
+          position === 'fixed' && 'fixed md:left-40 md:right-40 top-0',
           position === 'absolute' && 'absolute w-full'
         )}
       >
