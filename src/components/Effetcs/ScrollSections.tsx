@@ -16,7 +16,7 @@ import { Col, Row } from '../Helpers';
 import { P18, P24, Title } from '../Texts';
 
 const SPEED = 0.6;
-const MOBILE_GAP = 20;
+const MOBILE_GAP = 50;
 
 export function ScrollSections(): React.JSX.Element {
   const containerRef = useRef(null);
