@@ -77,7 +77,7 @@ export function ScrollSections(): React.JSX.Element {
     const scrollStart = isMobile ? screenHeight + MOBILE_GAP : screenHeight;
     const scrollEnd = isMobile
       ? screenHeight +
-        300 +
+        350 +
         (sections.length - 1) * SPEED * screenHeight +
         screenHeight * SPEED
       : screenHeight +
@@ -117,7 +117,7 @@ export function ScrollSections(): React.JSX.Element {
         }
         className={cn(
           position === 'fixed' &&
-            'fixed md:left-40 md:right-40 top-0 left-4 right-4',
+            'fixed md:left-40 md:right-40 top-0 left-0 right-0 px-5 md:px-0',
           position === 'absolute' && 'absolute w-full'
         )}
       >
@@ -194,13 +194,14 @@ const LineStepContainer = tw(motion.div)`
   flex
   items-center
   justify-center
-  w-full md:w-1/2
+  md:w-1/2
   h-1
   bg-foreground/20
-  rounded
-  top-1/4 
+  rounded-full
+  top-1/4
   -translate-y-7 md:translate-y-0
   absolute
+  w-4/5
 `;
 
 const LineStep = tw.div`
@@ -209,6 +210,5 @@ const LineStep = tw.div`
   absolute
   top-0
   left-0
-  rounded
-  
+  rounded-full
 `;

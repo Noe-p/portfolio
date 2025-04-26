@@ -44,7 +44,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
             key='loader'
             animate={{ y: 0 }}
             exit={{ y: '-100%' }}
-            transition={{ duration: 0.6, ease: 'backInOut' }}
+            transition={{ duration: 0.6, ease: 'easeInOut' }}
           >
             <TransitionPage isEnd={true} />
           </MotionLoaderPage>
