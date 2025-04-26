@@ -109,7 +109,6 @@ const Page = tw.div`
   z-10
   min-h-screen
   mb-5 md:mb-20
-  px-5 md:px-20
 `;
 
 const MotionLoaderPage = tw(motion.div)`

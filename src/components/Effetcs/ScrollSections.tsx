@@ -113,13 +113,11 @@ export function ScrollSections(): React.JSX.Element {
                   ? `${absoluteTop - screenHeight - MOBILE_GAP}px`
                   : `${absoluteTop - screenHeight}px`,
               }
-            : {}
+            : {
+                top: '0px',
+              }
         }
-        className={cn(
-          position === 'fixed' &&
-            'fixed md:left-40 md:right-40 top-0 left-0 right-0 px-5 md:px-0',
-          position === 'absolute' && 'absolute w-full'
-        )}
+        className={cn(position === 'fixed' && 'fixed')}
       >
         {position !== 'static' && (
           <LineStepContainer
@@ -176,7 +174,16 @@ const Wrapper = tw.section`
 `;
 
 const FixedContent = tw.div`
-  static h-screen flex flex-col items-center justify-center gap-20
+  absolute 
+  w-screen 
+  h-screen 
+  flex 
+  flex-col 
+  items-center 
+  justify-center 
+  gap-20
+  left-0 top-0 right-0 bottom-0
+  px-5 md:px-40
 `;
 
 const Slide = tw(motion.div)`
@@ -201,7 +208,7 @@ const LineStepContainer = tw(motion.div)`
   top-1/4
   -translate-y-7 md:translate-y-0
   absolute
-  w-4/5
+  w-5/6
 `;
 
 const LineStep = tw.div`

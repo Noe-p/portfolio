@@ -102,7 +102,6 @@ export function AboutPage(): React.JSX.Element {
 const Main = tw.div`
   flex
   flex-col
-  md:px-20
   z-20
   relative
 `;
@@ -116,4 +115,5 @@ const Header = tw(Col)`
   border-foreground/30
   md:pt-20
   md:px-10
+  px-5 md:px-40
 `;
