@@ -198,13 +198,14 @@ const LineStepContainer = tw(motion.div)`
   items-center
   justify-center
   h-1
+  absolute
   bg-foreground/20
   rounded-full
-  absolute
   top-1/4
-  md:w-100 w-2/3
   -translate-y-7
   md:translate-y-0
+  left-1/2 -translate-x-1/2 w-11/12
+  md:w-100
 `;
 
 const LineStep = tw.div`

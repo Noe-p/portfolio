@@ -139,5 +139,5 @@ const HeaderContent = () => {
 
 // Styled components
 const Main = tw.div`
-  flex flex-col w-screen items-center z-30
+  flex flex-col w-screen items-center z-10
 `;
