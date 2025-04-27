@@ -106,7 +106,10 @@ export function ScrollSections() {
               ? `${absoluteTop - screenHeight - (isMobile ? MOBILE_GAP : 0)}px`
               : '0px',
         }}
-        className={cn(position === 'fixed' && 'fixed -translate-x-1')}
+        className={cn(
+          position === 'fixed' &&
+            'fixed -translate-x-1 md:-translate-x-0 px-5 md:px-40'
+        )}
       >
         {position !== 'static' && (
           <LineStepContainer
@@ -163,7 +166,6 @@ const Wrapper = tw.section`
   relative
   w-full
   overflow-x-hidden
-  min-h-[200vh]
 `;
 
 const FixedContent = tw.div`
@@ -178,8 +180,6 @@ const FixedContent = tw.div`
   justify-center
   gap-20
   inset-0
-  md:px-40
-  px-5
 `;
 
 const Slide = tw(motion.div)`
@@ -197,13 +197,12 @@ const LineStepContainer = tw(motion.div)`
   flex
   items-center
   justify-center
-  md:w-1/2
   h-1
   bg-foreground/20
   rounded-full
   absolute
   top-1/4
-  w-5/6
+  md:w-100 w-2/3
   -translate-y-7
   md:translate-y-0
 `;

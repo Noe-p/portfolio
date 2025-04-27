@@ -1,10 +1,15 @@
 {
   "language": "en",
   "generics": {
-    "copyright": "Copyright © 2024 - Portfolio - All rights reserved",
-    "designed": "Designed and developed by ",
+    "copyright": "Copyright © 2025 - All rights reserved",
+    "designed": "Design & Development by",
     "seeMore": "See more",
-    "aboutMe": "Get to know me"
+    "aboutMe": "Get to know me",
+    "email": "Email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "instagram": "Instagram",
+    "sendEmail": "Send me an email"
   },
   "home": {
     "name": "home"
@@ -21,7 +26,7 @@
       "part1": {
         "part": "About me",
         "title": "Hey there! I'm Noé",
-        "text": "I just got back from a one-year van road trip across New Zealand! A unique break where I stepped away from development to slow down, and explore, meet people. It was also a great opportunity to improve my English (it needed some work, let's be honest) and dive into photography. Over there, it's almost too easy — the landscapes are stunning at every turn."
+        "text": "I just got back from a one-year van road trip across New Zealand! A break where I stepped away from development to slow down, and explore, meet people. It was also a great opportunity to improve my English (it needed some work, let's be honest) and dive into photography. Over there, it's almost too easy — the landscapes are stunning at every turn."
       },
       "part2": {
         "part": "education",
@@ -46,21 +51,21 @@
         "school": "MyDigitalSchool",
         "location": "Rennes, France",
         "year": "2021 - 2024",
-        "url": "https://www.mydigitalschool.com/"
+        "url": "https://www.mydigitalschool.com/mba-architecte-web?gbraid=0AAAAADeG2Or05k3VXUnTbJV1OwelARs8U"
       },
       "item2": {
         "diploma": "Bachelor's Degree in Web and Mobile Development",
         "school": "La Sorbonne",
         "location": "Paris, France",
         "year": "2020 - 2021",
-        "url": "https://www.sorbonne-universite.fr/"
+        "url": "https://www.cfa-sciences.fr/licence-professionnelle-3eme-annee-metiers-de-linformatique-applications-web-parcours-projet-web-et"
       },
       "item3": {
         "diploma": "Bachelor's Degree in Mathematics, Physics, and Computer Science",
         "school": "University of Brest",
         "location": "Brest, France",
         "year": "2018 - 2020",
-        "url": ""
+        "url": "https://formations.univ-brest.fr/fr/index/sciences-technologies-sante-STS/licence-XA/portail-mpmei-mathematiques-physique-maths-economie-informatique-KYA659ZE/l1-portail-mpmei-KYEFYSRJ.html"
       }
     },
     "experience": {
@@ -70,7 +75,7 @@
         "location": "Paris, France",
         "year": "2021 - 2024",
         "description": "Fullstack Developer (apprenticeship)",
-        "url": "https://bobledeveloppeur.com/"
+        "url": "https://www.bob-le-developpeur.com/"
       },
       "item2": {
         "company": "Tildev",
@@ -117,5 +122,8 @@
     "fact28": "There are more stars in the universe than grains of sand on Earth.",
     "fact29": "The Eiffel Tower grows taller in summer.",
     "fact30": "Birds are the closest living relatives of dinosaurs."
+  },
+  "footer": {
+    "title": "Thinking about building something together? Don't hesitate to get in touch!"
   }
 }

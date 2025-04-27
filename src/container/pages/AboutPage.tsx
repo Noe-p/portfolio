@@ -27,7 +27,7 @@ export function AboutPage(): React.JSX.Element {
 
   return (
     <Layout className='' isNavClose={false}>
-      <Row className='absolute top-20 md:top-5 left-5 md:left-10 w-full gap-1'>
+      <Row className='absolute z-30 top-20 md:top-5 left-5 md:left-10 w-full gap-1'>
         <P16
           onClick={() => {
             setIsTransitionStartOpen(true);
@@ -92,7 +92,7 @@ export function AboutPage(): React.JSX.Element {
             </motion.div>
           </Col>
         </Header>
-        <div className='border-b border-foreground/30 mx-5 md:mx-40' />
+        <div className='border-b border-foreground/30' />
         <ScrollSections />
         <Education />
       </Main>
@@ -113,5 +113,4 @@ const Header = tw(Col)`
   h-screen
   w-full
   md:pt-20
-  px-5 md:px-40
 `;

@@ -1,6 +1,8 @@
 import { Col, P14, P16, P18, P24, Row, RowBetween } from '@/components';
+import { EducationData, ExperienceData } from '@/types';
 import { ExternalLinkIcon } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
+import { useMediaQuery } from 'usehooks-ts';
 
 type ItemProps = {
   title: string;
@@ -11,6 +13,8 @@ type ItemProps = {
 };
 
 function Item({ title, location, subtitle, year, url }: ItemProps) {
+  const isMobile = useMediaQuery('(max-width: 768px)');
+
   const content = (
     <RowBetween className='items-start w-full group hover:cursor-pointer transition duration-300'>
       <Col>
@@ -33,7 +37,7 @@ function Item({ title, location, subtitle, year, url }: ItemProps) {
         </P16>
         {url && (
           <ExternalLinkIcon
-            size={16}
+            size={isMobile ? 13 : 16}
             className='text-foreground group-hover:text-primary transition duration-300'
           />
         )}
@@ -58,54 +62,52 @@ function Item({ title, location, subtitle, year, url }: ItemProps) {
 export function Education(): JSX.Element {
   const { t } = useTranslation();
 
+  const educationItems = t('about.education', {
+    returnObjects: true,
+  }) as EducationData;
+  const experienceItems = t('about.experience', {
+    returnObjects: true,
+  }) as ExperienceData;
+
+  const educationList = Object.entries(educationItems)
+    .filter(([key]) => key.startsWith('item'))
+    .map(([, value]) => ({
+      title: value.school,
+      location: value.location,
+      subtitle: value.diploma,
+      year: value.year,
+      url: value.url,
+    }));
+
+  const experienceList = Object.entries(experienceItems)
+    .filter(([key]) => key.startsWith('item'))
+    .map(([, value]) => ({
+      title: value.company,
+      location: value.location,
+      subtitle: value.description,
+      year: value.year,
+      url: value.url,
+    }));
+
   return (
-    <Col className='w-full items-center justify-start px-5 md:px-40 mb-20'>
+    <Col className='w-full items-center justify-start'>
       {/* Éducation */}
       <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 pb-20 border-t border-foreground/30 pt-20'>
-        <P16>{t('about.education.title')}</P16>
+        <P16>{educationItems.title}</P16>
         <Col className='w-full gap-5 md:gap-10 mt-10 md:mt-0'>
-          <Item
-            title={t('about.education.item1.school')}
-            location={t('about.education.item1.location')}
-            subtitle={t('about.education.item1.diploma')}
-            year={t('about.education.item1.year')}
-            url={t('about.education.item1.url')}
-          />
-          <Item
-            title={t('about.education.item2.school')}
-            location={t('about.education.item2.location')}
-            subtitle={t('about.education.item2.diploma')}
-            year={t('about.education.item2.year')}
-            url={t('about.education.item2.url')}
-          />
-          <Item
-            title={t('about.education.item3.school')}
-            location={t('about.education.item3.location')}
-            subtitle={t('about.education.item3.diploma')}
-            year={t('about.education.item3.year')}
-            url={t('about.education.item3.url')}
-          />
+          {educationList.map((item, index) => (
+            <Item key={index} {...item} />
+          ))}
         </Col>
       </RowBetween>
 
       {/* Expérience */}
       <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 border-t border-b border-foreground/30 pt-20 pb-20'>
-        <P16>{t('about.experience.title')}</P16>
+        <P16>{experienceItems.title}</P16>
         <Col className='w-full gap-5 md:gap-10 mt-10 md:mt-0'>
-          <Item
-            title={t('about.experience.item1.company')}
-            location={t('about.experience.item1.location')}
-            subtitle={t('about.experience.item1.description')}
-            year={t('about.experience.item1.year')}
-            url={t('about.experience.item1.url')}
-          />
-          <Item
-            title={t('about.experience.item2.company')}
-            location={t('about.experience.item2.location')}
-            subtitle={t('about.experience.item2.description')}
-            year={t('about.experience.item2.year')}
-            url={t('about.experience.item2.url')}
-          />
+          {experienceList.map((item, index) => (
+            <Item key={index} {...item} />
+          ))}
         </Col>
       </RowBetween>
     </Col>

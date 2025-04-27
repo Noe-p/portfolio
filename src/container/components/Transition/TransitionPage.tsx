@@ -48,4 +48,5 @@ const Main = tw(Col)`
   h-full
   w-full
   relative
+  shadow-lg
 `;

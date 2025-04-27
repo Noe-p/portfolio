@@ -52,7 +52,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
       </AnimatePresence>
       <div
         key={i18n.language}
-        className='relative overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove'
+        className='relative px-5 md:px-40 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove'
         style={
           {
             '--x': '30%',
@@ -70,7 +70,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
           />
         </div>
         <NavBar />
-        <Row className='hidden md:flex absolute z-10 gap-1 top-5 right-10'>
+        <Row className='hidden md:flex absolute z-40 gap-1 top-5 right-10'>
           <P16
             className={cn(
               'cursor-pointer transition duration-300',

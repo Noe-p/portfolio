@@ -1,4 +1,4 @@
-import { Col, H1, P16, P24, Row, RowBetween, Title } from '@/components';
+import { Col, H2, P14, P16, P24, Row, RowBetween, Title } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts';
 import { ROUTES } from '@/routes';
@@ -24,10 +24,11 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
       </Col>
 
       {/* Mobile version */}
-      <Col className='flex md:hidden items-center px-5'>
-        <P24 className='mt-7 text-foreground/70 normal-case'>
-          {t('position')}
-        </P24>
+      <Col className='flex md:hidden mt-7 items-center px-5'>
+        <Col className='w-full items-center'>
+          <P24 className='text-foreground/80 normal-case'>{t('position')}</P24>
+          <P14 className='text-foreground/80 normal-case'>{'Freelance'}</P14>
+        </Col>
         <Row className='justify-left relative w-full mt-7'>
           <HeaderImage />
           <Macaron className='w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28' />
@@ -39,8 +40,11 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
       <RowBetween className='mt-15 justify-around w-full hidden md:flex'>
         <Macaron className='top-10 left-20' />
         <Col>
-          <H1 className='text-foreground/70 normal-case'>{t('position')}</H1>
-          <RowBetween className='mt-5 gap-5'>
+          <RowBetween>
+            <H2 className='text-foreground/80 normal-case'>{t('position')}</H2>
+            <H2 className='text-foreground/80 normal-case'>{'Freelance'}</H2>
+          </RowBetween>
+          <RowBetween className='mt-8 gap-5'>
             <HeaderImage />
             <HeaderContent />
           </RowBetween>
@@ -95,7 +99,7 @@ const HeaderImage = () => {
   });
 
   // Déplacement vertical doux selon le scroll
-  const y = useTransform(scrollY, [0, 300], [0, -20]);
+  const y = useTransform(scrollY, [0, 300], [0, -10]);
 
   return (
     <motion.img
@@ -135,5 +139,5 @@ const HeaderContent = () => {
 
 // Styled components
 const Main = tw.div`
-  flex flex-col w-screen items-center z-0
+  flex flex-col w-screen items-center z-30
 `;
