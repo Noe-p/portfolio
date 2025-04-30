@@ -1,19 +1,11 @@
-import {
-  Col,
-  Layout,
-  P16,
-  P18,
-  Row,
-  ScrollSections,
-  Title,
-} from '@/components';
+import { Col, Layout, P16, P18, Row, Title } from '@/components';
 import { useAppContext } from '@/contexts';
 import { ROUTES } from '@/routes';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import tw from 'tailwind-styled-components';
-import { Education } from '../components';
+import { Education, FullPageScroll } from '../components';
 
 export function AboutPage(): React.JSX.Element {
   const router = useRouter();
@@ -93,7 +85,7 @@ export function AboutPage(): React.JSX.Element {
           </Col>
         </Header>
         <div className='border-b border-foreground/30' />
-        <ScrollSections />
+        <FullPageScroll />
         <Education />
       </Main>
     </Layout>
