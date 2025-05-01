@@ -218,7 +218,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
 }
 
 const Main = tw.div<{ $isOpen?: boolean }>`
-  fixed top-3 left-1/2 -translate-x-1/2 z-30 w-11/12 md:w-1/3 flex flex-col justify-between
+  fixed top-3 left-1/2 -translate-x-1/2 z-50 w-11/12 md:w-1/3 flex flex-col justify-between
   border shadow-md rounded transition-all duration-500 overflow-hidden p-2
   ${(p) =>
     p.$isOpen
