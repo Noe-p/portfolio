@@ -96,7 +96,7 @@ export function AboutPage(): React.JSX.Element {
             </div>
             <div className='order-1 md:order-2'>
               <Image
-                src='/images/noe_plage.webP'
+                src='/images/noe_plage.webp'
                 alt='Noé dos à la plage'
                 className='rounded md:-translate-y-25 -translate-y-15 md:-translate-x-15 translate-x-15 z-0 w-60 md:w-80 h-auto'
                 width={320}
