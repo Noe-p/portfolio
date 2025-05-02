@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next';
 import React from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
+import { NavKeys } from '../Navbar';
 
 interface FooterProps {
   className?: string;
@@ -33,7 +34,7 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
   const { t } = useTranslation();
 
   return (
-    <Main className={className}>
+    <Main className={className} id={NavKeys.CONTACT}>
       <Macaron />
 
       <RowBetween className='flex-col md:flex-row w-full mt-15'>

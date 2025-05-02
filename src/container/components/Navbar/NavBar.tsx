@@ -11,6 +11,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
+import { setTimeout } from 'timers';
 import { useMediaQuery, useScrollLock } from 'usehooks-ts';
 
 interface NavBarProps {
@@ -108,6 +109,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
         });
       }, 700);
     }
+
     nav === NavKeys.MENU ? setIsMenuOpen(!isMenuOpen) : setIsMenuOpen(false);
   };
 

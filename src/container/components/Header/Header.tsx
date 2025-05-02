@@ -50,7 +50,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
 
   return (
     <Main className={className} id={NavKeys.HOME}>
-      <Col className='items-center gap-3 mt-25 md:mt-30 w-full'>
+      <Col className='items-center mt-25 md:mt-30 w-full'>
         <div
           className={cn(
             'transition-all duration-500 ease-out',
@@ -67,7 +67,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
               'text-[40px] md:text-[75px] leading-none transition-all duration-500 ease-out',
               isVisible
                 ? 'opacity-100 -translate-x-5 md:-translate-x-10'
-                : 'opacity-0 -translate-x-10'
+                : 'opacity-0 -translate-x-10 md:-translate-x-20'
             )}
           >
             {'PHILIPPE'}
