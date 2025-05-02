@@ -1,6 +1,8 @@
+'use client';
+
 import { TransitionPage } from '@/container/components';
-import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState } from 'react';
+import { getGsap } from '@/services/registerGsap';
+import React, { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 interface State {
@@ -8,7 +10,7 @@ interface State {
 }
 
 interface Context extends State {
-  setIsTransitionStartOpen: (isTransitionStartOpen: boolean) => void;
+  setIsTransitionStartOpen: (open: boolean) => void;
 }
 
 const defaultState: State = {
@@ -23,17 +25,10 @@ const AppContext = React.createContext<Context>({
 });
 
 function useAppProvider() {
-  const [isLoaded, setIsLoaded] = useState<State['isTransitionStartOpen']>(
-    defaultState.isTransitionStartOpen
-  );
-
+  const [isLoaded, setIsLoaded] = useState(defaultState.isTransitionStartOpen);
   return {
     isTransitionStartOpen: isLoaded,
-    setIsTransitionStartOpen: (
-      isTransitionStartOpen: State['isTransitionStartOpen']
-    ) => {
-      setIsLoaded(isTransitionStartOpen);
-    },
+    setIsTransitionStartOpen: setIsLoaded,
   };
 }
 
@@ -42,30 +37,60 @@ interface Props {
 }
 
 export const AppProvider = ({ children }: Props): JSX.Element => {
-  const context: Context = useAppProvider();
+  const context = useAppProvider();
+  const [isVisible, setIsVisible] = useState(false);
+  const loaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const animate = async () => {
+      const { gsap } = await getGsap();
+
+      if (context.isTransitionStartOpen) {
+        // 1. Rendre visible d'abord
+        setIsVisible(true);
+      } else {
+        // 4. Animer vers le haut et masquer
+        if (!loaderRef.current) return;
+        gsap.to(loaderRef.current, {
+          y: '-100%',
+          duration: 0.7,
+          ease: 'power2.inOut',
+          onComplete: () => setIsVisible(false),
+        });
+      }
+    };
+
+    animate();
+  }, [context.isTransitionStartOpen]);
+
+  // 2. Nouvelle animation après montage réel de loaderRef
+  useEffect(() => {
+    const playEnter = async () => {
+      if (!loaderRef.current || !context.isTransitionStartOpen) return;
+      const { gsap } = await getGsap();
+      gsap.fromTo(
+        loaderRef.current,
+        { y: '100%' },
+        { y: '0%', duration: 0.7, ease: 'power2.inOut' }
+      );
+    };
+
+    playEnter();
+  }, [isVisible]);
 
   return (
     <AppContext.Provider value={context}>
-      <AnimatePresence>
-        {context.isTransitionStartOpen && (
-          <MotionLoaderPage
-            key='loader'
-            initial={{ y: '100%' }} // Animation du bas vers le haut
-            animate={{ y: 0 }}
-            exit={{ y: '-100%' }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
-          >
-            <TransitionPage />
-          </MotionLoaderPage>
-        )}
-      </AnimatePresence>
+      {isVisible && (
+        <LoaderPage ref={loaderRef}>
+          <TransitionPage />
+        </LoaderPage>
+      )}
       {children}
     </AppContext.Provider>
   );
 };
 
-// LoaderPage animé
-const MotionLoaderPage = tw(motion.div)`
+const LoaderPage = tw.div`
   fixed
   top-0
   left-0

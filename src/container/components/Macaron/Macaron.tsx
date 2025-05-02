@@ -1,12 +1,9 @@
-import { useScroll } from '@/hooks/useScroll'; // ajuste le chemin si besoin
-import {
-  motion,
-  useAnimationFrame,
-  useMotionValue,
-  useSpring,
-} from 'framer-motion';
+'use client';
+
+import { useScroll } from '@/hooks/useScroll';
+import { getGsap } from '@/services/registerGsap';
 import { useTranslation } from 'next-i18next';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import tw from 'tailwind-styled-components';
 
 interface MacaronProps {
@@ -14,37 +11,51 @@ interface MacaronProps {
 }
 
 export function Macaron({ className }: MacaronProps): JSX.Element {
-  const { scrollY } = useScroll();
   const { t } = useTranslation();
-  const lastScrollY = useRef(scrollY);
-  const rotation = useMotionValue(0);
-  const smoothRotation = useSpring(rotation, { damping: 20, stiffness: 120 });
+  const svgRef = useRef<SVGSVGElement>(null);
+  const rotation = useRef<number>(0);
+  const lastScrollY = useRef<number>(0);
+  const raf = useRef<number>();
 
-  const lastTime = useRef<number | null>(null);
+  const { scrollY } = useScroll();
 
-  useAnimationFrame((time) => {
-    if (lastTime.current === null) {
-      lastTime.current = time;
-      return;
-    }
+  useEffect(() => {
+    const animate = async () => {
+      const { gsap } = await getGsap();
 
-    const scrollDiff = scrollY - lastScrollY.current;
-    lastScrollY.current = scrollY;
+      const tick = () => {
+        const scrollDiff = scrollY - lastScrollY.current;
+        lastScrollY.current = scrollY;
 
-    const rotationSpeed = scrollDiff * 0.5; // Ajuste le facteur selon l'effet voulu
+        const rotationSpeed = scrollDiff !== 0 ? scrollDiff * 0.5 : 0.1;
+        rotation.current += rotationSpeed;
 
-    if (scrollDiff !== 0) {
-      rotation.set(rotation.get() + rotationSpeed);
-    } else {
-      rotation.set(rotation.get() + 0.1); // Rotation douce automatique
-    }
-  });
+        if (svgRef.current) {
+          gsap.to(svgRef.current, {
+            rotate: rotation.current,
+            duration: 0.7,
+            ease: 'power2.out',
+          });
+        }
+
+        raf.current = requestAnimationFrame(tick);
+      };
+
+      raf.current = requestAnimationFrame(tick);
+    };
+
+    animate();
+
+    return () => {
+      if (raf.current) cancelAnimationFrame(raf.current);
+    };
+  }, [scrollY]);
 
   return (
     <Wrapper className={className}>
-      <motion.svg
+      <svg
+        ref={svgRef}
         viewBox='0 0 100 100'
-        style={{ rotate: smoothRotation }}
         className='w-full h-full fill-current text-foreground origin-center'
       >
         <defs>
@@ -68,10 +79,10 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
             {t('status')}
             <tspan className='text-green-400'>{' • '}</tspan>
             {t('status')}
-            <tspan className='text-green-400'>{' • '}</tspan>
+            <tspan className='text-green-400'>{' •\u00A0'}</tspan>
           </textPath>
         </text>
-      </motion.svg>
+      </svg>
 
       <div className='absolute inset-0 flex items-center justify-center'>
         <div className='w-4 h-4 bg-primary rounded-full' />

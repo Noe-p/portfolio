@@ -1,7 +1,8 @@
-import { DRAWER_VARIANTS } from '@/services/motion';
-import { AnimatePresence, motion } from 'framer-motion';
+'use client';
+
+import { getGsap, GSAPContext } from '@/services/registerGsap';
 import { X } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { Button } from '../ui/button';
 import {
@@ -23,10 +24,12 @@ interface ImageFullScreenProps {
 }
 
 export function ImageFullScreen(props: ImageFullScreenProps): JSX.Element {
-  const { images, onClose, isOpen, startIndex, onLastImageShown } = props;
+  const { images, onClose, isOpen, startIndex = 0, onLastImageShown } = props;
 
   const [api, setApi] = useState<CarouselApi>();
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(startIndex);
+  const mainRef = useRef<HTMLDivElement>(null);
+  const closeBtnRef = useRef<HTMLDivElement>(null);
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(api);
 
@@ -37,65 +40,100 @@ export function ImageFullScreen(props: ImageFullScreenProps): JSX.Element {
   useEffect(() => {
     if (!api) return;
     setCurrentIndex(api.selectedScrollSnap());
-    api.on('select', () => {
+    const onSelect = () => {
       setCurrentIndex(api.selectedScrollSnap());
-    });
+    };
+    api.on('select', onSelect);
     return () => {
-      api.off('select', () => {
-        setCurrentIndex(api.selectedScrollSnap());
-      });
+      api.off('select', onSelect);
     };
   }, [api]);
 
   useEffect(() => {
-    isLastImageShown(currentIndex) && onLastImageShown?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex]);
+    if (isLastImageShown(currentIndex)) {
+      onLastImageShown?.();
+    }
+  }, [currentIndex, onLastImageShown]);
+
+  useEffect(() => {
+    let ctx: GSAPContext | undefined;
+    let gsap: typeof import('gsap').gsap;
+
+    const animateIn = async () => {
+      const gsapModule = await getGsap();
+      gsap = gsapModule.gsap;
+      ctx = gsap.context(() => {
+        gsap.fromTo(
+          mainRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.5, ease: 'power2.out' }
+        );
+        gsap.fromTo(
+          closeBtnRef.current,
+          { scale: 0 },
+          { scale: 1, duration: 0.3, ease: 'back.out(1.7)' }
+        );
+      }, mainRef);
+    };
+
+    const animateOut = async () => {
+      const gsapModule = await getGsap();
+      gsap = gsapModule.gsap;
+      await gsap.to(mainRef.current, {
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.in',
+      });
+    };
+
+    if (isOpen) {
+      animateIn();
+    } else {
+      animateOut();
+    }
+
+    return () => {
+      ctx?.revert();
+    };
+  }, [isOpen]);
+
+  if (!isOpen) return <></>;
 
   return (
-    <AnimatePresence initial={false} mode='wait'>
-      {isOpen && (
-        <Main
-          variants={DRAWER_VARIANTS['bottom']}
-          initial='hidden'
-          animate='visible'
-          exit='exit'
-        >
-          <CloseButton variant='outline' onClick={onClose}>
-            <X />
-          </CloseButton>
-          <Carousel
-            opts={{
-              startIndex,
-            }}
-            setApi={setApi}
-          >
-            <CarouselContent>
-              {images.map((image) => (
-                <CarouselItem key={image}>
-                  <Image src={image} alt='image' />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            {/* <CarouselPrevious className='left-10' /> */}
-            {/* <CarouselNext className='right-10' /> */}
-          </Carousel>
-          <Pagination>
-            {scrollSnaps.map((snap, index) => (
-              <PaginationDot
-                key={snap}
-                onClick={() => onDotButtonClick(index)}
-                $isActive={index === selectedIndex}
-              />
-            ))}
-          </Pagination>
-        </Main>
-      )}
-    </AnimatePresence>
+    <Main ref={mainRef}>
+      <div ref={closeBtnRef}>
+        <CloseButton variant='outline' onClick={onClose}>
+          <X />
+        </CloseButton>
+      </div>
+      <Carousel
+        opts={{
+          startIndex,
+        }}
+        setApi={setApi}
+      >
+        <CarouselContent>
+          {images.map((image) => (
+            <CarouselItem key={image}>
+              <Image src={image} alt='image' />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
+      <Pagination>
+        {scrollSnaps.map((snap, index) => (
+          <PaginationDot
+            key={snap}
+            onClick={() => onDotButtonClick(index)}
+            $isActive={index === selectedIndex}
+          />
+        ))}
+      </Pagination>
+    </Main>
   );
 }
 
-const Main = tw(motion.div)`
+const Main = tw.div`
   fixed
   top-0
   left-0
@@ -106,6 +144,7 @@ const Main = tw(motion.div)`
   justify-center
   items-center
   backdrop-blur-sm
+  bg-black/80
 `;
 
 const CloseButton = tw(Button)`

@@ -3,9 +3,9 @@
 import { Col, Row } from '@/components';
 import { H3, P14, P16 } from '@/components/Texts';
 import { useAppContext } from '@/contexts';
+import { getGsap } from '@/services/registerGsap';
 import { cn, scrollTo } from '@/services/utils';
 import { MEDIA_QUERIES } from '@/static/constants';
-import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
@@ -40,6 +40,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
   const { lock, unlock } = useScrollLock({ autoLock: false });
   const { setIsTransitionStartOpen } = useAppContext();
   const menuRef = useRef<HTMLDivElement>(null);
+  const menuItemsRefs = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
     isMobile && (isMenuOpen ? lock() : unlock());
@@ -123,13 +124,11 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
   };
 
   const MenuItem = ({ menu, index }: { menu: MenuKeys; index: number }) => (
-    <motion.div
-      key={menu}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ delay: 0.05 * index, duration: 0.3 }}
-      className='flex flex-col items-start w-2/3 md:w-1/2'
+    <div
+      ref={(el) => {
+        if (el) menuItemsRefs.current[index] = el;
+      }}
+      className='flex flex-col items-start w-2/3 md:w-1/2 opacity-0'
     >
       <Row className='w-full items-center gap-3'>
         <ChevronRight
@@ -165,8 +164,34 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
           </P14>
         </Col>
       </Row>
-    </motion.div>
+    </div>
   );
+
+  useEffect(() => {
+    const initializeAnimations = async () => {
+      const { gsap } = await getGsap();
+
+      if (isMenuContentVisible) {
+        gsap.fromTo(
+          menuItemsRefs.current,
+          { opacity: 0, y: 10 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.3,
+            stagger: 0.05,
+            ease: 'power2.out',
+          }
+        );
+      }
+    };
+
+    initializeAnimations();
+
+    return () => {
+      // Nettoyage des animations si nécessaire
+    };
+  }, [isMenuContentVisible]);
 
   return (
     <Main ref={menuRef} className={cn(className)} $isOpen={isMenuOpen}>
@@ -183,12 +208,10 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
       </Row>
 
       <Col className='justify-center h-full gap-3 items-center flex-col'>
-        <AnimatePresence>
-          {isMenuContentVisible &&
-            Object.values(MenuKeys).map((menu, index) => (
-              <MenuItem key={menu} menu={menu} index={index} />
-            ))}
-        </AnimatePresence>
+        {isMenuContentVisible &&
+          Object.values(MenuKeys).map((menu, index) => (
+            <MenuItem key={menu} menu={menu} index={index} />
+          ))}
       </Col>
 
       {isMenuContentVisible && (
@@ -218,7 +241,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
 }
 
 const Main = tw.div<{ $isOpen?: boolean }>`
-  fixed top-3 left-1/2 -translate-x-1/2 z-30 w-11/12 md:w-1/3 flex flex-col justify-between
+  fixed top-3 left-1/2 -translate-x-1/2 z-40 w-11/12 md:w-1/3 flex flex-col justify-between
   border shadow-md rounded transition-all duration-500 overflow-hidden p-2
   ${(p) =>
     p.$isOpen

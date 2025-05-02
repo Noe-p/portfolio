@@ -1,10 +1,10 @@
 import { Footer, NavBar, TransitionPage } from '@/container/components';
 import { useAppContext } from '@/contexts';
+import { getGsap } from '@/services/registerGsap';
 import { cn } from '@/services/utils';
-import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { Row } from '../Helpers';
 import { P16 } from '../Texts';
@@ -17,19 +17,35 @@ interface LayoutProps {
 
 export function Layout(props: LayoutProps): React.JSX.Element {
   const { children, className } = props;
-  const { i18n } = useTranslation(); // Le hook pour la traduction
-  const router = useRouter(); // Hook pour router
-  const [isTransitionEndOpen, setIsTransitionEndOpen] = useState(true);
+  const { i18n } = useTranslation();
+  const router = useRouter();
   const { setIsTransitionStartOpen } = useAppContext();
 
+  const [isVisible, setIsVisible] = useState(true);
+  const loaderRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    setIsTransitionStartOpen(false);
+    const animateOut = async () => {
+      const { gsap } = await getGsap();
+
+      if (!loaderRef.current) return;
+
+      await gsap.to(loaderRef.current, {
+        y: '-100%',
+        duration: 0.7,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          setIsVisible(false);
+        },
+      });
+    };
+
     setTimeout(() => {
-      setIsTransitionEndOpen(false);
-    }, 700);
+      setIsTransitionStartOpen(false); // transition d'entrée finie
+      animateOut(); // on lance la sortie GSAP
+    }, 300); // timing à ajuster selon le rendu souhaité
   }, []);
 
-  // Fonction pour changer la langue
   const handleLanguageChange = (lang: string) => {
     const { pathname, query } = router;
     router.push({ pathname, query }, undefined, { locale: lang });
@@ -38,18 +54,12 @@ export function Layout(props: LayoutProps): React.JSX.Element {
 
   return (
     <>
-      <AnimatePresence>
-        {isTransitionEndOpen && (
-          <MotionLoaderPage
-            key='loader'
-            animate={{ y: 0 }}
-            exit={{ y: '-100%' }}
-            transition={{ duration: 0.6, ease: 'easeInOut' }}
-          >
-            <TransitionPage isEnd={true} />
-          </MotionLoaderPage>
-        )}
-      </AnimatePresence>
+      {isVisible && (
+        <LoaderPage ref={loaderRef}>
+          <TransitionPage isEnd={true} />
+        </LoaderPage>
+      )}
+
       <div
         key={i18n.language}
         className='relative px-5 md:px-40 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove'
@@ -69,7 +79,9 @@ export function Layout(props: LayoutProps): React.JSX.Element {
             )}
           />
         </div>
+
         <NavBar />
+
         <Row className='hidden md:flex absolute z-40 gap-1 top-5 right-10'>
           <P16
             className={cn(
@@ -95,6 +107,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
             {'En'}
           </P16>
         </Row>
+
         <Page className={className}>{children}</Page>
         <Footer />
       </div>
@@ -111,7 +124,7 @@ const Page = tw.div`
   mb-5 md:mb-20
 `;
 
-const MotionLoaderPage = tw(motion.div)`
+const LoaderPage = tw.div`
   fixed
   top-0
   left-0
