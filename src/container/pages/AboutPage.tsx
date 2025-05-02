@@ -127,8 +127,8 @@ const Main = tw.div`
 
 const Header = tw(Col)`
   items-center
-  justify-center
+  md:justify-center justify-start
   h-screen
   w-full
-  pt-22 md:pt-20
+  pt-30 md:pt-20
 `;
