@@ -98,7 +98,10 @@ export function AboutPage(): React.JSX.Element {
               <Image
                 src='/images/noe_plage.webp'
                 alt='Noé dos à la plage'
-                className='rounded md:-translate-y-25 -translate-y-15 md:-translate-x-15 translate-x-15 z-0 w-60 md:w-80 h-auto'
+                className={cn(
+                  'rounded md:-translate-y-25 -translate-y-15 md:-translate-x-15 translate-x-15 z-0 w-60 md:w-80 h-auto transition-all duration-500 ease-out',
+                  isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                )}
                 width={320}
                 height={240}
                 priority

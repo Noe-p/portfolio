@@ -61,16 +61,15 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
             {'Noé'}
           </Title>
         </div>
-        <div
-          ref={philRef}
-          className={cn(
-            'transition-all duration-500 ease-out',
-            isVisible
-              ? 'opacity-100 -translate-x-0'
-              : 'opacity-0 -translate-x-10'
-          )}
-        >
-          <Title className='text-[40px] md:text-[75px] leading-none'>
+        <div ref={philRef}>
+          <Title
+            className={cn(
+              'text-[40px] md:text-[75px] leading-none transition-all duration-500 ease-out',
+              isVisible
+                ? 'opacity-100 -translate-x-5 md:-translate-x-10'
+                : 'opacity-0 -translate-x-10'
+            )}
+          >
             {'PHILIPPE'}
           </Title>
         </div>

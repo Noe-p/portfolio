@@ -26,6 +26,13 @@ export function TransitionPage({
 
   return (
     <Main className={className}>
+      <div
+        className={cn(
+          'absolute w-[100vw] h-[100vw] -left-1/2 rounded-full blur-3xl opacity-10',
+          'md:bg-[radial-gradient(circle,rgba(136,58,255,0.8)_0%,transparent_70%)]',
+          'bg-[radial-gradient(circle,rgba(136,58,255,1)_0%,transparent_100%)]'
+        )}
+      />
       <Content
         className={cn(
           isVisible ? 'opacity-100' : 'opacity-0',
@@ -52,6 +59,8 @@ const Main = tw(Col)`
   h-full
   w-full
   shadow-lg
+  relative
+  overflow-hidden
 `;
 
 const Content = tw.div`
