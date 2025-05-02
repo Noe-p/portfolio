@@ -10,3 +10,5 @@ export async function getGsap() {
 
   return { gsap, ScrollTrigger };
 }
+
+export type GSAPContext = ReturnType<typeof import('gsap').gsap.context>;
