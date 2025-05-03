@@ -8,38 +8,70 @@ interface SeoHeadProps {
   keywords?: string;
 }
 
-export function SeoHead(props: SeoHeadProps): React.JSX.Element {
+export function SeoHead({
+  title: customTitle,
+  description: customDesc,
+  keywords: customKeywords,
+}: SeoHeadProps): React.JSX.Element {
   const { asPath } = useRouter();
-  const { t } = useTranslation();
+  const { t } = useTranslation('metas');
 
-  const canonicalUrl = asPath.split('?')[0];
+  const canonicalPath = asPath.split('?')[0];
+  const domain = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, '');
+  const url = `${domain}${canonicalPath === '/' ? '' : canonicalPath}`;
+  const image = `${domain}/og.jpg`;
 
-  const title = props.title ?? t('metas:home.title');
-  const description = props.description ?? t('metas:home.description');
-  const domain = `${process.env.NEXT_PUBLIC_APP_URL}`;
-  const url = `${domain}/${canonicalUrl === '/' ? '' : canonicalUrl}`;
-  const image = `${process.env.NEXT_PUBLIC_APP_URL}/og.png`;
-  const manifest = '/manifest.json';
+  // fallbacks from i18n
+  const title =
+    customTitle ??
+    t(`${canonicalPath === '/' ? 'home' : canonicalPath.slice(1)}.title`);
+  const description =
+    customDesc ??
+    t(`${canonicalPath === '/' ? 'home' : canonicalPath.slice(1)}.description`);
+  const keywords =
+    customKeywords ??
+    t(`${canonicalPath === '/' ? 'home' : canonicalPath.slice(1)}.keywords`);
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    url: domain,
+    name: title,
+    author: {
+      '@type': 'Person',
+      name: 'Noé Philippe',
+    },
+  };
 
   return (
     <Head>
+      {/* Basic tags */}
       <title>{title}</title>
       <meta name='description' content={description} />
-      <meta name='keywords' content={props.keywords} />
+      {keywords && <meta name='keywords' content={keywords} />}
+      <meta name='robots' content='index, follow' />
+      <link rel='canonical' href={url} />
 
+      {/* Open Graph */}
+      <meta property='og:site_name' content='Noé Philippe Portfolio' />
       <meta property='og:url' content={url} />
       <meta property='og:type' content='website' />
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
       <meta property='og:image' content={image} />
 
+      {/* Twitter Card */}
       <meta name='twitter:card' content='summary_large_image' />
-      <meta property='twitter:domain' content={domain} />
-      <meta property='twitter:url' content={url} />
+      <meta
+        name='twitter:domain'
+        content={domain?.replace(/^https?:\/\//, '')}
+      />
+      <meta name='twitter:url' content={url} />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={image} />
 
+      {/* Google Analytics */}
       <script
         async
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
@@ -50,16 +82,23 @@ export function SeoHead(props: SeoHeadProps): React.JSX.Element {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-              page_path: window.location.pathname,
-            });
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', { page_path: window.location.pathname });
           `,
         }}
       />
 
-      <link rel='manifest' href={manifest} />
-      <meta name='viewport' content='width=device-width' />
+      {/* Manifest */}
+      <link rel='manifest' href='/manifest.json' />
+      <meta name='viewport' content='width=device-width, initial-scale=1' />
       <meta name='theme-color' content='hsl(0 3% 14%)' />
+
+      {/* JSON-LD structured data */}
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd),
+        }}
+      />
     </Head>
   );
 }

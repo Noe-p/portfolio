@@ -1,7 +1,12 @@
 {
   "home": {
-    "title": "Home",
-    "description": "Welcome to the home page",
-    "keywords": "home, page, welcome"
+    "title": "Noé Philippe — Développeur Fullstack Freelance",
+    "description": "Développeur fullstack freelance basé à Quimper et disponible à distance. Découvre le portfolio de Noé Philippe et imaginons ensemble ton prochain projet web.",
+    "keywords": "Noé Philippe, développeur fullstack freelance, portfolio, développement web, photographie, musique, sport"
+  },
+  "about": {
+    "title": "À propos de Noé Philippe — Développeur Fullstack Freelance",
+    "description": "Découvre le parcours de Noé Philippe, développeur fullstack freelance basé à Quimper, entre un road-trip d’un an en van en Nouvelle-Zélande et des projets mêlant code, photo et musique.",
+    "keywords": "Noé Philippe, développeur fullstack, freelance, Nouvelle-Zélande, photographie, musique, sport, parcours développeur"
   }
 }
