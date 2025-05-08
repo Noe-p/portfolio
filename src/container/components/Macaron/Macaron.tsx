@@ -74,7 +74,7 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
             startOffset='0'
             method='align'
             spacing='50'
-            lengthAdjust='spacing'
+            lengthAdjust='spacingAndGlyphs'
           >
             {t('status')}
             <tspan className='text-green-400'>{' • '}</tspan>

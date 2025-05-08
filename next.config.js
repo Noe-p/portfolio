@@ -13,7 +13,7 @@ const settings = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'www.jambase.com',
+        hostname: 'www.noe-philippe.com',
         port: '',
         pathname: '/**',
       },
