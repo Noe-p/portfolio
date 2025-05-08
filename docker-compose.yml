@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: ${GHCR_REGISTRY}/${OWNER_LC}/monapp:${SHA}
+    image: ${GHCR_REGISTRY}/${OWNER_LC}/portfolio:${SHA}
     restart: always
     ports:
       - '3003:3000'
