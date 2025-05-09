@@ -71,22 +71,6 @@ export function SeoHead({
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={image} />
 
-      {/* Google Analytics */}
-      <script
-        async
-        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-      />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', { page_path: window.location.pathname });
-          `,
-        }}
-      />
-
       {/* Manifest */}
       <link rel='manifest' href='/manifest.json' />
       <meta name='viewport' content='width=device-width, initial-scale=1' />

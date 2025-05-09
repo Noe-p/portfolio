@@ -1,7 +1,5 @@
 import { SeoHead } from '@/container/components';
-import { pageview } from '@/services/analytics';
-import { useRouter } from 'next/router';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 
 interface SeoPageProps {
   children?: ReactNode;
@@ -12,18 +10,6 @@ interface SeoPageProps {
 
 export function SeoPage(props: SeoPageProps): JSX.Element {
   const { children, title, description, keywords } = props;
-
-  const router = useRouter();
-
-  useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      pageview(url);
-    };
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
 
   return (
     <>
