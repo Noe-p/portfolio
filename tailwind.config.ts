@@ -1,6 +1,5 @@
 import type { Config } from 'tailwindcss';
 /** @type {import('tailwindcss').Config} */
-const defaultTheme = require('tailwindcss/defaultTheme');
 
 const sizesList = {
   2: '0.5rem',
@@ -163,8 +162,7 @@ const config = {
         ...sizesList,
       },
       fontFamily: {
-        sans: ['Luciole', 'Outfit', ...defaultTheme.fontFamily.sans],
-        title: ['Dela', 'DM', 'Outfit', ...defaultTheme.fontFamily.sans],
+        title: ['Dela'],
         mono: ['Monda', 'Roboto Mono', 'monospace'],
       },
       colors: {

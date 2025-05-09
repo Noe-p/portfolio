@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 /* FONTS */
-@import url('../../../public/fonts/Luciole/stylesheet.css');
-@import url('../../../public/fonts/Outfit/stylesheet.css');
-@import url('../../../public/fonts/DM/stylesheet.css');
 @import url('../../../public/fonts/Monda/stylesheet.css');
 @import url('../../../public/fonts/Dela_Gothic_One/stylesheet.css');
 
