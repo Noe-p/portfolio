@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
-import { Loader2 } from 'lucide-react';
+'use client';
 import { cn } from '@/services/utils';
+import { Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 interface LoaderProps {
   className?: string;

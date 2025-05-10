@@ -1,9 +1,10 @@
+'use client';
 import { Footer, NavBar, TransitionPage } from '@/container/components';
 import { useAppContext } from '@/contexts';
 import { getGsap } from '@/services/registerGsap';
 import { cn } from '@/services/utils';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
+import { useLocale } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { Row } from '../Helpers';
@@ -17,9 +18,11 @@ interface LayoutProps {
 
 export function Layout(props: LayoutProps): React.JSX.Element {
   const { children, className } = props;
-  const { i18n } = useTranslation();
+  const locale = useLocale();
+
   const router = useRouter();
   const { setIsTransitionStartOpen } = useAppContext();
+  const pathname = usePathname();
 
   const [isVisible, setIsVisible] = useState(true);
   const loaderRef = useRef<HTMLDivElement>(null);
@@ -47,28 +50,18 @@ export function Layout(props: LayoutProps): React.JSX.Element {
   }, []);
 
   const handleLanguageChange = (lang: string) => {
-    const { pathname, query } = router;
-    router.push({ pathname, query }, undefined, { locale: lang });
-    i18n.changeLanguage(lang);
+    const segments = pathname.split('/');
+    segments[1] = lang;
+    const newPath = segments.join('/') || `/${lang}`;
+    router.push(newPath);
   };
 
   return (
     <>
-      {isVisible && (
-        <LoaderPage ref={loaderRef}>
-          <TransitionPage isEnd={true} />
-        </LoaderPage>
-      )}
-
       <div
-        key={i18n.language}
+        key={locale}
         className='relative px-5 md:px-40 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove'
-        style={
-          {
-            '--x': '30%',
-            '--y': '30%',
-          } as React.CSSProperties
-        }
+        style={{ '--x': '30%', '--y': '30%' } as React.CSSProperties}
       >
         <div className='absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0'>
           <div
@@ -79,33 +72,31 @@ export function Layout(props: LayoutProps): React.JSX.Element {
             )}
           />
         </div>
+        {isVisible && (
+          <LoaderPage ref={loaderRef}>
+            <TransitionPage isEnd={true} />
+          </LoaderPage>
+        )}
 
         <NavBar />
 
         <Row className='hidden md:flex absolute z-40 gap-1 top-5 right-10'>
-          <P16
-            className={cn(
-              'cursor-pointer transition duration-300',
-              i18n.language === 'fr'
-                ? 'text-primary'
-                : 'text-foreground/50 hover:text-foreground/80'
-            )}
-            onClick={() => handleLanguageChange('fr')}
-          >
-            {'Fr'}
-          </P16>
-          <P16 className='text-foreground/50'>{'/'}</P16>
-          <P16
-            className={cn(
-              'cursor-pointer transition duration-300',
-              i18n.language === 'en'
-                ? 'text-primary'
-                : 'text-foreground/50 hover:text-foreground/80'
-            )}
-            onClick={() => handleLanguageChange('en')}
-          >
-            {'En'}
-          </P16>
+          {['Fr', 'En'].map((lang) => (
+            <React.Fragment key={lang}>
+              <P16
+                className={cn(
+                  'cursor-pointer transition duration-300',
+                  locale === lang.toLocaleLowerCase()
+                    ? 'text-primary'
+                    : 'text-foreground/50 hover:text-foreground/80'
+                )}
+                onClick={() => handleLanguageChange(lang.toLocaleLowerCase())}
+              >
+                {lang}
+              </P16>
+              {lang === 'Fr' && <P16 className='text-foreground/50'>{'/'}</P16>}
+            </React.Fragment>
+          ))}
         </Row>
 
         <Page className={className}>{children}</Page>

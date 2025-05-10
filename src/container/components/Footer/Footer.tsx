@@ -1,7 +1,9 @@
+'use client';
 import { Col, Row, RowBetween } from '@/components';
 import { H2, P14, P16 } from '@/components/Texts';
 import { Button } from '@/components/ui/button';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
+
 import React from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
@@ -31,7 +33,7 @@ const socialLinks = [
 ];
 
 export function Footer({ className }: FooterProps): React.JSX.Element {
-  const { t } = useTranslation();
+  const t = useTranslations('common');
 
   return (
     <Main className={className} id={NavKeys.CONTACT}>
@@ -89,7 +91,7 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
         {/* Right */}
         <Col className='w-full items-end'>
           <Row className='gap-1'>
-            <span className='text-green-400 leading-none'>•</span>
+            <span className='text-green-400 leading-none'>{'•'}</span>
             <P14 className='text-primary leading-none'>{t('status')}</P14>
           </Row>
           <P14 className='text-end'>{t('position')}</P14>

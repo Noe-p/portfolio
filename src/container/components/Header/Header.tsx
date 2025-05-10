@@ -6,9 +6,9 @@ import { useAppContext } from '@/contexts';
 import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
 import { cn } from '@/services/utils';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
@@ -19,7 +19,7 @@ interface HeaderProps {
 }
 
 export function Header({ className }: HeaderProps): React.JSX.Element {
-  const { t } = useTranslation();
+  const t = useTranslations('common');
   const router = useRouter();
   const { setIsTransitionStartOpen } = useAppContext();
   const [isVisible, setIsVisible] = useState(false);

@@ -1,7 +1,7 @@
+'use client';
 import { Col, P14, P16, P18, P24, Row, RowBetween } from '@/components';
-import { EducationData, ExperienceData } from '@/types';
 import { ExternalLinkIcon } from 'lucide-react';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useMediaQuery } from 'usehooks-ts';
 
 type ItemProps = {
@@ -60,53 +60,81 @@ function Item({ title, location, subtitle, year, url }: ItemProps) {
 }
 
 export function Education(): JSX.Element {
-  const { t } = useTranslation();
+  const t = useTranslations('common');
 
-  const educationItems = t('about.education', {
-    returnObjects: true,
-  }) as EducationData;
-  const experienceItems = t('about.experience', {
-    returnObjects: true,
-  }) as ExperienceData;
+  const educationList = [
+    {
+      title: t('about.education.item1.diploma'),
+      location: t('about.education.item1.location'),
+      subtitle: t('about.education.item1.diploma'),
+      year: t('about.education.item1.year'),
+      url: t('about.education.item1.url'),
+    },
+    {
+      title: t('about.education.item2.diploma'),
+      location: t('about.education.item2.location'),
+      subtitle: t('about.education.item2.diploma'),
+      year: t('about.education.item2.year'),
+      url: t('about.education.item2.url'),
+    },
+    {
+      title: t('about.education.item3.diploma'),
+      location: t('about.education.item3.location'),
+      subtitle: t('about.education.item3.diploma'),
+      year: t('about.education.item3.year'),
+      url: t('about.education.item3.url'),
+    },
+  ];
 
-  const educationList = Object.entries(educationItems)
-    .filter(([key]) => key.startsWith('item'))
-    .map(([, value]) => ({
-      title: value.school,
-      location: value.location,
-      subtitle: value.diploma,
-      year: value.year,
-      url: value.url,
-    }));
-
-  const experienceList = Object.entries(experienceItems)
-    .filter(([key]) => key.startsWith('item'))
-    .map(([, value]) => ({
-      title: value.company,
-      location: value.location,
-      subtitle: value.description,
-      year: value.year,
-      url: value.url,
-    }));
+  const experienceList = [
+    {
+      title: t('about.experience.item1.company'),
+      location: t('about.experience.item1.location'),
+      subtitle: t('about.experience.item1.description'),
+      year: t('about.experience.item1.year'),
+      url: t('about.experience.item1.url'),
+    },
+    {
+      title: t('about.experience.item2.company'),
+      location: t('about.experience.item2.location'),
+      subtitle: t('about.experience.item2.description'),
+      year: t('about.experience.item2.year'),
+      url: t('about.experience.item2.url'),
+    },
+  ];
 
   return (
     <Col className='w-full items-center justify-start'>
       {/* Éducation */}
       <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 pb-20 border-t border-foreground/30 pt-20'>
-        <P16>{educationItems.title}</P16>
+        <P16>{t('about.education.title')}</P16>
         <Col className='w-full gap-5 md:gap-10 mt-10 md:mt-0'>
-          {educationList.map((item, index) => (
-            <Item key={index} {...item} />
+          {educationList.map((education, i) => (
+            <Item
+              key={i}
+              title={education.title}
+              location={education.location}
+              subtitle={education.subtitle}
+              year={education.year}
+              url={education.year}
+            />
           ))}
         </Col>
       </RowBetween>
 
       {/* Expérience */}
       <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 border-t border-b border-foreground/30 pt-20 pb-20'>
-        <P16>{experienceItems.title}</P16>
+        <P16>{t('about.experience.title')}</P16>
         <Col className='w-full gap-5 md:gap-10 mt-10 md:mt-0'>
-          {experienceList.map((item, index) => (
-            <Item key={index} {...item} />
+          {experienceList.map((experience, i) => (
+            <Item
+              key={i}
+              title={experience.title}
+              location={experience.location}
+              subtitle={experience.subtitle}
+              year={experience.year}
+              url={experience.year}
+            />
           ))}
         </Col>
       </RowBetween>

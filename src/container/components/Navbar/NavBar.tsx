@@ -3,15 +3,15 @@
 import { Col, Row } from '@/components';
 import { H3, P14, P16 } from '@/components/Texts';
 import { useAppContext } from '@/contexts';
+import { useRedirectTo } from '@/hooks/redirectTo';
 import { getGsap } from '@/services/registerGsap';
 import { cn, scrollTo } from '@/services/utils';
 import { MEDIA_QUERIES } from '@/static/constants';
 import { ChevronRight } from 'lucide-react';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
+import { useLocale, useTranslations } from 'next-intl';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { setTimeout } from 'timers';
 import { useMediaQuery, useScrollLock } from 'usehooks-ts';
 
 interface NavBarProps {
@@ -31,8 +31,11 @@ export enum MenuKeys {
 }
 
 export function NavBar({ className }: NavBarProps): React.JSX.Element {
-  const { t, i18n } = useTranslation();
-  const router = useRouter();
+  const tEnums = useTranslations('enums');
+  const tCommons = useTranslations('common');
+  const locale = useLocale(); // 'en' ou 'fr'
+  const router = useRouter(); // navigation avec locale
+  const pathname = usePathname(); // chemin sans préfixe
   const isMobile = useMediaQuery(MEDIA_QUERIES.SM);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuContentVisible, setIsMenuContentVisible] = useState(false);
@@ -42,87 +45,67 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
   const { setIsTransitionStartOpen } = useAppContext();
   const menuRef = useRef<HTMLDivElement>(null);
   const menuItemsRefs = useRef<HTMLDivElement[]>([]);
+  const redirectTo = useRedirectTo();
 
+  // verrouillage du scroll mobile
   useEffect(() => {
-    isMobile && (isMenuOpen ? lock() : unlock());
-  }, [isMenuOpen, isMobile]);
+    isMobile ? (isMenuOpen ? lock() : unlock()) : undefined;
+  }, [isMenuOpen, isMobile, lock, unlock]);
 
+  // fermer le menu si clic à l'extérieur
   useEffect(() => {
-    const handleClickOutside = (e: Event) => {
+    const handler = (e: Event) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setIsMenuOpen(false);
       }
     };
-
     document[isMenuOpen ? 'addEventListener' : 'removeEventListener'](
       'mousedown',
-      handleClickOutside
+      handler
     );
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handler);
   }, [isMenuOpen]);
 
+  // apparition progressive du contenu du menu
   useEffect(() => {
-    let timeout: NodeJS.Timeout | null = null;
-
+    let timeout: NodeJS.Timeout;
     if (isMenuOpen) {
-      timeout = setTimeout(() => {
-        setIsMenuContentVisible(true);
-      }, 500);
+      timeout = setTimeout(() => setIsMenuContentVisible(true), 500);
     } else {
       setIsMenuContentVisible(false);
     }
-
-    return () => {
-      if (timeout) clearTimeout(timeout);
-    };
+    return () => clearTimeout(timeout);
   }, [isMenuOpen]);
 
+  // suivi de la route active
   useEffect(() => {
-    const actualRoute = router.asPath.split('/')[1].toUpperCase();
-    if (Object.values(MenuKeys).includes(actualRoute as MenuKeys)) {
-      setSelectedMenuItem(actualRoute);
+    const seg = pathname.split('/')[1].toUpperCase();
+    if (Object.values(MenuKeys).includes(seg as MenuKeys)) {
+      setSelectedMenuItem(seg);
       setSelectedNavItem(null);
     } else {
-      setSelectedNavItem(actualRoute);
+      setSelectedNavItem(seg);
       setSelectedMenuItem(null);
     }
-  }, [router]);
+  }, [pathname]);
 
+  // changement de langue
   const handleLanguageChange = (lang: string) => {
-    const { pathname, query } = router;
-    router.push({ pathname, query }, undefined, { locale: lang });
-    i18n.changeLanguage(lang);
+    const segments = pathname.split('/');
+    segments[1] = lang;
+    const newPath = segments.join('/') || `/${lang}`;
+    router.push(newPath);
   };
 
-  const handleNavClick = (nav: NavKeys) => {
+  // clic sur un item de navigation principale
+  const handleNavClick = (nav: string) => {
     setSelectedNavItem(nav);
     scrollTo(nav);
-    if (nav === NavKeys.HOME && router.asPath !== '/') {
+    if (nav === NavKeys.HOME && pathname !== '/') {
       setIsTransitionStartOpen(true);
-      setTimeout(() => {
-        router.push({
-          pathname: '/',
-          query: router.query,
-        });
-      }, 700);
+      setTimeout(() => router.push(`/${locale}/`), 700);
     }
-
-    nav === NavKeys.MENU ? setIsMenuOpen(!isMenuOpen) : setIsMenuOpen(false);
-  };
-
-  const redirectTo = (path: MenuKeys) => {
-    if (router.asPath !== `/${path.toLowerCase()}`) {
-      setIsTransitionStartOpen(true);
-      setTimeout(() => {
-        router.push({
-          pathname: `/${path.toLowerCase()}`,
-          query: router.query,
-        });
-      }, 700);
-    }
+    setIsMenuOpen(nav === NavKeys.MENU ? !isMenuOpen : false);
   };
 
   const MenuItem = ({ menu, index }: { menu: MenuKeys; index: number }) => (
@@ -154,7 +137,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
               selectedMenuItem === menu && 'text-foreground'
             )}
           >
-            {t(`enums:${menu}`)}
+            {tEnums(menu)}
           </H3>
           <P14
             className={cn(
@@ -162,37 +145,24 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
               selectedMenuItem === menu && 'text-primary'
             )}
           >
-            {t(`nav.${menu}`)}
+            {tCommons(`nav.${menu}`)}
           </P14>
         </Col>
       </Row>
     </div>
   );
 
+  // animations GSAP du menu
   useEffect(() => {
-    const initializeAnimations = async () => {
+    if (!isMenuContentVisible) return;
+    (async () => {
       const { gsap } = await getGsap();
-
-      if (isMenuContentVisible) {
-        gsap.fromTo(
-          menuItemsRefs.current,
-          { opacity: 0, y: 10 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.3,
-            stagger: 0.05,
-            ease: 'power2.out',
-          }
-        );
-      }
-    };
-
-    initializeAnimations();
-
-    return () => {
-      // Nettoyage des animations si nécessaire
-    };
+      gsap.fromTo(
+        menuItemsRefs.current,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }
+      );
+    })();
   }, [isMenuContentVisible]);
 
   return (
@@ -204,15 +174,15 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
             onClick={() => handleNavClick(nav)}
             $selected={selectedNavItem === nav}
           >
-            {t(`enums:${nav}`)}
+            {tEnums(nav)}
           </TextNavigation>
         ))}
       </Row>
 
       <Col className='justify-center h-full gap-3 items-center flex-col'>
         {isMenuContentVisible &&
-          Object.values(MenuKeys).map((menu, index) => (
-            <MenuItem key={menu} menu={menu} index={index} />
+          Object.values(MenuKeys).map((menu, i) => (
+            <MenuItem key={menu} menu={menu} index={i} />
           ))}
       </Col>
 
@@ -223,17 +193,15 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
               <P16
                 className={cn(
                   'cursor-pointer transition duration-300',
-                  i18n.language === lang.toLowerCase()
+                  locale === lang.toLocaleLowerCase()
                     ? 'text-primary'
                     : 'text-foreground/50 hover:text-foreground/80'
                 )}
-                onClick={() => handleLanguageChange(lang.toLowerCase())}
+                onClick={() => handleLanguageChange(lang.toLocaleLowerCase())}
               >
                 {lang}
               </P16>
-              {lang.toLowerCase() === 'fr' && (
-                <P16 className='text-foreground/50'>{'/'}</P16>
-              )}
+              {lang === 'Fr' && <P16 className='text-foreground/50'>{'/'}</P16>}
             </React.Fragment>
           ))}
         </Row>

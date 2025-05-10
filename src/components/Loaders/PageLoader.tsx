@@ -1,6 +1,7 @@
-import tw from 'tailwind-styled-components';
+'use client';
+import { useEffect, useState } from 'react';
 import { InfinitySpin } from 'react-loader-spinner';
-import { useState, useEffect } from 'react';
+import tw from 'tailwind-styled-components';
 import { ColCenter } from '../Helpers';
 import { P24 } from '../Texts';
 

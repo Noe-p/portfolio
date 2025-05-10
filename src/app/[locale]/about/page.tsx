@@ -1,6 +1,7 @@
 'use client';
 
 import { Col, Layout, P16, P18, Row, Title } from '@/components';
+import { Education, FullPageScroll } from '@/container/components';
 import { useAppContext } from '@/contexts';
 import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
@@ -11,12 +12,12 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { Education, FullPageScroll } from '../components';
 
-export function AboutPage(): React.JSX.Element {
+export default function AboutPage(): React.JSX.Element {
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations('common');
+  const tEnums = useTranslations('enums');
   const { setIsTransitionStartOpen } = useAppContext();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -47,11 +48,10 @@ export function AboutPage(): React.JSX.Element {
           onClick={handleBack}
           className='text-foreground/70 hover:text-foreground cursor-pointer transition duration-300'
         >
-          {t('enums:HOME')}
+          {tEnums('HOME')}
         </P16>
-        <P16 className='text-foreground/70'>{'/'}</P16>
         <P16 className='w-full text-primary/70'>
-          {t(`enums:${pathname.toUpperCase().replace('/', '')}`)}
+          {pathname.replace('fr/', '')}
         </P16>
       </Row>
 
@@ -124,7 +124,6 @@ const Main = tw.div`
   flex
   flex-col
   z-20
-  relative
 `;
 
 const Header = tw(Col)`

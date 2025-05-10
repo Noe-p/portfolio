@@ -3,11 +3,11 @@
 import { Col, P18, P24, Title } from '@/components';
 import { getGsap } from '@/services/registerGsap';
 import { cn } from '@/services/utils';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
 export function FullPageScroll() {
-  const { t } = useTranslation();
+  const t = useTranslations('common');
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0); // Pour suivre la progression du scroll
 

@@ -1,6 +1,7 @@
-import { useTranslation } from 'next-i18next';
+'use client';
+import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 interface SeoHeadProps {
   title?: string;
@@ -13,10 +14,10 @@ export function SeoHead({
   description: customDesc,
   keywords: customKeywords,
 }: SeoHeadProps): React.JSX.Element {
-  const { asPath } = useRouter();
-  const { t } = useTranslation('metas');
+  const pathname = usePathname();
+  const t = useTranslations('metas');
 
-  const canonicalPath = asPath.split('?')[0];
+  const canonicalPath = pathname.split('?')[0];
   const domain = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, '');
   const url = `${domain}${canonicalPath === '/' ? '' : canonicalPath}`;
   const image = `${domain}/og.jpg`;

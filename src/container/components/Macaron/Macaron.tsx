@@ -2,7 +2,8 @@
 
 import { useScroll } from '@/hooks/useScroll';
 import { getGsap } from '@/services/registerGsap';
-import { useTranslation } from 'next-i18next';
+import { useTranslations } from 'next-intl';
+
 import { useEffect, useRef } from 'react';
 import tw from 'tailwind-styled-components';
 
@@ -11,7 +12,7 @@ interface MacaronProps {
 }
 
 export function Macaron({ className }: MacaronProps): JSX.Element {
-  const { t } = useTranslation();
+  const t = useTranslations('common');
   const svgRef = useRef<SVGSVGElement>(null);
   const rotation = useRef<number>(0);
   const lastScrollY = useRef<number>(0);
