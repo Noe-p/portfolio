@@ -162,8 +162,8 @@ const config = {
         ...sizesList,
       },
       fontFamily: {
-        title: ['Dela'],
-        mono: ['Monda', 'Roboto Mono', 'monospace'],
+        title: ['var(--font-dela)', 'sans-serif'],
+        mono: ['var(--font-monda)', 'Monda', 'Roboto Mono', 'monospace'],
       },
       colors: {
         border: 'hsl(var(--border))',

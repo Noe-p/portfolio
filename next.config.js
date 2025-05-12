@@ -7,8 +7,8 @@ const settings = {
   i18n,
   staticPageGenerationTimeout: 20000,
   output: 'standalone',
-  // https://github.com/vercel/next.js/issues/48748#issuecomment-1578374105
   modularizeImports: {},
+  compress: true,
   images: {
     remotePatterns: [
       {
@@ -18,6 +18,19 @@ const settings = {
         pathname: '/**',
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)\\.(js|css|png|jpg|svg)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+    ];
   },
 };
 

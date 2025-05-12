@@ -7,6 +7,27 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link rel='icon' href='/icons/logo_128x128.webp' />
+          <link
+            rel='preload'
+            href='/fonts/Monda/Monda-Regular.ttf'
+            as='font'
+            type='font/ttf'
+            crossOrigin='anonymous'
+          />
+          <link
+            rel='preload'
+            href='/fonts/Monda/Monda-Bold.ttf'
+            as='font'
+            type='font/ttf'
+            crossOrigin='anonymous'
+          />
+          <link
+            rel='preload'
+            href='/fonts/Dela_Gothic_One/DelaGothicOne-Regular.ttf'
+            as='font'
+            type='font/ttf'
+            crossOrigin='anonymous'
+          />
         </Head>
         <body className='text-primary bg-background hide-scrollbar'>
           <Main />

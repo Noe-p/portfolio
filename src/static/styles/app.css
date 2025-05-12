@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* FONTS */
-@import url('../../../public/fonts/Monda/stylesheet.css');
-@import url('../../../public/fonts/Dela_Gothic_One/stylesheet.css');
-
 @layer base {
   :root {
     --background: 0 0% 11%; /* #1C1C1C */

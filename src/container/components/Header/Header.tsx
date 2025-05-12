@@ -9,7 +9,7 @@ import { cn } from '@/services/utils';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
 import { NavKeys } from '../Navbar';
@@ -22,7 +22,6 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
   const { t } = useTranslation();
   const router = useRouter();
   const { setIsTransitionStartOpen } = useAppContext();
-  const [isVisible, setIsVisible] = useState(false);
 
   const imageRef = useRef<HTMLDivElement>(null);
   const philRef = useRef<HTMLDivElement>(null);
@@ -34,13 +33,6 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
     { ref: positionRef, speed: -20, direction: 'horizontal' },
   ]);
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsVisible(true);
-    }, 1100);
-    return () => clearTimeout(timeout);
-  }, []);
-
   const handleClick = () => {
     setIsTransitionStartOpen(true);
     setTimeout(() => {
@@ -51,23 +43,13 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
   return (
     <Main className={className} id={NavKeys.HOME}>
       <Col className='items-center mt-25 md:mt-30 w-full'>
-        <div
-          className={cn(
-            'transition-all duration-500 ease-out',
-            isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
-          )}
-        >
-          <Title className='text-[100px] md:text-[180px] translate-x-5 md:translate-x-10 leading-none'>
-            {'Noé'}
-          </Title>
-        </div>
+        <Title className='text-[100px] md:text-[180px] translate-x-5 md:translate-x-10 leading-none'>
+          {'Noé'}
+        </Title>
         <div ref={philRef}>
           <Title
             className={cn(
-              'text-[40px] md:text-[75px] leading-none transition-all duration-500 ease-out',
-              isVisible
-                ? 'opacity-100 -translate-x-5 md:-translate-x-10'
-                : 'opacity-0 -translate-x-10 md:-translate-x-20'
+              'text-[40px] md:text-[75px] leading-none -translate-x-5 md:-translate-x-10'
             )}
           >
             {'PHILIPPE'}
@@ -87,11 +69,13 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
             className='w-[200px] h-auto rounded overflow-hidden'
           >
             <Image
-              src='/images/header.webP'
-              alt='philippe'
-              width={280}
-              height={280}
-              className='object-cover w-full h-full'
+              src='/images/header.webp'
+              alt='Noé Philippe de dos sur une plage'
+              width={320}
+              height={426}
+              className='object-cover'
+              fetchPriority='high'
+              quality={80}
               priority
             />
           </div>
