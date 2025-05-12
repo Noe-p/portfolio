@@ -107,6 +107,7 @@ export function AboutPage(): React.JSX.Element {
                 width={320}
                 height={240}
                 priority
+                fetchPriority='high'
               />
             </div>
           </Col>

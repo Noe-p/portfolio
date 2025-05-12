@@ -74,7 +74,6 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
             href='#circlePath'
             startOffset='0'
             method='align'
-            spacing='50'
             lengthAdjust='spacingAndGlyphs'
           >
             {t('status')}
@@ -94,6 +93,6 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
 
 const Wrapper = tw.div`
   relative
-  w-50
-  h-50
+  w-100 md:w-50
+  h-100 md:h-50
 `;

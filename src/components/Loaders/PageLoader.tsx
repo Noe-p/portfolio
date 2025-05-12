@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 'use client';
 import { useEffect, useState } from 'react';
-import { InfinitySpin } from 'react-loader-spinner';
 import tw from 'tailwind-styled-components';
 import { ColCenter } from '../Helpers';
 import { P24 } from '../Texts';
@@ -27,7 +27,6 @@ export function PageLoader(props: PageLoaderProps): JSX.Element {
       {showLoader ? (
         <ColCenter className='py-10 h-full justify-between'>
           <Logo src='/icons/logo_128x128.webp' alt='logo' />
-          <InfinitySpin width='200' color='hsl(0.61, 90.74%, 42.35%)' />
           <P24 className='uppercase'>{'Sakana San'}</P24>
         </ColCenter>
       ) : null}

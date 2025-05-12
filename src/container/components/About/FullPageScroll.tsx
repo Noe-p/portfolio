@@ -151,8 +151,12 @@ export function FullPageScroll() {
     initGsap();
 
     return () => {
-      import('gsap/ScrollTrigger').then(({ ScrollTrigger }) => {
-        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      getGsap().then(({ ScrollTrigger }) => {
+        (
+          ScrollTrigger as unknown as typeof import('gsap/ScrollTrigger').ScrollTrigger
+        )
+          .getAll()
+          .forEach((trigger) => trigger.kill());
       });
     };
   }, [mounted]);

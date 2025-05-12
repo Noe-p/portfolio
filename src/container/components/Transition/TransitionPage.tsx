@@ -40,12 +40,13 @@ export function TransitionPage({
         )}
       >
         <Image
-          src='/logo.webP'
+          src='/logo.webp'
           width={150}
           height={150}
           alt='logo'
-          quality={30}
+          quality={70}
           priority
+          fetchPriority='high'
           className={cn(
             'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-10'
           )}

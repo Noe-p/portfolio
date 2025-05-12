@@ -1,14 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+let cachedGsap: {
+  gsap: typeof import('gsap').gsap;
+  ScrollTrigger: any;
+} | null = null;
+
 export async function getGsap() {
+  if (cachedGsap) return cachedGsap;
+
   const { gsap } = await import('gsap');
   const { ScrollTrigger } = await import('gsap/ScrollTrigger');
 
-  // Bypass TS en castant vers any
   if (!(gsap as any).core.globals().ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  return { gsap, ScrollTrigger };
+  cachedGsap = { gsap, ScrollTrigger };
+  return cachedGsap;
 }
 
 export type GSAPContext = ReturnType<typeof import('gsap').gsap.context>;
