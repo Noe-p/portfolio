@@ -73,7 +73,6 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
               alt='Noé Philippe de dos sur une plage'
               width={320}
               height={426}
-              className='object-cover'
               fetchPriority='high'
               quality={80}
               priority

@@ -11,6 +11,9 @@ WORKDIR /home/app
 # réutiliser les node_modules installés
 COPY --from=dependencies /home/app/node_modules ./node_modules
 COPY . .
+
+COPY .env.production .env
+
 # build Next.js standalone
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG NODE_ENV=production

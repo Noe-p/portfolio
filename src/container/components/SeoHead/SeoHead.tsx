@@ -17,7 +17,9 @@ export function SeoHead({
   const { t } = useTranslation('metas');
 
   const canonicalPath = asPath.split('?')[0];
-  const domain = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, '');
+  const domain =
+    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, '') ||
+    'http://localhost:3000';
   const url = `${domain}${canonicalPath === '/' ? '' : canonicalPath}`;
   const image = `${domain}/og.jpg`;
 
