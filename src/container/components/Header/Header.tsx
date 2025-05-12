@@ -69,7 +69,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
             className='w-[200px] h-auto rounded overflow-hidden'
           >
             <Image
-              src='/images/header.webp'
+              src='/images/header.webP'
               alt='Noé Philippe de dos sur une plage'
               width={320}
               height={426}
@@ -94,7 +94,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
           <RowBetween className='mt-8 gap-5'>
             <div ref={imageRef} className='rounded overflow-hidden'>
               <Image
-                src='/images/header.webp'
+                src='/images/header.webP'
                 alt='Noé Philippe de dos sur une plage'
                 width={320}
                 height={426}
