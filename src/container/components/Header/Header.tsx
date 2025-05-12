@@ -92,13 +92,14 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
             <H2 className='text-foreground/80 normal-case'>{'Freelance'}</H2>
           </RowBetween>
           <RowBetween className='mt-8 gap-5'>
-            <div ref={imageRef} className='w-70 h-auto rounded overflow-hidden'>
+            <div ref={imageRef} className='rounded overflow-hidden'>
               <Image
-                src='/images/header.webP'
-                alt='philippe'
-                width={280}
-                height={280}
-                className='object-cover w-full h-full'
+                src='/images/header.webp'
+                alt='Noé Philippe de dos sur une plage'
+                width={320}
+                height={426}
+                fetchPriority='high'
+                quality={80}
                 priority
               />
             </div>
