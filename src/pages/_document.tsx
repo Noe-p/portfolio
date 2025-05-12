@@ -20,6 +20,7 @@ class MyDocument extends Document {
             crossOrigin='anonymous'
           />
           <link
+            rel='preload'
             href='/fonts/Dela_Gothic_One/DelaGothicOne-Regular.ttf'
             as='font'
             type='font/ttf'
