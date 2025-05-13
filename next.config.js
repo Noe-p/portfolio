@@ -13,11 +13,14 @@ const settings = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'www.noe-philippe.com',
+        hostname: 'www.noe-philippe.fr',
         port: '',
         pathname: '/**',
       },
     ],
+    formats: ['image/webp'],
+
+    minimumCacheTTL: 60,
   },
   async headers() {
     return [

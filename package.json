@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-separator": "^1.1.6",
     "@radix-ui/react-slot": "^1.0.2",
     "@types/gsap": "^3.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "date-fns": "^4.1.0",
     "gsap": "^3.12.7",
     "i18next": "^23.7.7",
     "lucide-react": "^0.344.0",

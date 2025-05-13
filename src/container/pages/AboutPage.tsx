@@ -1,6 +1,7 @@
 'use client';
 
 import { Col, Layout, P16, P18, Row, Title } from '@/components';
+import { Separator } from '@/components/ui/separator';
 import { useAppContext } from '@/contexts';
 import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
@@ -110,8 +111,7 @@ export function AboutPage(): React.JSX.Element {
             </div>
           </Col>
         </Header>
-
-        <div className='border-b border-foreground/30' />
+        <Separator />
         <FullPageScroll />
         <Education />
       </Main>

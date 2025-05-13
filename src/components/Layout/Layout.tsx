@@ -62,7 +62,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
 
       <div
         key={i18n.language}
-        className='relative px-5 md:px-40 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove'
+        className='relative px-5 md:px-40 overflow-hidden z-0 min-h-screen w-full bg-[#1C1C1C] animate-gradientMove'
         style={
           {
             '--x': '30%',
@@ -119,7 +119,6 @@ const Page = tw.div`
   flex
   flex-col
   items-center
-  z-10
   min-h-screen
   mb-5 md:mb-20
 `;
