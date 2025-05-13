@@ -1,5 +1,7 @@
 'use client';
 import { Col, P14, P16, P18, P24, Row, RowBetween } from '@/components';
+import { Separator } from '@/components/ui/separator';
+import { EducationData, ExperienceData } from '@/types';
 import { ExternalLinkIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMediaQuery } from 'usehooks-ts';
@@ -105,6 +107,7 @@ export function Education(): JSX.Element {
 
   return (
     <Col className='w-full items-center justify-start'>
+      <Separator />
       {/* Éducation */}
       <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 pb-20 border-t border-foreground/30 pt-20'>
         <P16>{t('about.education.title')}</P16>
@@ -122,6 +125,7 @@ export function Education(): JSX.Element {
         </Col>
       </RowBetween>
 
+      <Separator />
       {/* Expérience */}
       <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 border-t border-b border-foreground/30 pt-20 pb-20'>
         <P16>{t('about.experience.title')}</P16>
@@ -138,6 +142,7 @@ export function Education(): JSX.Element {
           ))}
         </Col>
       </RowBetween>
+      <Separator />
     </Col>
   );
 }

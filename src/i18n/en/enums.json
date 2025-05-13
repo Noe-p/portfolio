@@ -4,5 +4,10 @@
   "MENU": "Menu",
   "ABOUT": "About",
   "PROJECTS": "Projects",
-  "MUSIC": "Music"
+  "MUSIC": "Music",
+  "FREELANCE": "Freelance",
+  "PERSONAL": "Personal",
+  "WORK": "Work",
+  "SCHOOL": "School",
+  "TRAVEL": "Travel"
 }

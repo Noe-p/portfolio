@@ -110,7 +110,6 @@ const Page = tw.div`
   flex
   flex-col
   items-center
-  z-10
   min-h-screen
   mb-5 md:mb-20
 `;

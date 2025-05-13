@@ -1,18 +1,13 @@
 import { Layout } from '@/components';
-import { Header } from '@/container/components';
-import tw from 'tailwind-styled-components';
+import { Separator } from '@/components/ui/separator';
+import { Header, Projects } from '@/container/components';
+
 export function HomePage(): React.JSX.Element {
   return (
     <Layout isNavClose={false}>
       <Header />
-      <Main></Main>
+      <Separator className='mt-10 z-10' />
+      <Projects />
     </Layout>
   );
 }
-
-const Main = tw.div`
-  flex
-  flex-col
-  w-full md:w-2/3
-  z-20
-`;
