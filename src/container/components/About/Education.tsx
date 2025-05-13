@@ -1,4 +1,5 @@
 import { Col, P14, P16, P18, P24, Row, RowBetween } from '@/components';
+import { Separator } from '@/components/ui/separator';
 import { EducationData, ExperienceData } from '@/types';
 import { ExternalLinkIcon } from 'lucide-react';
 import { useTranslation } from 'next-i18next';
@@ -91,8 +92,9 @@ export function Education(): JSX.Element {
 
   return (
     <Col className='w-full items-center justify-start'>
+      <Separator />
       {/* Éducation */}
-      <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 pb-20 border-t border-foreground/30 pt-20'>
+      <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 py-20'>
         <P16>{educationItems.title}</P16>
         <Col className='w-full gap-5 md:gap-10 mt-10 md:mt-0'>
           {educationList.map((item, index) => (
@@ -101,8 +103,9 @@ export function Education(): JSX.Element {
         </Col>
       </RowBetween>
 
+      <Separator />
       {/* Expérience */}
-      <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 border-t border-b border-foreground/30 pt-20 pb-20'>
+      <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 py-20'>
         <P16>{experienceItems.title}</P16>
         <Col className='w-full gap-5 md:gap-10 mt-10 md:mt-0'>
           {experienceList.map((item, index) => (
@@ -110,6 +113,7 @@ export function Education(): JSX.Element {
           ))}
         </Col>
       </RowBetween>
+      <Separator />
     </Col>
   );
 }
