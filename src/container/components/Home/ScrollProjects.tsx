@@ -18,7 +18,7 @@ export function ScrollProjects(): JSX.Element {
   const titlesRef = useRef<HTMLDivElement>(null);
   const [currentProject, setCurrentProject] = useState<Project>(projects[0]);
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const GAPSPACING = isMobile ? 15 : 25;
+  const GAPSPACING = isMobile ? 23 : 25;
 
   // refs pour chaque <video>
   const videoRefs = useRef<HTMLVideoElement[]>([]);
@@ -153,7 +153,7 @@ export function ScrollProjects(): JSX.Element {
       <div
         ref={titlesRef}
         className={cn(
-          'absolute left-0 -top-50 md:top-0 w-fit h-min flex flex-col items-start z-0 md:z-10',
+          'absolute left-0 -top-60 md:top-0 w-fit h-min flex flex-col items-start z-0 md:z-10',
           isMobile ? 'ml-8' : 'ml-16'
         )}
         style={{ gap: `${GAPSPACING}px` }}
@@ -186,8 +186,8 @@ export function ScrollProjects(): JSX.Element {
 
 const VideoContainer = tw.div`
   absolute
-  top-60 md:top-20
-  bottom-5 md:bottom-20
+  top-50 md:top-20
+  bottom-10 md:bottom-20
   left-0 right-0      
   md:left-auto         
   md:w-1/2           
