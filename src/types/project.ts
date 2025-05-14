@@ -38,4 +38,5 @@ export interface Project {
   date: Date;
   type: ProjectType;
   tags?: ProjectTag[];
+  slug?: string;
 }
