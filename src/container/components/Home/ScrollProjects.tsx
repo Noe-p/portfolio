@@ -83,17 +83,22 @@ export function ScrollProjects(): JSX.Element {
   }, []);
 
   return (
-    <div ref={containerRef} className='relative w-full h-screen overflow-hidde'>
+    <div
+      ref={containerRef}
+      className='relative w-full h-screen overflow-hidden'
+    >
       <H3 className='fixed left-0 top-20'>{t('generics.projects')}</H3>
+
       <VideoContainer>
         <Col className='w-full h-full'>
           <VideoHeader
-            key={currentProject.video}
+            key={currentProject.id}
             autoPlay
             loop
             muted
             playsInline
-            preload='metadata'
+            preload='auto'
+            poster={currentProject.firstImage}
           >
             <source src={currentProject.video} type='video/mp4' />
           </VideoHeader>
@@ -113,7 +118,7 @@ export function ScrollProjects(): JSX.Element {
       <div
         ref={titlesRef}
         className={cn(
-          'absolute left-0 top-0 w-full h-min flex flex-col items-start ',
+          'absolute left-0 top-0 w-full h-min flex flex-col items-start',
           isMobile ? 'ml-8' : 'ml-16'
         )}
         style={{ gap: `${GAPSPACING}px` }}

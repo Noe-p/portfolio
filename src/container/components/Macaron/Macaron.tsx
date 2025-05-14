@@ -93,6 +93,6 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
 
 const Wrapper = tw.div`
   relative
-  w-100 md:w-50
-  h-100 md:h-50
+  w-50
+  h-50
 `;
