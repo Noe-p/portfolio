@@ -11,6 +11,7 @@ export const projects: Project[] = [
     firstImage: '/projetcs/sakana-san/sakana-san.webP',
     video: '/projetcs/sakana-san/sakana-san.mp4',
     tags: [ProjectTag.NEXTJS, ProjectTag.TYPESCRIPT, ProjectTag.TAILWIND],
+    slug: 'sakana-san',
   },
   {
     id: 'f1b0c2a4-3d8e-4b5c-9f7d-6a0e1f2b3c4d',
@@ -21,6 +22,7 @@ export const projects: Project[] = [
     images: ['/projetcs/romane-faupin/romane-faupin.webP'],
     firstImage: '/projetcs/romane-faupin/romane-faupin.webP',
     video: '/projetcs/romane-faupin/romane-faupin.mp4',
+    slug: 'romane-faupin',
   },
   {
     id: 'a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6',
@@ -31,5 +33,6 @@ export const projects: Project[] = [
     images: ['/projetcs/sakana-san/kerluskellik.webP'],
     firstImage: '/projetcs/kerluskellik/kerluskellik.webP',
     video: '/projetcs/kerluskellik/kerluskellik.mp4',
+    slug: 'kerluskellik',
   },
 ];
