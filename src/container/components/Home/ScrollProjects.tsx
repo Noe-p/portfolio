@@ -19,7 +19,7 @@ export function ScrollProjects(): JSX.Element {
   const [currentProject, setCurrentProject] = useState<Project>(projects[0]);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const GAPSPACING = isMobile ? 15 : 25;
-  const SLOWDOWN_FACTOR = isMobile ? 7 : 5;
+  const SLOWDOWN_FACTOR = isMobile ? 5 : 5;
 
   // refs pour chaque <video>
   const videoRefs = useRef<HTMLVideoElement[]>([]);
@@ -36,10 +36,10 @@ export function ScrollProjects(): JSX.Element {
       const titleHeight = firstTitle.offsetHeight;
       const step = titleHeight + GAPSPACING;
       const totalSteps = projects.length - 1;
-      const totalDistance = step * totalSteps;
+      const totalDistance = step * totalSteps + 38;
 
       const position = isMobile
-        ? 80
+        ? container.offsetHeight / 2 - titleHeight / 2
         : container.offsetHeight / 2 - titleHeight / 2;
 
       gsap.set(titlesContainer, {
@@ -96,12 +96,12 @@ export function ScrollProjects(): JSX.Element {
       ref={containerRef}
       className='relative w-full h-screen overflow-hidden mt-10 md:mt-0'
     >
-      <H3 className='text-sm md:text-xl fixed left-0 top-5 md:top-20'>
+      <H3 className='text-sm md:text-xl fixed left-0 top-20'>
         {t('generics.projects')}
       </H3>
 
       <VideoContainer>
-        <Col className='w-full h-full relative'>
+        <Col className='w-full h-full relative opacity-70 md:opacity-100'>
           <Link
             href={`/projects/${currentProject.slug}`}
             className='block w-full h-full absolute inset-0 z-10 cursor-pointer'
@@ -114,15 +114,13 @@ export function ScrollProjects(): JSX.Element {
                 }}
                 className={cn(
                   'absolute inset-0 object-cover transition-all duration-500',
-                  project === currentProject
-                    ? 'opacity-100 scale-100'
-                    : 'opacity-0 scale-95'
+                  project === currentProject ? 'scale-100' : 'scale-95'
                 )}
                 autoPlay
                 loop
                 muted
                 playsInline
-                preload='auto'
+                preload={project === currentProject ? 'auto' : 'none'}
                 poster={project.firstImage}
               >
                 <source src={project.video} type='video/mp4' />
@@ -152,7 +150,7 @@ export function ScrollProjects(): JSX.Element {
       <div
         ref={titlesRef}
         className={cn(
-          'absolute left-0 top-0 w-fit h-min flex flex-col items-start z-0 md:z-10',
+          'absolute left-0 top-0 w-fit h-min flex flex-col items-start z-10 md:z-10',
           isMobile ? 'ml-8' : 'ml-16'
         )}
         style={{ gap: `${GAPSPACING}px` }}
@@ -161,8 +159,10 @@ export function ScrollProjects(): JSX.Element {
           <div
             key={i}
             className={cn(
-              'relative',
-              project === currentProject ? 'opacity-100' : 'opacity-30'
+              'relative backdrop-blur-md rounded px-2 py-1 transition-all duration-500',
+              project === currentProject
+                ? 'opacity-100 md:bg-background/50 bg-background/90'
+                : 'opacity-60 bg-background/50 md:opacity-30 md:bg-background/30'
             )}
           >
             <H1 className={cn('title md:text-6xl text-2xl transition-opacity')}>
@@ -176,7 +176,7 @@ export function ScrollProjects(): JSX.Element {
       </div>
 
       <ChevronRight
-        className={cn('absolute left-0 top-20 md:top-1/2 md:-translate-y-1/2')}
+        className={cn('absolute left-0 top-1/2 -translate-y-1/2 z-10')}
         size={isMobile ? 30 : 60}
       />
     </div>
@@ -186,14 +186,14 @@ export function ScrollProjects(): JSX.Element {
 const VideoContainer = tw.div`
   absolute
   top-40 md:top-20
-  bottom-20 md:bottom-20
+  bottom-30 md:bottom-20
   left-0 right-0      
   md:left-auto         
   md:w-1/2           
   md:z-0 z-10
-  opacity-100
   rounded
   overflow-hidden
+  opacity-70 md:opacity-100
 `;
 const VideoHeader = tw.video`
   w-full h-full
