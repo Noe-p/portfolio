@@ -112,7 +112,6 @@ const Main = tw.div`
   w-full
   flex-col
   mb-5 md:mb-10
-  pt-20
 `;
 
 const CopyRight = tw(P14)`

@@ -18,7 +18,8 @@ export function ScrollProjects(): JSX.Element {
   const titlesRef = useRef<HTMLDivElement>(null);
   const [currentProject, setCurrentProject] = useState<Project>(projects[0]);
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const GAPSPACING = isMobile ? 23 : 25;
+  const GAPSPACING = isMobile ? 15 : 25;
+  const SLOWDOWN_FACTOR = isMobile ? 7 : 5;
 
   // refs pour chaque <video>
   const videoRefs = useRef<HTMLVideoElement[]>([]);
@@ -36,27 +37,24 @@ export function ScrollProjects(): JSX.Element {
       const step = titleHeight + GAPSPACING;
       const totalSteps = projects.length - 1;
       const totalDistance = step * totalSteps;
-      const snapPoints = projects.map((_, i) => i / totalSteps);
+
+      const position = isMobile
+        ? 80
+        : container.offsetHeight / 2 - titleHeight / 2;
 
       gsap.set(titlesContainer, {
-        y: container.offsetHeight / 2 - titleHeight / 2,
+        y: position,
       });
       gsap.to(titlesContainer, {
-        y: container.offsetHeight / 2 - titleHeight / 2 - totalDistance,
+        y: position - totalDistance,
         ease: 'none',
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: `+=${totalDistance}`,
+          end: `+=${totalDistance * SLOWDOWN_FACTOR}`, // étendu
           scrub: true,
           pin: true,
-          pinSpacing: false,
-          snap: {
-            snapTo: snapPoints,
-            duration: 0.6,
-            delay: 0.1,
-            ease: 'power2.out',
-          },
+          pinSpacing: true,
           onUpdate(self) {
             const idx = Math.round(self.progress * totalSteps);
             setCurrentProject(projects[idx]);
@@ -76,7 +74,7 @@ export function ScrollProjects(): JSX.Element {
           .forEach((trigger) => trigger.kill());
       });
     };
-  }, []);
+  }, [isMobile]);
 
   // play/pause et opacity
   useEffect(() => {
@@ -96,9 +94,9 @@ export function ScrollProjects(): JSX.Element {
   return (
     <div
       ref={containerRef}
-      className='relative w-full h-screen overflow-hidden'
+      className='relative w-full h-screen overflow-hidden mt-10 md:mt-0'
     >
-      <H3 className='text-sm md:text-xl fixed left-0 top-20'>
+      <H3 className='text-sm md:text-xl fixed left-0 top-5 md:top-20'>
         {t('generics.projects')}
       </H3>
 
@@ -115,9 +113,10 @@ export function ScrollProjects(): JSX.Element {
                   if (el) videoRefs.current[i] = el;
                 }}
                 className={cn(
-                  'absolute inset-0 object-cover transition-opacity duration-500',
-                  'transform transition-transform duration-300',
-                  project === currentProject ? 'opacity-100' : 'opacity-0'
+                  'absolute inset-0 object-cover transition-all duration-500',
+                  project === currentProject
+                    ? 'opacity-100 scale-100'
+                    : 'opacity-0 scale-95'
                 )}
                 autoPlay
                 loop
@@ -153,7 +152,7 @@ export function ScrollProjects(): JSX.Element {
       <div
         ref={titlesRef}
         className={cn(
-          'absolute left-0 -top-60 md:top-0 w-fit h-min flex flex-col items-start z-0 md:z-10',
+          'absolute left-0 top-0 w-fit h-min flex flex-col items-start z-0 md:z-10',
           isMobile ? 'ml-8' : 'ml-16'
         )}
         style={{ gap: `${GAPSPACING}px` }}
@@ -177,7 +176,7 @@ export function ScrollProjects(): JSX.Element {
       </div>
 
       <ChevronRight
-        className={cn('absolute left-0 top-1/2 -translate-y-1/2')}
+        className={cn('absolute left-0 top-20 md:top-1/2 md:-translate-y-1/2')}
         size={isMobile ? 30 : 60}
       />
     </div>
@@ -186,8 +185,8 @@ export function ScrollProjects(): JSX.Element {
 
 const VideoContainer = tw.div`
   absolute
-  top-50 md:top-20
-  bottom-10 md:bottom-20
+  top-40 md:top-20
+  bottom-20 md:bottom-20
   left-0 right-0      
   md:left-auto         
   md:w-1/2           
