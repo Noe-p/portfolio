@@ -88,8 +88,8 @@
     }
   },
   "projects": {
-    "seeOne": "Découvrir le projet",
-    "seeAll": "Découvrir tous mes projets"
+    "seeOne": "Voir le projet",
+    "seeAll": "Découvrir tous les projets"
   },
   "nav": {
     "ABOUT": "Qui suis-je ?",

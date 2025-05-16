@@ -149,12 +149,12 @@ export function ScrollProjects(): JSX.Element {
           </Col>
         </VideoContainer>
 
-        <Row className='md:w-1/2 w-full items-center justify-between p-4 right-0 md:bottom-20 bottom-36 z-30 absolute bg-background/60 backdrop-blur-md'>
+        <Row className='md:w-1/2 w-full items-center justify-between p-2 right-0 md:bottom-20 bottom-36 z-30 absolute bg-background/60 backdrop-blur-md'>
           <Row className='items-center justify-center gap-2 group cursor-pointer bg-primary hover:bg-primary/80 transition-all duration-500  rounded px-2 py-1'>
             <P16 className='text-foreground'>{t('projects.seeOne')}</P16>
             <ArrowUpRightSquareIcon className='text-foreground' size={15} />
           </Row>
-          <P16 className='font-semibold'>
+          <P16 className='text-[14px] md:text-[16px] font-semibold'>
             {format(currentProject.date, 'dd MMMM yyyy', {
               locale: t('langage') === 'en' ? enUS : fr,
             })}
@@ -197,10 +197,14 @@ export function ScrollProjects(): JSX.Element {
         />
         <Button
           onClick={handleClick}
-          className='w-full md:w-fit absolute md:bottom-20 bottom-15 left-0 z-10'
+          className='w-full md:w-fit items-center gap-1 group absolute md:bottom-20 bottom-15 left-0 z-10'
           variant='outline'
         >
           {t('projects.seeAll')}
+          <ArrowUpRightSquareIcon
+            className='text-foreground/70 group-hover:text-primary transition-colors '
+            size={15}
+          />
         </Button>
       </div>
     </Col>
@@ -217,7 +221,7 @@ const VideoContainer = tw.div`
   md:z-0 z-10
   rounded
   overflow-hidden
-  opacity-70 md:opacity-100
+  opacity-50 md:opacity-100
 `;
 const VideoHeader = tw.video`
   w-full h-full
