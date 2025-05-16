@@ -87,7 +87,10 @@
       }
     }
   },
-  "projects": {},
+  "projects": {
+    "seeOne": "Découvrir le projet",
+    "seeAll": "Découvrir tous mes projets"
+  },
   "nav": {
     "ABOUT": "Qui suis-je ?",
     "PROJECTS": "Découvrir mes projets",
