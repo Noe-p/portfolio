@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 'use client';
 
 import { useScroll } from '@/hooks/useScroll';
@@ -17,14 +18,43 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
   const rotation = useRef<number>(0);
   const lastScrollY = useRef<number>(0);
   const raf = useRef<number>();
+  const [isVisible, setIsVisible] = useState(true);
 
   const { scrollY } = useScroll();
+
+  // Détection de visibilité
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0.1,
+      }
+    );
+
+    if (svgRef.current) {
+      observer.observe(svgRef.current);
+    }
+
+    return () => {
+      if (svgRef.current) {
+        observer.unobserve(svgRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const animate = async () => {
       const { gsap } = await getGsap();
 
       const tick = () => {
+        // Ne pas animer si le macaron n'est pas visible
+        if (!isVisible) {
+          raf.current = requestAnimationFrame(tick);
+          return;
+        }
+
         const scrollDiff = scrollY - lastScrollY.current;
         lastScrollY.current = scrollY;
 
@@ -50,7 +80,7 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
     return () => {
       if (raf.current) cancelAnimationFrame(raf.current);
     };
-  }, [scrollY]);
+  }, [scrollY, isVisible]);
 
   return (
     <Wrapper className={className}>

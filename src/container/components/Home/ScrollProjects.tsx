@@ -43,25 +43,47 @@ export function ScrollProjects(): JSX.Element {
         ? container.offsetHeight / 2 - titleHeight / 2
         : container.offsetHeight / 2 - titleHeight / 2;
 
+      if (isMobile) {
+        titlesContainer.style.willChange = 'transform';
+        gsap.set(titlesContainer, {
+          force3D: true,
+          backfaceVisibility: 'hidden',
+          perspective: 1000,
+        });
+      }
+
       gsap.set(titlesContainer, {
         y: position,
       });
+
       gsap.to(titlesContainer, {
         y: position - totalDistance,
         ease: 'none',
         scrollTrigger: {
           trigger: container,
           start: 'top top',
-          end: `+=${totalDistance * SLOWDOWN_FACTOR}`, // étendu
-          scrub: true,
+          end: `+=${totalDistance * SLOWDOWN_FACTOR}`,
+          scrub: isMobile ? 0.8 : true,
           pin: true,
           pinSpacing: true,
           onUpdate(self) {
             const idx = Math.round(self.progress * totalSteps);
             setCurrentProject(projects[idx]);
           },
+          fastScrollEnd: isMobile,
+          preventOverlaps: isMobile,
         },
       });
+
+      if (isMobile) {
+        videoRefs.current.forEach((video) => {
+          if (video) {
+            video.style.transition = 'opacity 0.4s ease-out';
+            video.style.willChange = 'opacity, transform';
+          }
+        });
+      }
+
       ScrollTrigger.refresh();
     }
 
@@ -77,12 +99,14 @@ export function ScrollProjects(): JSX.Element {
     };
   }, [isMobile]);
 
-  // play/pause et opacity
   useEffect(() => {
     videoRefs.current.forEach((vid, i) => {
       if (!vid) return;
       if (projects[i] === currentProject) {
         vid.style.opacity = '1';
+        if (isMobile) {
+          vid.playbackRate = 0.8;
+        }
         vid.play().catch(() => {});
       } else {
         vid.style.opacity = '0';
@@ -90,7 +114,7 @@ export function ScrollProjects(): JSX.Element {
         vid.currentTime = 0;
       }
     });
-  }, [currentProject]);
+  }, [currentProject, isMobile]);
 
   const handleClick = (nav: string) => {
     setIsTransitionStartOpen(true);

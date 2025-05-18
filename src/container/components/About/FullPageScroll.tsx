@@ -5,12 +5,14 @@ import { getGsap } from '@/services/registerGsap';
 import { cn } from '@/services/utils';
 import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
 
 export function FullPageScroll() {
   const t = useTranslations('common');
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const isMobile = useMediaQuery('(max-width: 768px)');
 
   const sectionsData = [
     {
@@ -60,22 +62,34 @@ export function FullPageScroll() {
       const titles = gsap.utils.toArray<HTMLElement>('.title');
       const textBlocks = gsap.utils.toArray<HTMLElement>('.text-block');
 
-      // Position initiale
-      gsap.set(sections, { autoAlpha: 0, y: 10 });
-      gsap.set(titles, { autoAlpha: 0, y: 20 });
-      gsap.set(textBlocks, { autoAlpha: 0, y: 20 });
+      // Position initiale avec des valeurs optimisées pour mobile
+      gsap.set(sections, { autoAlpha: 0, y: isMobile ? 5 : 10 });
+      gsap.set(titles, { autoAlpha: 0, y: isMobile ? 10 : 20 });
+      gsap.set(textBlocks, { autoAlpha: 0, y: isMobile ? 10 : 20 });
 
       // Affiche la première section et son contenu
       gsap.set(sections[0], { autoAlpha: 1, y: 0 });
-      gsap.to(titles[0], { autoAlpha: 1, y: 0, duration: 0.6, delay: 0.2 });
-      gsap.to(textBlocks[0], { autoAlpha: 1, y: 0, duration: 0.6, delay: 0.4 });
+      gsap.to(titles[0], {
+        autoAlpha: 1,
+        y: 0,
+        duration: isMobile ? 0.4 : 0.6,
+        delay: 0.2,
+        force3D: true,
+      });
+      gsap.to(textBlocks[0], {
+        autoAlpha: 1,
+        y: 0,
+        duration: isMobile ? 0.4 : 0.6,
+        delay: 0.4,
+        force3D: true,
+      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
           start: 'top top',
           end: `+=${window.innerHeight * (sections.length - 1)}`,
-          scrub: true,
+          scrub: isMobile ? 0.5 : true, // Réduire la fluidité du scrub sur mobile
           pin: true,
           pinSpacing: true,
           onUpdate: (self) => {
@@ -87,24 +101,31 @@ export function FullPageScroll() {
       sections.forEach((section, i) => {
         if (i === 0) return;
 
-        // Entrée de la section
+        // Entrée de la section avec des valeurs optimisées pour mobile
         tl.fromTo(
           section,
-          { autoAlpha: 0, y: 30 },
-          { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power2.out' },
+          { autoAlpha: 0, y: isMobile ? 15 : 30 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: isMobile ? 0.5 : 0.8,
+            ease: 'power2.out',
+            force3D: true,
+          },
           i
         );
 
         // Entrée du titre
         tl.fromTo(
           titles[i],
-          { autoAlpha: 0, y: 20 },
+          { autoAlpha: 0, y: isMobile ? 10 : 20 },
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.5,
+            duration: isMobile ? 0.3 : 0.5,
             ease: 'power2.out',
             clearProps: 'all',
+            force3D: true,
           },
           i + 0.1
         );
@@ -112,13 +133,14 @@ export function FullPageScroll() {
         // Entrée du texte
         tl.fromTo(
           textBlocks[i],
-          { autoAlpha: 0, y: 20 },
+          { autoAlpha: 0, y: isMobile ? 10 : 20 },
           {
             autoAlpha: 1,
             y: 0,
-            duration: 0.5,
+            duration: isMobile ? 0.3 : 0.5,
             ease: 'power2.out',
             clearProps: 'all',
+            force3D: true,
           },
           i + 0.3
         );
@@ -126,21 +148,39 @@ export function FullPageScroll() {
         // Sortie du titre précédent
         tl.to(
           titles[i - 1],
-          { autoAlpha: 0, y: -10, duration: 0.4, ease: 'power2.in' },
+          {
+            autoAlpha: 0,
+            y: isMobile ? -5 : -10,
+            duration: isMobile ? 0.3 : 0.4,
+            ease: 'power2.in',
+            force3D: true,
+          },
           i - 0.1
         );
 
         // Sortie du texte précédent
         tl.to(
           textBlocks[i - 1],
-          { autoAlpha: 0, y: -10, duration: 0.4, ease: 'power2.in' },
+          {
+            autoAlpha: 0,
+            y: isMobile ? -5 : -10,
+            duration: isMobile ? 0.3 : 0.4,
+            ease: 'power2.in',
+            force3D: true,
+          },
           i
         );
 
         // Sortie de la section précédente
         tl.to(
           sections[i - 1],
-          { autoAlpha: 0, y: -30, duration: 0.8, ease: 'power2.in' },
+          {
+            autoAlpha: 0,
+            y: isMobile ? -15 : -30,
+            duration: isMobile ? 0.5 : 0.8,
+            ease: 'power2.in',
+            force3D: true,
+          },
           i
         );
       });
