@@ -109,3 +109,22 @@ body::-webkit-scrollbar {
     text-shadow: 2px 2px 0 hsl(var(--primary));
   }
 }
+
+@supports (
+  (text-stroke: 1px black) or (-webkit-text-stroke: 1.5px hsl(var(--primary)))
+) {
+  .outline-text-primary {
+    color: transparent;
+    -webkit-text-stroke: 1.5px hsl(var(--primary));
+    text-stroke: 1.5px hsl(var(--primary));
+    text-shadow: none;
+  }
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-1 * var(--marquee-width)));
+  }
+}

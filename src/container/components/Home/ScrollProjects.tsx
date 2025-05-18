@@ -173,7 +173,7 @@ export function ScrollProjects(): JSX.Element {
               <H1
                 className={cn('title md:text-6xl text-2xl transition-opacity')}
               >
-                {project.title}
+                {t(`projects:${project.title}`)}
               </H1>
               <ProjectType>{t(`enums:${project.type}`)}</ProjectType>
             </ProjectTitle>

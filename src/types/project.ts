@@ -34,7 +34,7 @@ export interface Project {
   description: string;
   images: string[];
   video: string;
-  firstImage?: string;
+  firstImage: string;
   date: Date;
   type: ProjectType;
   tags?: ProjectTag[];

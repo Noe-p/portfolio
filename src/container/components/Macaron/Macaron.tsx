@@ -67,23 +67,31 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
         </defs>
         <text
           fontSize='10'
-          textLength='220'
           className='font-title text-foreground tracking-widest'
         >
-          <textPath
-            href='#circlePath'
-            startOffset='0'
-            method='align'
-            lengthAdjust='spacingAndGlyphs'
-          >
+          <textPath href='#circlePath' startOffset='0%' textLength='100%'>
             {t('status')}
-            <tspan className='text-green-400'>{' • '}</tspan>
+          </textPath>
+        </text>
+        <text fontSize='10' className='font-title tracking-widest'>
+          <textPath href='#circlePath' startOffset='47%'>
+            <tspan className='text-green-400'>{'•\u00A0'}</tspan>
+          </textPath>
+        </text>
+        <text
+          fontSize='10'
+          className='font-title text-foreground tracking-widest'
+        >
+          <textPath href='#circlePath' startOffset='50%' textLength='100%'>
             {t('status')}
-            <tspan className='text-green-400'>{' •\u00A0'}</tspan>
+          </textPath>
+        </text>
+        <text fontSize='10' className='font-title tracking-widest'>
+          <textPath href='#circlePath' startOffset='97%'>
+            <tspan className='text-green-400'>{'•\u00A0'}</tspan>
           </textPath>
         </text>
       </svg>
-
       <div className='absolute inset-0 flex items-center justify-center'>
         <div className='w-4 h-4 bg-primary rounded-full' />
       </div>

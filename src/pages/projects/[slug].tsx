@@ -12,9 +12,9 @@ type ProjectDetailProps = {
 export default function ProjectDetail(props: ProjectDetailProps): JSX.Element {
   const { slug } = props;
   const { t } = useTranslation();
-  const title = t(`metas:project.${slug}.title`);
-  const description = t(`metas:project.${slug}.description`);
-  const keywords = t(`metas:project.${slug}.keywords`);
+  const title = t(`projects.${slug}.metas.title`);
+  const description = t(`projects.${slug}.metas.description`);
+  const keywords = t(`projects.${slug}.metas.keywords`);
 
   if (!slug) return <FullPageLoader />;
   return (

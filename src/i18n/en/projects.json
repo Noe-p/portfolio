@@ -1,0 +1,14 @@
+{
+  "sakana-san": {
+    "title": "Sakana San",
+    "description": "Sakana San is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about fish."
+  },
+  "romane-faupin": {
+    "title": "Romane Faupin",
+    "description": "Romane Faupin is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about Romane Faupin."
+  },
+  "kerluskellik": {
+    "title": "Kerluskellik",
+    "description": "Kerluskellik is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about Kerluskellik."
+  }
+}
