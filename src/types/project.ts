@@ -21,13 +21,6 @@ export enum ProjectTag {
   GSAP = 'GSAP',
 }
 
-export interface Customer {
-  id: string;
-  name: string;
-  logo: string;
-  url: string;
-}
-
 export interface Project {
   id: string;
   title: string;
@@ -39,4 +32,7 @@ export interface Project {
   type: ProjectType;
   tags?: ProjectTag[];
   slug: string;
+  github?: string;
+  link?: string;
+  customerUrl?: string;
 }

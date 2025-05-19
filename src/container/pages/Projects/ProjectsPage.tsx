@@ -17,7 +17,7 @@ export function ProjectsPage(): React.JSX.Element {
 
   return (
     <Layout isNavClose={false}>
-      <Row className='absolute z-30 top-20 md:top-5 left-5 md:left-10 w-full gap-1'>
+      <Row className='absolute z-30 top-20 md:top-7 left-5 md:left-10 w-full gap-1'>
         <P16
           onClick={() => handleBack(ROUTES.home)}
           className='text-foreground/70 hover:text-foreground cursor-pointer transition duration-300'

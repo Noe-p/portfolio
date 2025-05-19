@@ -10,5 +10,9 @@
   "kerluskellik": {
     "title": "Kerluskellik",
     "description": "Kerluskellik is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about Kerluskellik."
+  },
+  "fast-foodie": {
+    "title": "Fast & Foodie",
+    "description": "Fast Foodie is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about fast food."
   }
 }

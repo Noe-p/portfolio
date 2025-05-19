@@ -10,7 +10,10 @@
     "linkedin": "LinkedIn",
     "instagram": "Instagram",
     "sendEmail": "Envois-moi un email",
-    "projects": "Projets"
+    "projects": "Projets",
+    "tags": "Tags",
+    "date": "Date",
+    "customer": "Client"
   },
   "status": "Prêt à travailler",
   "position": "Développeur Fullstack",
@@ -89,7 +92,10 @@
   },
   "projects": {
     "seeOne": "Voir le projet",
-    "seeAll": "Découvrir tous les projets"
+    "seeAll": "Découvrir tous les projets",
+    "seeGithub": "Voir sur GitHub",
+    "seeWeb": "Voir le site",
+    "type": "Type de projet"
   },
   "nav": {
     "ABOUT": "Qui suis-je ?",

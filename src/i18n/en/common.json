@@ -10,7 +10,10 @@
     "linkedin": "LinkedIn",
     "instagram": "Instagram",
     "sendEmail": "Send me an email",
-    "projects": "Projects"
+    "projects": "Projects",
+    "tags": "Tags",
+    "date": "Date",
+    "customer": "Customer"
   },
   "home": {
     "name": "home"
@@ -89,7 +92,10 @@
   },
   "projects": {
     "seeOne": "View the project",
-    "seeAll": "Discover all projects"
+    "seeAll": "Discover all projects",
+    "seeGithub": "View on GitHub",
+    "seeWeb": "View the website",
+    "type": "Type of project"
   },
   "nav": {
     "ABOUT": "Who am I?",

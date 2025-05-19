@@ -9,5 +9,14 @@
   "PERSONAL": "Personnel",
   "WORK": "Travail",
   "SCHOOL": "Étude",
-  "TRAVEL": "Voyage"
+  "TRAVEL": "Voyage",
+  "NEXTJS": "Next.js",
+  "TYPESCRIPT": "TypeScript",
+  "TAILWIND": "Tailwind CSS",
+  "NESTJS": "Nest.js",
+  "REACT_NATIVE": "React Native",
+  "ANIMATION": "Animation",
+  "DOCKER": "Docker",
+  "POSTGRESQL": "PostgreSQL",
+  "GSAP": "GSAP"
 }
