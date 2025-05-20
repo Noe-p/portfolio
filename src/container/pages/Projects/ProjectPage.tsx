@@ -165,7 +165,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
                     {t('generics.date')}
                   </P16>
                   <P14>
-                    {format(project.date, 'dd MMMM yyyy', {
+                    {format(new Date(project.date), 'dd MMMM yyyy', {
                       locale: t('langage') === 'en' ? enUS : fr,
                     })}
                   </P14>

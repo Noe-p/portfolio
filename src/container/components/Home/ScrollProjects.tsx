@@ -170,7 +170,7 @@ export function ScrollProjects(): JSX.Element {
             <ArrowUpRightSquareIcon className='text-foreground' size={15} />
           </ProjectLink>
           <P16 className='text-[14px] md:text-[16px] font-semibold'>
-            {format(currentProject.date, 'dd MMMM yyyy', {
+            {format(new Date(currentProject.date), 'dd MMMM yyyy', {
               locale: t('langage') === 'en' ? enUS : fr,
             })}
           </P16>
