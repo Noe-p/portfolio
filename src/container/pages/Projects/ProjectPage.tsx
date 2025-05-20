@@ -1,17 +1,18 @@
 import {
+  Badge,
   Col,
   FullPageLoader,
   Grid3,
   GridCol1,
   GridCol2,
   Layout,
-  P12,
   P14,
   P16,
   Row,
 } from '@/components';
 import { Marquee } from '@/components/ui/marquee';
 import { useAppContext } from '@/contexts';
+import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
 import { projects } from '@/static/projects';
 import { format } from 'date-fns';
@@ -21,6 +22,7 @@ import { Trans, useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useRef } from 'react';
 import Masonry from 'react-masonry-css';
 import tw from 'tailwind-styled-components';
 import { useMediaQuery } from 'usehooks-ts';
@@ -35,6 +37,30 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
   const { setIsTransitionStartOpen } = useAppContext();
   const project = projects.find((project) => project.slug === slug);
   const isMobile = useMediaQuery('(max-width: 768px)');
+
+  // Références pour le parallax
+  const titleRef = useRef<HTMLDivElement>(null);
+  const descriptionRef = useRef<HTMLDivElement>(null);
+  const imagesRef = useRef<HTMLDivElement>(null);
+
+  // Configuration du parallax
+  useParallax([
+    {
+      ref: titleRef,
+      speed: -50,
+      easing: 'easeOutQuad',
+    },
+    {
+      ref: descriptionRef,
+      speed: 80,
+      easing: 'linear',
+    },
+    {
+      ref: imagesRef,
+      speed: -50,
+      easing: 'easeInCubic',
+    },
+  ]);
 
   const handleBack = (slug: string) => {
     setIsTransitionStartOpen(true);
@@ -63,12 +89,14 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
         </P16>
       </Row>
       <Main>
-        <Marquee pauseOnHover={false} speed={isMobile ? 50 : 100}>
-          <Text>{t(`projects:${project.title}`)}</Text>
-        </Marquee>
-        <Grid3 className='md:gap-20 mt-10'>
+        <div ref={titleRef}>
+          <Marquee pauseOnHover={false} speed={isMobile ? 50 : 100}>
+            <Text>{t(`projects:${project.title}`)}</Text>
+          </Marquee>
+        </div>
+        <Grid3 ref={descriptionRef} className='md:gap-20 mt-5'>
           <GridCol1>
-            <Col className='w-full gap-7 md:gap-10'>
+            <Col className='w-full gap-5 md:gap-10'>
               <Row className='w-full justify-between'>
                 {project.github ? (
                   <SeeLink
@@ -127,9 +155,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
                 </P16>
                 <Row className='gap-1 flex-wrap'>
                   {project.tags?.map((tag) => (
-                    <Badge key={tag}>
-                      <P12>{t(`enums:${tag}`)}</P12>
-                    </Badge>
+                    <Badge key={tag}>{t(`enums:${tag}`)}</Badge>
                   ))}
                 </Row>
               </Col>
@@ -148,11 +174,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
                   <P16 className='uppercase text-foreground/60'>
                     {t('projects.type')}
                   </P16>
-                  <Badge className='bg-primary/20 '>
-                    <P12 className='text-primary'>
-                      {t(`enums:${project.type}`)}
-                    </P12>
-                  </Badge>
+                  <Badge variant='primary'>{t(`enums:${project.type}`)}</Badge>
                 </Col>
               </Row>
             </Col>
@@ -174,7 +196,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
             </P16>
           </GridCol2>
         </Grid3>
-        <div className='w-full md:mt-20 mt-15'>
+        <div className='w-full md:mt-20 mt-15' ref={imagesRef}>
           <Masonry
             breakpointCols={{
               default: project.images.length === 1 ? 1 : 3,
@@ -184,8 +206,27 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
             className='flex -ml-4 w-auto'
             columnClassName='pl-4 bg-clip-padding'
           >
+            {project.videos?.map((video, index) => (
+              <div
+                key={`video-${index}`}
+                className='mb-4 overflow-hidden rounded-md'
+              >
+                <video
+                  src={video}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className='w-full h-auto object-cover'
+                  poster={project.images[0]}
+                />
+              </div>
+            ))}
             {project.images.map((image, index) => (
-              <div key={index} className='mb-4 overflow-hidden rounded-md'>
+              <div
+                key={`image-${index}`}
+                className='mb-4 overflow-hidden rounded-md'
+              >
                 <Image
                   src={image}
                   alt={`${project.title} - Image ${index + 1}`}
@@ -213,13 +254,12 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
     <FullPageLoader />
   );
 }
-
 const Main = tw.div`
   flex
   flex-col
   z-20
   relative
-  md:pt-10 pt-20
+  md:pt-10 pt-25
   w-full
 `;
 
@@ -240,16 +280,6 @@ const SeeLink = tw(Link)`
   text-foreground/80
   hover:text-primary
   transition-colors
-`;
-
-const Badge = tw.div`
-  bg-foreground/10
-  backdrop-blur-md
-  text-foreground/80
-  rounded-md
-  px-2
-  py-1
-  w-fit
 `;
 
 const PurpleTextSmall = tw.a`

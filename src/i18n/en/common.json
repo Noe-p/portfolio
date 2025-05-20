@@ -11,7 +11,7 @@
     "instagram": "Instagram",
     "sendEmail": "Send me an email",
     "projects": "Projects",
-    "tags": "Tags",
+    "tags": "Tech Stack",
     "date": "Date",
     "customer": "Customer"
   },
@@ -95,10 +95,11 @@
     "seeAll": "Discover all projects",
     "seeGithub": "View on GitHub",
     "seeWeb": "View the website",
-    "type": "Type of project"
+    "type": "Type of project",
+    "noProjectsFound": "No projects found"
   },
   "nav": {
-    "ABOUT": "Who am I?",
+    "ABOUT": "About me",
     "PROJECTS": "Discover my projects",
     "MUSIC": "Listen to my music"
   },

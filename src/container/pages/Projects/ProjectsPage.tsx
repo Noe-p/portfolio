@@ -1,18 +1,69 @@
+/* eslint-disable indent */
 import { Layout, P16, Row, Title } from '@/components';
+import { ProjectCard } from '@/components/ProjectCard';
+import { Badge } from '@/components/ui/Badge';
 import { useAppContext } from '@/contexts';
 import { ROUTES } from '@/routes';
+import { projects } from '@/static/projects';
+import { ProjectTag, ProjectType } from '@/types/project';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
+import { useMemo, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 export function ProjectsPage(): React.JSX.Element {
   const router = useRouter();
   const { t } = useTranslation();
   const { setIsTransitionStartOpen } = useAppContext();
+  const [selectedTags, setSelectedTags] = useState<ProjectTag[]>([]);
+  const [selectedType, setSelectedType] = useState<ProjectType | null>(null);
 
   const handleBack = (slug: string) => {
     setIsTransitionStartOpen(true);
     setTimeout(() => router.push(slug), 700);
+  };
+
+  const handleProjectClick = (slug: string) => {
+    setIsTransitionStartOpen(true);
+    setTimeout(() => router.push(ROUTES.projects.project(slug)), 700);
+  };
+
+  const allFilters = useMemo(() => {
+    const tags = new Set<ProjectTag>();
+    projects.forEach((project) => {
+      project.tags?.forEach((tag) => tags.add(tag));
+    });
+    return [...Object.values(ProjectType), ...Array.from(tags)];
+  }, []);
+
+  const filteredProjects = useMemo(() => {
+    let filtered = projects;
+
+    if (selectedType) {
+      filtered = filtered.filter((project) => project.type === selectedType);
+    }
+
+    if (selectedTags.length > 0) {
+      filtered = filtered.filter((project) =>
+        selectedTags.every((tag) => project.tags?.includes(tag))
+      );
+    }
+
+    return filtered;
+  }, [selectedTags, selectedType]);
+
+  const toggleFilter = (filter: ProjectType | ProjectTag) => {
+    if (Object.values(ProjectType).includes(filter as ProjectType)) {
+      setSelectedType((prev) =>
+        prev === filter ? null : (filter as ProjectType)
+      );
+    } else {
+      setSelectedTags((prev) =>
+        prev.includes(filter as ProjectTag)
+          ? prev.filter((t) => t !== filter)
+          : [...prev, filter as ProjectTag]
+      );
+    }
   };
 
   return (
@@ -28,7 +79,44 @@ export function ProjectsPage(): React.JSX.Element {
         <P16 className='w-full text-primary/70'>{t('enums:PROJECTS')}</P16>
       </Row>
       <Main>
-        <Title>{'Projects'}</Title>
+        <Title>{t('enums:PROJECTS')}</Title>
+
+        <TagsContainer>
+          {allFilters.map((filter) => (
+            <Badge
+              key={filter}
+              variant={
+                Object.values(ProjectType).includes(filter as ProjectType)
+                  ? selectedType === filter
+                    ? 'primary'
+                    : 'default'
+                  : selectedTags.includes(filter as ProjectTag)
+                  ? 'primary'
+                  : 'default'
+              }
+              className='cursor-pointer'
+              onClick={() => toggleFilter(filter)}
+            >
+              {t(`enums:${filter}`)}
+            </Badge>
+          ))}
+        </TagsContainer>
+
+        {filteredProjects.length === 0 ? (
+          <P16 className='text-foreground/70 text-center mt-8'>
+            {t('projects.noProjectsFound')}
+          </P16>
+        ) : (
+          <ProjectsGrid>
+            {filteredProjects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                onClick={() => handleProjectClick(project.slug)}
+              />
+            ))}
+          </ProjectsGrid>
+        )}
       </Main>
     </Layout>
   );
@@ -40,4 +128,26 @@ const Main = tw.div`
   z-20
   relative
   pt-30
+  md:px-10
+  space-y-8
+  min-h-screen
+  w-full
+`;
+
+const TagsContainer = tw.div`
+  flex
+  flex-wrap
+  gap-2
+  mt-4
+  justify-start
+`;
+
+const ProjectsGrid = tw.div`
+  grid
+  grid-cols-1
+  md:grid-cols-2
+  lg:grid-cols-3
+  gap-6
+  mt-8
+  w-full
 `;

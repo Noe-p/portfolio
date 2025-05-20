@@ -11,7 +11,7 @@
     "instagram": "Instagram",
     "sendEmail": "Envois-moi un email",
     "projects": "Projets",
-    "tags": "Tags",
+    "tags": "Technologies",
     "date": "Date",
     "customer": "Client"
   },
@@ -95,10 +95,11 @@
     "seeAll": "Découvrir tous les projets",
     "seeGithub": "Voir sur GitHub",
     "seeWeb": "Voir le site",
-    "type": "Type de projet"
+    "type": "Type de projet",
+    "noProjectsFound": "Aucun projet trouvé"
   },
   "nav": {
-    "ABOUT": "Qui suis-je ?",
+    "ABOUT": "À propos de moi",
     "PROJECTS": "Découvrir mes projets",
     "MUSIC": "Écouter ma musique"
   },

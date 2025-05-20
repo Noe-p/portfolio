@@ -1,22 +1,26 @@
 import { FullPageLoader } from '@/components';
 import { SeoPage } from '@/components/Layout/SeoPage';
 import { ProjectPage } from '@/container/pages/Projects/ProjectPage';
-import { PageBaseProps } from '@/types';
+import { projects } from '@/static/projects';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 type ProjectDetailProps = {
   slug: string;
+  project: (typeof projects)[0];
 };
 
-export default function ProjectDetail(props: ProjectDetailProps): JSX.Element {
-  const { slug } = props;
+export default function ProjectDetail({
+  project,
+  slug,
+}: ProjectDetailProps): JSX.Element {
   const { t } = useTranslation();
   const title = t(`projects.${slug}.metas.title`);
   const description = t(`projects.${slug}.metas.description`);
   const keywords = t(`projects.${slug}.metas.keywords`);
 
-  if (!slug) return <FullPageLoader />;
+  if (!project) return <FullPageLoader />;
   return (
     <SeoPage title={title} description={description} keywords={keywords}>
       <ProjectPage slug={slug} />
@@ -24,25 +28,38 @@ export default function ProjectDetail(props: ProjectDetailProps): JSX.Element {
   );
 }
 
-export async function getStaticProps({
+export const getStaticProps: GetStaticProps<ProjectDetailProps> = async ({
   locale,
   params,
-}: {
-  locale: string;
-  params: { slug: string };
-}): Promise<PageBaseProps> {
+}) => {
+  const project = projects.find((p) => p.slug === params?.slug);
+
+  if (!project) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(locale)),
-      slug: params.slug,
+      project,
+      slug: project.slug,
+      ...(await serverSideTranslations(locale || 'fr')),
     },
+    revalidate: 3600, // Revalidation toutes les heures
   };
-}
+};
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  const paths = projects.flatMap((project) =>
+    (locales || ['fr']).map((locale) => ({
+      params: { slug: project.slug },
+      locale,
+    }))
+  );
+
   return {
-    paths: [],
-    fallback: true,
+    paths,
+    fallback: 'blocking',
   };
-}
+};

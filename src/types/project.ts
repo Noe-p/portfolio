@@ -26,8 +26,7 @@ export interface Project {
   title: string;
   description: string;
   images: string[];
-  video: string;
-  firstImage: string;
+  videos: string[];
   date: Date;
   type: ProjectType;
   tags?: ProjectTag[];

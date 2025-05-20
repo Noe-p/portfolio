@@ -1,6 +1,6 @@
 import { SeoPage } from '@/components';
 import { ProjectsPage } from '@/container/pages/Projects/ProjectsPage';
-import { PageBaseProps } from '@/types';
+import { GetStaticProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
@@ -16,14 +16,11 @@ export default function IndexPage(): React.JSX.Element {
   );
 }
 
-export async function getStaticProps({
-  locale,
-}: {
-  locale: string;
-}): Promise<PageBaseProps> {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale)),
+      ...(await serverSideTranslations(locale || 'fr')),
     },
+    revalidate: 3600, // Revalidation toutes les heures
   };
-}
+};

@@ -22,7 +22,7 @@ export function ScrollProjects(): JSX.Element {
   const [currentProject, setCurrentProject] = useState<Project>(projects[0]);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const GAPSPACING = isMobile ? 15 : 25;
-  const SLOWDOWN_FACTOR = isMobile ? 5 : 3;
+  const SLOWDOWN_FACTOR = isMobile ? 4 : 3;
   const { setIsTransitionStartOpen } = useAppContext();
   const videoRefs = useRef<HTMLVideoElement[]>([]);
 
@@ -152,9 +152,9 @@ export function ScrollProjects(): JSX.Element {
                 muted
                 playsInline
                 preload={project === currentProject ? 'auto' : 'none'}
-                poster={project.firstImage}
+                poster={project.images[0]}
               >
-                <source src={project.video} type='video/mp4' />
+                <source src={project.videos[0]} type='video/mp4' />
               </VideoHeader>
             ))}
           </Col>
