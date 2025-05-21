@@ -9,7 +9,8 @@ import { useEffect, useRef, useState } from 'react';
 export function FullPageScroll() {
   const t = useTranslations('common');
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0); // Pour suivre la progression du scroll
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   const sectionsData = [
     {
@@ -43,6 +44,12 @@ export function FullPageScroll() {
   ];
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     async function initGsap() {
       const { gsap, ScrollTrigger } = await getGsap();
 
@@ -72,7 +79,6 @@ export function FullPageScroll() {
           pin: true,
           pinSpacing: true,
           onUpdate: (self) => {
-            // Mise à jour de la progression du scroll
             setScrollProgress(self.progress);
           },
         } satisfies ScrollTrigger.Vars,
@@ -149,38 +155,40 @@ export function FullPageScroll() {
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       });
     };
-  }, []);
+  }, [mounted]);
 
   return (
-    <div ref={containerRef} className='relative w-full h-screen'>
-      {/* Scroll Progress Bar */}
-      <div
-        className={cn(
-          'fixed top-1/4 md:top-1/3 -translate-y-12 w-full md:w-1/2 h-1 left-1/2 -translate-x-1/2  bg-foreground/20 rounded-full transition-all duration-300 ease-in-out',
-          scrollProgress > 0 ? 'opacity-100' : 'opacity-0'
-        )}
-      >
+    mounted && (
+      <div ref={containerRef} className='relative w-full h-screen'>
+        {/* Scroll Progress Bar */}
         <div
-          className='h-full bg-primary  rounded-full'
-          style={{ width: `${scrollProgress * 100}%` }}
-        />
-      </div>
-
-      {/* Sections */}
-      {sectionsData.map((section, i) => (
-        <div
-          key={i}
-          className='section absolute top-0 left-0 w-full h-screen flex items-center justify-center'
+          className={cn(
+            'fixed top-1/4 md:top-1/3 -translate-y-12 w-full md:w-1/2 h-1 left-1/2 -translate-x-1/2  bg-foreground/20 rounded-full transition-all duration-300 ease-in-out',
+            scrollProgress > 0 ? 'opacity-100' : 'opacity-0'
+          )}
         >
-          <Col className='grid grid-cols-1 md:grid-cols-2 items-center gap-10'>
-            <Title className='title'>{section.title}</Title>
-            <Col className='text-block'>
-              <P24 className='font-bold'>{section.content.title}</P24>
-              <P18 className='mt-1 md:mt-2'>{section.content.text}</P18>
-            </Col>
-          </Col>
+          <div
+            className='h-full bg-primary  rounded-full'
+            style={{ width: `${scrollProgress * 100}%` }}
+          />
         </div>
-      ))}
-    </div>
+
+        {/* Sections */}
+        {sectionsData.map((section, i) => (
+          <div
+            key={i}
+            className='section absolute top-0 left-0 w-full h-screen flex items-center justify-center'
+          >
+            <Col className='grid grid-cols-1 md:grid-cols-2 items-center gap-10'>
+              <Title className='title'>{section.title}</Title>
+              <Col className='text-block'>
+                <P24 className='font-bold'>{section.content.title}</P24>
+                <P18 className='mt-1 md:mt-2'>{section.content.text}</P18>
+              </Col>
+            </Col>
+          </div>
+        ))}
+      </div>
+    )
   );
 }
