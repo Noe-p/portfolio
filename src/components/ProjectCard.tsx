@@ -1,5 +1,4 @@
 import { Project } from '@/types/project';
-import { t } from 'i18next';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
@@ -27,7 +26,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
         />
       </ImageContainer>
       <Content>
-        <P16 className='font-medium'>{t(`projects:${project.title}`)}</P16>
+        <P16 className='font-medium'>{tProjects(project.title)}</P16>
         <P16 className='text-foreground/70 line-clamp-2'>
           {tProjects(project.description)}
         </P16>
