@@ -1,15 +1,17 @@
+'use client';
 import {
-  Badge,
   Col,
   FullPageLoader,
   Grid3,
   GridCol1,
   GridCol2,
   Layout,
+  Link,
   P14,
   P16,
   Row,
 } from '@/components';
+import { Badge } from '@/components/ui/Badge';
 import { Marquee } from '@/components/ui/marquee';
 import { useAppContext } from '@/contexts';
 import { useParallax } from '@/hooks/useParallax';
@@ -18,25 +20,27 @@ import { projects } from '@/static/projects';
 import { format } from 'date-fns';
 import { enUS, fr } from 'date-fns/locale';
 import { ArrowUpRightSquareIcon } from 'lucide-react';
-import { Trans, useTranslation } from 'next-i18next';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import Masonry from 'react-masonry-css';
 import tw from 'tailwind-styled-components';
 import { useMediaQuery } from 'usehooks-ts';
 
-interface ProjectPageProps {
+interface ProjectDetailProps {
   slug: string;
 }
 
-export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
+export function ProjectDetail({ slug }: ProjectDetailProps) {
+  const project = projects.find((p) => p.slug === slug);
+  const tProjects = useTranslations('projects');
+  const tEnums = useTranslations('enums');
+  const tCommon = useTranslations('common');
+  const locale = useLocale();
   const router = useRouter();
-  const { t } = useTranslation();
-  const { setIsTransitionStartOpen } = useAppContext();
-  const project = projects.find((project) => project.slug === slug);
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const { setIsTransitionStartOpen } = useAppContext();
 
   // Références pour le parallax
   const titleRef = useRef<HTMLDivElement>(null);
@@ -64,7 +68,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
 
   const handleBack = (slug: string) => {
     setIsTransitionStartOpen(true);
-    setTimeout(() => router.push(slug, undefined, { shallow: true }), 700);
+    setTimeout(() => router.push(slug, undefined), 700);
   };
 
   return project ? (
@@ -74,24 +78,22 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
           onClick={() => handleBack(ROUTES.home)}
           className='text-foreground/80 hover:text-foreground cursor-pointer transition duration-300'
         >
-          {t('enums:HOME')}
+          {tEnums('HOME')}
         </P16>
         <P16 className='text-foreground/80'>{'/'}</P16>
         <P16
           onClick={() => handleBack(ROUTES.projects.all)}
           className='text-foreground/80 hover:text-foreground cursor-pointer transition duration-300'
         >
-          {t('enums:PROJECTS')}
+          {tEnums('PROJECTS')}
         </P16>
         <P16 className='text-foreground/80'>{'/'}</P16>
-        <P16 className='w-full text-primary/70'>
-          {t(`projects:${project.title}`)}
-        </P16>
+        <P16 className='w-full text-primary/70'>{tProjects(project.title)}</P16>
       </Row>
       <Main>
         <div ref={titleRef}>
           <Marquee pauseOnHover={false} speed={isMobile ? 50 : 100}>
-            <Text>{t(`projects:${project.title}`)}</Text>
+            <Text>{tProjects(project.title)}</Text>
           </Marquee>
         </div>
         <Grid3 ref={descriptionRef} className='md:gap-20 mt-5'>
@@ -105,7 +107,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
                     rel='noopener noreferrer'
                   >
                     <P16 className='text-foreground/80 group-hover:text-primary transition-colors'>
-                      {t('projects.seeGithub')}
+                      {tCommon('projects.seeGithub')}
                     </P16>
                     <ArrowUpRightSquareIcon
                       className='text-foreground/80 group-hover:text-primary transition-colors'
@@ -115,7 +117,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
                 ) : (
                   <div className='opacity-50 cursor-not-allowed w-fit items-center flex gap-1'>
                     <P16 className='text-foreground/80'>
-                      {t('projects.seeGithub')}
+                      {tCommon('projects.seeGithub')}
                     </P16>
                     <ArrowUpRightSquareIcon
                       className='text-foreground/80'
@@ -130,7 +132,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
                     rel='noopener noreferrer'
                   >
                     <P16 className='text-foreground/80 group-hover:text-primary transition-colors'>
-                      {t('projects.seeWeb')}
+                      {tCommon('projects.seeWeb')}
                     </P16>
                     <ArrowUpRightSquareIcon
                       className='text-foreground/80 group-hover:text-primary transition-colors'
@@ -140,7 +142,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
                 ) : (
                   <div className='opacity-50 cursor-not-allowed w-fit items-center flex gap-1'>
                     <P16 className='text-foreground/80'>
-                      {t('projects.seeWeb')}
+                      {tCommon('projects.seeWeb')}
                     </P16>
                     <ArrowUpRightSquareIcon
                       className='text-foreground/80'
@@ -151,49 +153,36 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
               </Row>
               <Col className='gap-2'>
                 <P16 className='uppercase text-foreground/60'>
-                  {t('generics.tags')}
+                  {tCommon('generics.tags')}
                 </P16>
                 <Row className='gap-1 flex-wrap'>
                   {project.tags?.map((tag) => (
-                    <Badge key={tag}>{t(`enums:${tag}`)}</Badge>
+                    <Badge key={tag}>{tEnums(tag)}</Badge>
                   ))}
                 </Row>
               </Col>
               <Row className='items-start justify-between'>
                 <Col className='gap-2'>
                   <P16 className='uppercase text-foreground/60'>
-                    {t('generics.date')}
+                    {tCommon('generics.date')}
                   </P16>
                   <P14>
                     {format(new Date(project.date), 'dd MMMM yyyy', {
-                      locale: t('langage') === 'en' ? enUS : fr,
+                      locale: locale === 'en' ? enUS : fr,
                     })}
                   </P14>
                 </Col>
                 <Col className='gap-2'>
                   <P16 className='uppercase text-foreground/60'>
-                    {t('projects.type')}
+                    {tCommon('projects.type')}
                   </P16>
-                  <Badge variant='primary'>{t(`enums:${project.type}`)}</Badge>
+                  <Badge variant='primary'>{tEnums(project.type)}</Badge>
                 </Col>
               </Row>
             </Col>
           </GridCol1>
           <GridCol2 className='md:ml-25 mt-10 md:mt-0'>
-            <P16>
-              <Trans
-                i18nKey={`projects:${project.description}`}
-                components={{
-                  purple: (
-                    <PurpleTextSmall
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      href={project.customerUrl}
-                    />
-                  ),
-                }}
-              />
-            </P16>
+            <P16>{tProjects(project.description)}</P16>
           </GridCol2>
         </Grid3>
         <div className='w-full md:mt-20 mt-15' ref={imagesRef}>
@@ -254,6 +243,7 @@ export function ProjectPage({ slug }: ProjectPageProps): React.JSX.Element {
     <FullPageLoader />
   );
 }
+
 const Main = tw.div`
   flex
   flex-col
@@ -280,10 +270,4 @@ const SeeLink = tw(Link)`
   text-foreground/80
   hover:text-primary
   transition-colors
-`;
-
-const PurpleTextSmall = tw.a`
-  text-primary/90 hover:text-primary cursor-pointer
-  font-semibold
-  transition-all 
 `;

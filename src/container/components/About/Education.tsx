@@ -1,7 +1,6 @@
 'use client';
 import { Col, P14, P16, P18, P24, Row, RowBetween } from '@/components';
 import { Separator } from '@/components/ui/separator';
-import { EducationData, ExperienceData } from '@/types';
 import { ExternalLinkIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useMediaQuery } from 'usehooks-ts';

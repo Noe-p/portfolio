@@ -1,3 +1,5 @@
+'use client';
+
 import { Col, H1, P12, P16, Row, Title } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts';
@@ -9,14 +11,19 @@ import { Project } from '@/types/project';
 import { format } from 'date-fns';
 import { enUS, fr } from 'date-fns/locale';
 import { ArrowUpRightSquareIcon, ChevronRight } from 'lucide-react';
-import { useTranslation } from 'next-i18next';
-import router from 'next/router';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
+
 import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { useMediaQuery } from 'usehooks-ts';
 
 export function ScrollProjects(): JSX.Element {
-  const { t } = useTranslation();
+  const tCommon = useTranslations('common');
+  const tProject = useTranslations('projects');
+  const tEnums = useTranslations('enums');
+  const locale = useLocale();
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const titlesRef = useRef<HTMLDivElement>(null);
   const [currentProject, setCurrentProject] = useState<Project>(projects[0]);
@@ -132,7 +139,7 @@ export function ScrollProjects(): JSX.Element {
             isMobile ? '' : 'md:text-3xl'
           )}
         >
-          {t('generics.projects')}
+          {tCommon('generics.projects')}
         </Title>
 
         <VideoContainer>
@@ -166,12 +173,12 @@ export function ScrollProjects(): JSX.Element {
               handleClick(ROUTES.projects.project(currentProject.slug))
             }
           >
-            <P16 className='text-foreground'>{t('projects.seeOne')}</P16>
+            <P16 className='text-foreground'>{tCommon('projects.seeOne')}</P16>
             <ArrowUpRightSquareIcon className='text-foreground' size={15} />
           </ProjectLink>
           <P16 className='text-[14px] md:text-[16px] font-semibold'>
             {format(new Date(currentProject.date), 'dd MMMM yyyy', {
-              locale: t('langage') === 'en' ? enUS : fr,
+              locale: locale === 'en' ? enUS : fr,
             })}
           </P16>
         </ProjectInfoBar>
@@ -197,9 +204,9 @@ export function ScrollProjects(): JSX.Element {
               <H1
                 className={cn('title md:text-6xl text-2xl transition-opacity')}
               >
-                {t(`projects:${project.title}`)}
+                {tProject(project.title)}
               </H1>
-              <ProjectType>{t(`enums:${project.type}`)}</ProjectType>
+              <ProjectType>{tEnums(project.type)}</ProjectType>
             </ProjectTitle>
           ))}
         </div>
@@ -209,7 +216,7 @@ export function ScrollProjects(): JSX.Element {
           onClick={() => handleClick(ROUTES.projects.all)}
           variant='outline'
         >
-          {t('projects.seeAll')}
+          {tCommon('projects.seeAll')}
           <ArrowUpRightSquareIcon
             className='text-foreground/70 group-hover:text-primary transition-colors'
             size={15}
@@ -299,6 +306,7 @@ const ScrollIndicator = tw(ChevronRight)`
   top-1/2 
   -translate-y-1/2 
   z-10
+  text-primary
 `;
 
 const SeeAllButton = tw(Button)`

@@ -1,5 +1,6 @@
 import { Project } from '@/types/project';
-import { Trans, useTranslation } from 'next-i18next';
+import { t } from 'i18next';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import tw from 'tailwind-styled-components';
 import { P16 } from './Texts';
@@ -11,14 +12,16 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, onClick }: ProjectCardProps) {
-  const { t } = useTranslation();
+  const tEnums = useTranslations('enums');
+  const tCommons = useTranslations('common');
+  const tProjects = useTranslations('projects');
 
   return (
     <Card onClick={onClick}>
       <ImageContainer>
         <Image
           src={project.images[0]}
-          alt={t(project.title)}
+          alt={tCommons(project.title)}
           fill
           className='object-cover'
         />
@@ -26,18 +29,13 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
       <Content>
         <P16 className='font-medium'>{t(`projects:${project.title}`)}</P16>
         <P16 className='text-foreground/70 line-clamp-2'>
-          <Trans
-            i18nKey={`projects:${project.description}`}
-            components={{
-              purple: <PurpleTextSmall />,
-            }}
-          />
+          {tProjects(project.description)}
         </P16>
 
         <TagsContainer>
           {project.tags?.map((tag) => (
             <Badge key={tag} variant='primary'>
-              {t(`enums:${tag}`)}
+              {tEnums(tag)}
             </Badge>
           ))}
         </TagsContainer>
@@ -75,8 +73,4 @@ const TagsContainer = tw.div`
   flex-wrap
   gap-2
   mt-2
-`;
-
-const PurpleTextSmall = tw.a`
-  text-foreground/70
 `;

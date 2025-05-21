@@ -4,8 +4,7 @@
 import { useScroll } from '@/hooks/useScroll';
 import { getGsap } from '@/services/registerGsap';
 import { useTranslations } from 'next-intl';
-
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 interface MacaronProps {

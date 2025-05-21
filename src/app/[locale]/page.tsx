@@ -1,19 +1,31 @@
-import { Layout } from '@/components';
-import { Header } from '@/container/components';
-import tw from 'tailwind-styled-components';
+import { HomePage } from '@/container/pages/HomePage';
+import { getMessages } from '@/i18n/config';
+import { defaultMetadata } from '@/services/metadata';
+import { Metadata } from 'next';
 
-export default function HomePage(): React.JSX.Element {
-  return (
-    <Layout isNavClose={false}>
-      <Header />
-      <Main></Main>
-    </Layout>
-  );
+type Props = {
+  params: { locale: string };
+};
+
+export async function generateMetadata({
+  params: { locale },
+}: Props): Promise<Metadata> {
+  const messages = await getMessages(locale);
+  const t = messages.metas;
+
+  return {
+    ...defaultMetadata,
+    title: t.home.title,
+    description: t.home.description,
+    keywords: t.home.keywords,
+    openGraph: {
+      ...defaultMetadata.openGraph,
+      title: t.home.title,
+      description: t.home.description,
+    },
+  };
 }
 
-const Main = tw.div`
-  flex
-  flex-col
-  w-full md:w-2/3
-  z-20
-`;
+export default function Page(): React.JSX.Element {
+  return <HomePage />;
+}

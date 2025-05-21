@@ -9,7 +9,7 @@ import { cn } from '@/services/utils';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
 import { NavKeys } from '../Navbar';

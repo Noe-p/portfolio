@@ -1,8 +1,8 @@
 import { Layout } from '@/components';
 import { Separator } from '@/components/ui/separator';
-import { Header, ScrollProjects } from '@/container/components';
+import { Header, ScrollProjects } from '../components';
 
-export function HomePage(): React.JSX.Element {
+export function HomePage(): JSX.Element {
   return (
     <Layout isNavClose={false}>
       <Header />

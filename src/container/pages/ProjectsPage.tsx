@@ -1,4 +1,5 @@
 /* eslint-disable indent */
+'use client';
 import { Layout, P16, Row, Title } from '@/components';
 import { ProjectCard } from '@/components/ProjectCard';
 import { Badge } from '@/components/ui/Badge';
@@ -6,14 +7,16 @@ import { useAppContext } from '@/contexts';
 import { ROUTES } from '@/routes';
 import { projects } from '@/static/projects';
 import { ProjectTag, ProjectType } from '@/types/project';
-import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 export function ProjectsPage(): React.JSX.Element {
   const router = useRouter();
-  const { t } = useTranslation();
+  const tCommons = useTranslations('common');
+  const tEnums = useTranslations('enums');
+
   const { setIsTransitionStartOpen } = useAppContext();
   const [selectedTags, setSelectedTags] = useState<ProjectTag[]>([]);
   const [selectedType, setSelectedType] = useState<ProjectType | null>(null);
@@ -73,13 +76,13 @@ export function ProjectsPage(): React.JSX.Element {
           onClick={() => handleBack(ROUTES.home)}
           className='text-foreground/70 hover:text-foreground cursor-pointer transition duration-300'
         >
-          {t('enums:HOME')}
+          {tEnums('HOME')}
         </P16>
         <P16 className='text-foreground/70'>{'/'}</P16>
-        <P16 className='w-full text-primary/70'>{t('enums:PROJECTS')}</P16>
+        <P16 className='w-full text-primary/70'>{tEnums('PROJECTS')}</P16>
       </Row>
       <Main>
-        <Title>{t('enums:PROJECTS')}</Title>
+        <Title>{tEnums('PROJECTS')}</Title>
 
         <TagsContainer>
           {allFilters.map((filter) => (
@@ -97,14 +100,14 @@ export function ProjectsPage(): React.JSX.Element {
               className='cursor-pointer'
               onClick={() => toggleFilter(filter)}
             >
-              {t(`enums:${filter}`)}
+              {tEnums(filter)}
             </Badge>
           ))}
         </TagsContainer>
 
         {filteredProjects.length === 0 ? (
           <P16 className='text-foreground/70 text-center mt-8'>
-            {t('projects.noProjectsFound')}
+            {tCommons('projects.noProjectsFound')}
           </P16>
         ) : (
           <ProjectsGrid>
