@@ -13,6 +13,6 @@
   },
   "fast-foodie": {
     "title": "Fast & Foodie",
-    "description": "Fast Foodie is a <purple>Bob Le Développeur</purple> demo project for the Sakana framework.<br/><br/> It uses the Sakana framework to create a demo application that displays information about fast food."
+    "description": "Fast Foodie is a <a>Bob Le Développeur</a> demo project for the Sakana framework.<br></br><br></br> It uses the Sakana framework to create a demo application that displays information about fast food."
   }
 }

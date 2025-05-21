@@ -1,5 +1,5 @@
 import { AboutPage } from '@/container/pages/AboutPage';
-import { getMessages } from '@/i18n/config';
+import { getMessages, locales } from '@/i18n/config';
 import { defaultMetadata } from '@/services/metadata';
 import { PageBaseProps } from '@/types';
 import { Metadata } from 'next';
@@ -29,6 +29,10 @@ export async function generateMetadata(
       description: t.about.description,
     },
   };
+}
+
+export async function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
 }
 
 export default function About(): React.JSX.Element {

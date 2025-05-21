@@ -12,23 +12,28 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, onClick }: ProjectCardProps) {
   const tEnums = useTranslations('enums');
-  const tCommons = useTranslations('common');
   const tProjects = useTranslations('projects');
+
+  if (!tProjects || !tEnums || !project) return null;
 
   return (
     <Card onClick={onClick}>
       <ImageContainer>
         <Image
           src={project.images[0]}
-          alt={tCommons(project.title)}
+          alt={tProjects(project.title)}
           fill
           className='object-cover'
+          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         />
       </ImageContainer>
       <Content>
         <P16 className='font-medium'>{tProjects(project.title)}</P16>
         <P16 className='text-foreground/70 line-clamp-2'>
-          {tProjects(project.description)}
+          {tProjects.rich(project.description, {
+            a: (chunks) => <PurpleTextSmall>{chunks}</PurpleTextSmall>,
+            br: () => <br />,
+          })}
         </P16>
 
         <TagsContainer>
@@ -72,4 +77,9 @@ const TagsContainer = tw.div`
   flex-wrap
   gap-2
   mt-2
+`;
+const PurpleTextSmall = tw.span`
+  text-foreground/70
+  font-semibold
+  inline
 `;

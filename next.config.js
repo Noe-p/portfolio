@@ -39,6 +39,9 @@ const nextConfig = {
       },
     ];
   },
+  experimental: {
+    staticPageGenerationTimeout: 20000,
+  },
 };
 
 // 4. Exposez la config étendue par next-intl

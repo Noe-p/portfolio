@@ -72,10 +72,11 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
               src='/images/header.webP'
               alt='Noé Philippe de dos sur une plage'
               width={320}
-              height={426}
+              height={480}
               fetchPriority='high'
               quality={80}
               priority
+              style={{ width: 'auto', height: 'auto' }}
             />
           </div>
           <Macaron className='w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28' />
@@ -101,6 +102,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
                 fetchPriority='high'
                 quality={80}
                 priority
+                style={{ width: 'auto', height: 'auto' }}
               />
             </div>
             <HeaderContent onClick={handleClick} t={t} />

@@ -101,8 +101,8 @@ export function AboutPage(): React.JSX.Element {
                   'rounded md:-translate-y-25 -translate-y-15 md:-translate-x-15 translate-x-15 z-0 w-60 md:w-80 h-auto transition-all duration-500 ease-out',
                   isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
                 )}
-                width={320}
-                height={240}
+                width={280}
+                height={373}
                 priority
               />
             </div>

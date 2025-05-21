@@ -8,12 +8,9 @@ import { getGsap } from '@/services/registerGsap';
 import { cn } from '@/services/utils';
 import { projects } from '@/static/projects';
 import { Project } from '@/types/project';
-import { format } from 'date-fns';
-import { enUS, fr } from 'date-fns/locale';
 import { ArrowUpRightSquareIcon, ChevronRight } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useFormatter, useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-
 import { useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { useMediaQuery } from 'usehooks-ts';
@@ -22,7 +19,7 @@ export function ScrollProjects(): JSX.Element {
   const tCommon = useTranslations('common');
   const tProject = useTranslations('projects');
   const tEnums = useTranslations('enums');
-  const locale = useLocale();
+  const format = useFormatter();
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const titlesRef = useRef<HTMLDivElement>(null);
@@ -177,8 +174,10 @@ export function ScrollProjects(): JSX.Element {
             <ArrowUpRightSquareIcon className='text-foreground' size={15} />
           </ProjectLink>
           <P16 className='text-[14px] md:text-[16px] font-semibold'>
-            {format(new Date(currentProject.date), 'dd MMMM yyyy', {
-              locale: locale === 'en' ? enUS : fr,
+            {format.dateTime(new Date(currentProject.date), {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
             })}
           </P16>
         </ProjectInfoBar>

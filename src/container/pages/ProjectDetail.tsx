@@ -17,10 +17,8 @@ import { useAppContext } from '@/contexts';
 import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
 import { projects } from '@/static/projects';
-import { format } from 'date-fns';
-import { enUS, fr } from 'date-fns/locale';
 import { ArrowUpRightSquareIcon } from 'lucide-react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useFormatter, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
@@ -37,7 +35,8 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
   const tProjects = useTranslations('projects');
   const tEnums = useTranslations('enums');
   const tCommon = useTranslations('common');
-  const locale = useLocale();
+  const format = useFormatter();
+
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const { setIsTransitionStartOpen } = useAppContext();
@@ -167,8 +166,10 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                     {tCommon('generics.date')}
                   </P16>
                   <P14>
-                    {format(new Date(project.date), 'dd MMMM yyyy', {
-                      locale: locale === 'en' ? enUS : fr,
+                    {format.dateTime(new Date(project.date), {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
                     })}
                   </P14>
                 </Col>
@@ -182,7 +183,16 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             </Col>
           </GridCol1>
           <GridCol2 className='md:ml-25 mt-10 md:mt-0'>
-            <P16>{tProjects(project.description)}</P16>
+            <P16>
+              {tProjects.rich(project.description, {
+                a: (chunks) => (
+                  <PurpleTextSmall href={project.link}>
+                    {chunks}
+                  </PurpleTextSmall>
+                ),
+                br: () => <br />,
+              })}
+            </P16>
           </GridCol2>
         </Grid3>
         <div className='w-full md:mt-20 mt-15' ref={imagesRef}>
@@ -228,15 +238,6 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             ))}
           </Masonry>
         </div>
-
-        {/* <Image
-          src={project.firstImage}
-          alt={project.title}
-          className='object-cover rounded'
-          priority
-          width={1405}
-          height={822}
-        /> */}
       </Main>
     </Layout>
   ) : (
@@ -270,4 +271,10 @@ const SeeLink = tw(Link)`
   text-foreground/80
   hover:text-primary
   transition-colors
+`;
+
+const PurpleTextSmall = tw.a`
+  text-primary/90 hover:text-primary cursor-pointer
+  font-semibold
+  transition-all 
 `;
