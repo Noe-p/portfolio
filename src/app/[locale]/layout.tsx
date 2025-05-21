@@ -44,9 +44,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang={locale} className={`${delaGothic.variable} ${monda.variable}`}>
-      <header>
-        <link rel='icon' href='/logos/logo_128x128.webp' />
-      </header>
       <body>
         <IntlProvider
           timeZone={timeZone}

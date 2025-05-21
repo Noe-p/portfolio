@@ -1,16 +1,20 @@
 import { HomePage } from '@/container/pages/HomePage';
 import { getMessages } from '@/i18n/config';
 import { defaultMetadata } from '@/services/metadata';
+import { PageBaseProps } from '@/types';
 import { Metadata } from 'next';
 
-type Props = {
-  params: { locale: string };
-};
+export async function generateMetadata(
+  props: PageBaseProps
+): Promise<Metadata> {
+  const params = await props.params;
+  const messages = await getMessages(params.locale);
 
-export async function generateMetadata({
-  params: { locale },
-}: Props): Promise<Metadata> {
-  const messages = await getMessages(locale);
+  if (!messages?.metas) {
+    console.error(`Messages not found for locale: ${params.locale}`);
+    return defaultMetadata;
+  }
+
   const t = messages.metas;
 
   return {

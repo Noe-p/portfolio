@@ -1,6 +1,10 @@
 import { Metadata } from 'next';
 
 export const defaultMetadata: Metadata = {
+  icons: {
+    icon: '/logos/logo_152x152.webp',
+    shortcut: '/logos/logo_152x152.webp',
+  },
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, '') || ''
   ),

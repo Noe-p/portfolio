@@ -1,4 +1,7 @@
 export interface PageBaseProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  props: any;
+  params: Promise<{
+    locale: string;
+    slug?: string;
+  }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
