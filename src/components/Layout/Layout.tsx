@@ -51,12 +51,13 @@ export function Layout(props: LayoutProps): React.JSX.Element {
 
   const handleLanguageChange = (lang: string) => {
     const segments = pathname.split('/').filter(Boolean);
-    const newPath =
+    // On retire le préfixe de langue s'il existe
+    const pathWithoutLocale =
       segments[0] === 'en' || segments[0] === 'fr'
-        ? '/' + segments.slice(1).join('/')
-        : '/' + segments.join('/');
+        ? segments.slice(1).join('/')
+        : segments.join('/');
 
-    router.replace(`/${lang}${newPath}`);
+    router.push(`/${lang}/${pathWithoutLocale}`);
   };
 
   return (
