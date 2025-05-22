@@ -156,9 +156,9 @@ export function ScrollProjects(): JSX.Element {
                 muted
                 playsInline
                 preload={project === currentProject ? 'auto' : 'none'}
-                poster={project.images[0]}
+                poster={project.media.desktop[0]}
               >
-                <source src={project.videos[0]} type='video/mp4' />
+                <source src={project.media.videos[0]} type='video/mp4' />
               </VideoHeader>
             ))}
           </Col>

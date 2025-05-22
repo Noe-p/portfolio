@@ -96,7 +96,10 @@
     "seeGithub": "View on GitHub",
     "seeWeb": "View the website",
     "type": "Type of project",
-    "noProjectsFound": "No projects found"
+    "noProjectsFound": "No projects found",
+    "desktopImages": "Desktop images",
+    "mobileImages": "Mobile images",
+    "videos": "Videos"
   },
   "nav": {
     "ABOUT": "About me",

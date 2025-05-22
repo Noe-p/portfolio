@@ -55,12 +55,12 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
     },
     {
       ref: descriptionRef,
-      speed: 80,
+      speed: 50,
       easing: 'linear',
     },
     {
       ref: imagesRef,
-      speed: -50,
+      speed: -20,
       easing: 'easeInCubic',
     },
   ]);
@@ -186,7 +186,11 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             <P16>
               {tProjects.rich(project.description, {
                 a: (chunks) => (
-                  <PurpleTextSmall href={project.link}>
+                  <PurpleTextSmall
+                    href={project.customerUrl}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
                     {chunks}
                   </PurpleTextSmall>
                 ),
@@ -195,48 +199,122 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             </P16>
           </GridCol2>
         </Grid3>
-        <div className='w-full md:mt-20 mt-15' ref={imagesRef}>
-          <Masonry
-            breakpointCols={{
-              default: project.images.length === 1 ? 1 : 3,
-              900: project.images.length === 1 ? 1 : 2,
-              750: 1,
-            }}
-            className='flex -ml-4 w-auto'
-            columnClassName='pl-4 bg-clip-padding'
-          >
-            {project.videos?.map((video, index) => (
-              <div
-                key={`video-${index}`}
-                className='mb-4 overflow-hidden rounded-md'
-              >
-                <video
-                  src={video}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className='w-full h-auto object-cover'
-                  poster={project.images[0]}
-                />
+        <div
+          className='w-full md:mt-20 mt-15  bg-foreground/15 rounded-md p-1'
+          ref={imagesRef}
+        >
+          {project.media.videos && project.media.videos.length > 0 && (
+            <div className='mb-10 mt-3'>
+              <P16 className='uppercase text-foreground/60 mb-4 ml-4'>
+                {tCommon('projects.videos')}
+              </P16>
+              <div className='flex flex-col md:flex-row gap-5'>
+                {project.media.videos[0] && (
+                  <div className='w-full md:w-2/3'>
+                    <video
+                      className='w-full h-auto md:h-[400px] md:object-cover rounded-md'
+                      loop
+                      muted
+                      autoPlay
+                      preload='auto'
+                    >
+                      <source
+                        src={project.media.videos[0]}
+                        type='video/mp4'
+                        className='rounded-md'
+                      />
+                      {'Your browser does not support the video tag.'}
+                    </video>
+                  </div>
+                )}
+                {project.media.videos[1] && (
+                  <div className='w-full md:w-1/3 flex items-center justify-center'>
+                    <video
+                      className='w-full md:w-auto h-auto md:h-[400px] md:object-contain rounded-md'
+                      loop
+                      muted
+                      autoPlay
+                      preload='auto'
+                    >
+                      <source
+                        src={project.media.videos[1]}
+                        type='video/mp4'
+                        className='rounded-md'
+                      />
+                      {'Your browser does not support the video tag.'}
+                    </video>
+                  </div>
+                )}
               </div>
-            ))}
-            {project.images.map((image, index) => (
-              <div
-                key={`image-${index}`}
-                className='mb-4 overflow-hidden rounded-md'
+            </div>
+          )}
+
+          {project.media.desktop && project.media.desktop.length > 0 && (
+            <div className='mb-10'>
+              <P16 className='uppercase text-foreground/60 mb-4 ml-4'>
+                {tCommon('projects.desktopImages')}
+              </P16>
+              <Masonry
+                breakpointCols={{
+                  default: project.media.desktop.length === 1 ? 1 : 3,
+                  900: project.media.desktop.length === 1 ? 1 : 2,
+                  750: 1,
+                }}
+                className='flex -ml-4 w-auto'
+                columnClassName='pl-4 bg-clip-padding'
               >
-                <Image
-                  src={image}
-                  alt={`${project.title} - Image ${index + 1}`}
-                  className='w-full h-auto object-cover'
-                  width={project.images.length === 1 ? 1200 : 500}
-                  height={project.images.length === 1 ? 800 : 300}
-                  priority={index === 0}
-                />
-              </div>
-            ))}
-          </Masonry>
+                {project.media.desktop.map((image, index) => (
+                  <div
+                    key={`image-${index}`}
+                    className='mb-4 overflow-hidden rounded-md'
+                  >
+                    <Image
+                      src={image}
+                      alt={`${project.title} - Image ${index + 1}`}
+                      className='w-full h-auto object-cover'
+                      width={project.media.desktop.length === 1 ? 1200 : 500}
+                      height={project.media.desktop.length === 1 ? 800 : 300}
+                      priority={index === 0}
+                    />
+                  </div>
+                ))}
+              </Masonry>
+            </div>
+          )}
+
+          {project.media.mobile && project.media.mobile.length > 0 && (
+            <div>
+              <P16 className='uppercase text-foreground/60 mb-4 ml-4'>
+                {tCommon('projects.mobileImages')}
+              </P16>
+              <Masonry
+                breakpointCols={{
+                  default: project.media.mobile.length === 1 ? 1 : 4,
+                  1200: project.media.mobile.length === 1 ? 1 : 3,
+                  900: project.media.mobile.length === 1 ? 1 : 2,
+                  750: 1,
+                }}
+                className='flex -ml-4 w-auto'
+                columnClassName='pl-4 bg-clip-padding'
+              >
+                {project.media.mobile.map((image, index) => (
+                  <div
+                    key={`image-${index}`}
+                    className='mb-4 overflow-hidden rounded-md'
+                  >
+                    <Image
+                      src={image}
+                      alt={`${project.title} - Mobile Image ${index + 1}`}
+                      className='w-full h-auto object-cover'
+                      width={project.media.mobile.length === 1 ? 800 : 300}
+                      height={project.media.mobile.length === 1 ? 1200 : 450}
+                      priority={index === 0}
+                    />
+                  </div>
+                ))}
+              </Masonry>
+            </div>
+          )}
         </div>
       </Main>
     </Layout>

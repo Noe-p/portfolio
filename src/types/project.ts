@@ -19,14 +19,20 @@ export enum ProjectTag {
   DOCKER = 'DOCKER',
   POSTGRESQL = 'POSTGRESQL',
   GSAP = 'GSAP',
+  PROG_WEB_APP = 'PROG_WEB_APP',
+}
+
+export interface Media {
+  mobile: string[];
+  desktop: string[];
+  videos: string[];
 }
 
 export interface Project {
   id: string;
   title: string;
   description: string;
-  images: string[];
-  videos: string[];
+  media: Media;
   date: string;
   type: ProjectType;
   tags?: ProjectTag[];

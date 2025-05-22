@@ -1,7 +1,7 @@
 {
   "sakana-san": {
     "title": "Sakana San",
-    "description": "Sakana San est un projet de démonstration pour le framework Sakana. Il utilise le framework Sakana pour créer une application de démonstration qui affiche des informations sur les poissons."
+    "description": "Projet réalisé en freelance pour <a>Sakana San</a> (Louis Renier), artiste tatoueur basé à Pont l'Abbé, dans le Finistère. L’objectif était de concevoir un site vitrine moderne, responsive et bilingue, permettant de valoriser ses créations (tatouages, dessins, t-shirts, musique) tout en affirmant son identité artistique. Le projet comprend également un backoffice personnalisé et minimaliste, accessible depuis mobile, lui permettant de gérer de manière autonome ses contenus, ses événements et les mises à jour de sa page d’accueil.<br></br><br></br>Le site a été pensé mobile-first et optimisé pour le référencement naturel. L’ensemble a été déployé sur un serveur VPS via Docker Compose, et intègre un suivi de fréquentation via Google Analytics."
   },
   "romane-faupin": {
     "title": "Romane Faupin",

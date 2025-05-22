@@ -18,5 +18,6 @@
   "ANIMATION": "Animation",
   "DOCKER": "Docker",
   "POSTGRESQL": "PostgreSQL",
-  "GSAP": "GSAP"
+  "GSAP": "GSAP",
+  "PROG_WEB_APP": "Progressive Web App"
 }

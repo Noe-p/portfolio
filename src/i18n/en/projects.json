@@ -1,7 +1,7 @@
 {
   "sakana-san": {
     "title": "Sakana San",
-    "description": "Sakana San is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about fish."
+    "description": "Freelance project for <a>Sakana San</a> (Louis Renier), a tattoo artist based in Pont l'Abbé, Brittany. The goal was to design a modern, responsive, and bilingual showcase website to highlight his creations (tattoos, drawings, t-shirts, music) while reflecting his unique artistic identity. The project also includes a minimalist, mobile-friendly backoffice, allowing him to manage his content, events, and homepage updates independently.<br></br><br></br>The site was designed mobile-first and optimized for SEO. It was deployed on a VPS using Docker Compose, and includes traffic tracking via Google Analytics."
   },
   "romane-faupin": {
     "title": "Romane Faupin",
