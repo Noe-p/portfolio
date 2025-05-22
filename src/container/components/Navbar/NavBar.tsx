@@ -91,10 +91,13 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
 
   // changement de langue
   const handleLanguageChange = (lang: string) => {
-    const segments = pathname.split('/');
-    segments[1] = lang;
-    const newPath = segments.join('/') || `/${lang}`;
-    router.push(newPath);
+    const segments = pathname.split('/').filter(Boolean);
+    const newPath =
+      segments[0] === 'en' || segments[0] === 'fr'
+        ? '/' + segments.slice(1).join('/')
+        : '/' + segments.join('/');
+
+    router.replace(`/${lang}${newPath}`);
   };
 
   // clic sur un item de navigation principale

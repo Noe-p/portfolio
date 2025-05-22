@@ -6,7 +6,7 @@ const createNextIntlPlugin = require('next-intl/plugin');
 
 // 2. Passez le chemin vers votre fichier de messages ou dossier i18n
 //    Ici, on pointe sur votre fichier src/i18n/i18n.ts qui exporte l'objet `messages`
-const withNextIntl = createNextIntlPlugin('./src/i18n/i18n.ts'); // :contentReference[oaicite:0]{index=0}
+const withNextIntl = createNextIntlPlugin('./src/i18n/config.ts'); // :contentReference[oaicite:0]{index=0}
 
 // 3. Déclarez votre configuration Next.js
 const nextConfig = {
@@ -14,18 +14,6 @@ const nextConfig = {
   output: 'standalone',
   modularizeImports: {},
   compress: true,
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'www.noe-philippe.fr',
-        port: '',
-        pathname: '/**',
-      },
-    ],
-    formats: ['image/webp'],
-    minimumCacheTTL: 60,
-  },
   async headers() {
     return [
       {
@@ -38,9 +26,6 @@ const nextConfig = {
         ],
       },
     ];
-  },
-  experimental: {
-    staticPageGenerationTimeout: 20000,
   },
 };
 

@@ -50,10 +50,13 @@ export function Layout(props: LayoutProps): React.JSX.Element {
   }, []);
 
   const handleLanguageChange = (lang: string) => {
-    const segments = pathname.split('/');
-    segments[1] = lang;
-    const newPath = segments.join('/') || `/${lang}`;
-    router.push(newPath);
+    const segments = pathname.split('/').filter(Boolean);
+    const newPath =
+      segments[0] === 'en' || segments[0] === 'fr'
+        ? '/' + segments.slice(1).join('/')
+        : '/' + segments.join('/');
+
+    router.replace(`/${lang}${newPath}`);
   };
 
   return (

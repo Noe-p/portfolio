@@ -2,31 +2,29 @@
 'use client';
 
 import { AppProvider } from '@/contexts';
-import { Locale, messages } from '@/i18n/i18n';
+import { Locale, messages } from '@/i18n/config';
 import { IntlProvider } from 'next-intl';
-import localFont from 'next/font/local';
+import { Dela_Gothic_One, Monda } from 'next/font/google';
 import { ReactNode, useEffect, useState } from 'react';
 import '../../static/styles/app.css';
 
-const delaGothic = localFont({
-  src: '../../../public/fonts/Dela_Gothic_One/DelaGothicOne-Regular.ttf',
+const delaGothic = Dela_Gothic_One({
+  display: 'swap',
   variable: '--font-dela',
+  weight: '400',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
+  adjustFontFallback: true,
+  subsets: ['latin'],
 });
 
-const monda = localFont({
-  src: [
-    {
-      path: '../../../public/fonts/Monda/Monda-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../../../public/fonts/Monda/Monda-Bold.ttf',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
+const monda = Monda({
+  display: 'swap',
   variable: '--font-monda',
+  weight: ['400', '700'],
+  fallback: ['system-ui', 'arial'],
+  adjustFontFallback: true,
+  subsets: ['latin'],
 });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
