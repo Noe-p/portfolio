@@ -22,17 +22,17 @@ export enum ProjectTag {
   PROG_WEB_APP = 'PROG_WEB_APP',
 }
 
-export interface Media {
+export interface ImageProps {
   mobile: string[];
   desktop: string[];
-  videos: string[];
+  header: string;
 }
 
 export interface Project {
   id: string;
   title: string;
   description: string;
-  media: Media;
+  images: ImageProps;
   date: string;
   type: ProjectType;
   tags?: ProjectTag[];

@@ -20,7 +20,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
     <Card onClick={onClick}>
       <ImageContainer>
         <Image
-          src={project.images[0]}
+          src={project.images.header}
           alt={tProjects(project.title)}
           fill
           className='object-cover'

@@ -1,18 +1,38 @@
 {
   "sakana-san": {
     "title": "Sakana San",
-    "description": "Projet réalisé en freelance pour <a>Sakana San</a> (Louis Renier), artiste tatoueur basé à Pont l'Abbé, dans le Finistère. L’objectif était de concevoir un site vitrine moderne, responsive et bilingue, permettant de valoriser ses créations (tatouages, dessins, t-shirts, musique) tout en affirmant son identité artistique. Le projet comprend également un backoffice personnalisé et minimaliste, accessible depuis mobile, lui permettant de gérer de manière autonome ses contenus, ses événements et les mises à jour de sa page d’accueil.<br></br><br></br>Le site a été pensé mobile-first et optimisé pour le référencement naturel. L’ensemble a été déployé sur un serveur VPS via Docker Compose, et intègre un suivi de fréquentation via Google Analytics."
+    "description": "Projet réalisé en freelance pour <a>Sakana San</a> (Louis Renier), artiste tatoueur basé à Pont l'Abbé, dans le Finistère. L'objectif était de concevoir un site vitrine moderne, responsive et bilingue, permettant de valoriser ses créations (tatouages, dessins, t-shirts, musique) tout en affirmant son identité artistique. Le projet comprend également un backoffice personnalisé et minimaliste, accessible depuis mobile, lui permettant de gérer de manière autonome ses contenus, ses événements et les mises à jour de sa page d'accueil.<br></br><br></br>Le site a été pensé mobile-first et optimisé pour le référencement naturel. L'ensemble a été déployé sur un serveur VPS via Docker Compose, et intègre un suivi de fréquentation via Google Analytics.",
+    "metas": {
+      "title": "Sakana San — Site Vitrine d'Artiste Tatoueur | Noé Philippe",
+      "description": "Découvre le site vitrine bilingue et responsive de Sakana San, artiste tatoueur à Pont l'Abbé. Un projet freelance mêlant design moderne, backoffice personnalisé et optimisation SEO.",
+      "keywords": "site vitrine artiste, tatoueur Finistère, développement web freelance, design responsive, backoffice personnalisé, optimisation SEO, Docker Compose"
+    }
   },
-  "romane-faupin": {
-    "title": "Romane Faupin",
-    "description": "Romane Faupin est un projet de démonstration pour le framework Sakana. Il utilise le framework Sakana pour créer une application de démonstration qui affiche des informations sur Romane Faupin."
+  "tildev": {
+    "title": "Tildev",
+    "description": "Projet freelance pour <a>Tildev</a>, entreprise spécialisée dans le développement de solutions de gestion de fiches bilan dématérialisées pour le secteur de la santé. J'ai réalisé le site vitrine de l'entreprise ainsi que celui de leur solution phare Syopé, une plateforme de gestion d'interventions utilisée par plus de 635 organismes et établissements. Le projet comprenait également la maintenance de leurs différentes solutions, notamment eFiBi, un système de gestion des victimes développé en collaboration avec la BSPP.<br></br><br></br>Durant ces trois semaines, j'ai mis en place une architecture moderne et évolutive, tout en assurant la compatibilité avec les systèmes existants. Le site vitrine a été conçu pour mettre en valeur l'expertise de Tildev dans le domaine de la santé et de l'informatique, tout en présentant clairement leurs solutions innovantes.",
+    "metas": {
+      "title": "Tildev — Solutions de Gestion de Fiches Bilan | Noé Philippe",
+      "description": "Découvre le site vitrine de Tildev et leurs solutions innovantes pour la gestion de fiches bilan dématérialisées. Un projet freelance mêlant développement web et maintenance de solutions de santé.",
+      "keywords": "Tildev, Syopé, eFiBi, gestion de fiches bilan, dématérialisation santé, développement web freelance, maintenance applicative, BSPP"
+    }
   },
   "kerluskellik": {
     "title": "Kerluskellik",
-    "description": "Kerluskellik est un projet de démonstration pour le framework Sakana. Il utilise le framework Sakana pour créer une application de démonstration qui affiche des informations sur Kerluskellik."
+    "description": "Projet freelance pour <a>Kerluskellik</a>, une maison de caractère située sur l'île de Batz. J'ai développé un site vitrine moderne et responsive permettant de présenter cette magnifique maison de capitaine au long cours, exposée Sud et face à la mer. Le site met en valeur les différentes pièces, les équipements disponibles et les tarifs de location.<br></br><br></br>Le projet comprend une interface utilisateur intuitive avec une galerie photo, une carte interactive, et un système de témoignages. Le site a été optimisé pour le référencement naturel et offre une expérience utilisateur fluide sur tous les appareils.",
+    "metas": {
+      "title": "Kerluskellik — Location de Maison sur l'Île de Batz | Noé Philippe",
+      "description": "Découvre le site vitrine de Kerluskellik, une magnifique maison de caractère à louer sur l'île de Batz. Un projet freelance mêlant design moderne et présentation de biens immobiliers.",
+      "keywords": "location île de Batz, maison de caractère, location vacances Finistère, développement web freelance, site vitrine immobilier, optimisation SEO"
+    }
   },
-  "fast-foodie": {
-    "title": "Fast & Foodie",
-    "description": "Fast Foodie is a <a>Bob Le Développeur</a> demo project for the Sakana framework.<br></br><br></br> It uses the Sakana framework to create a demo application that displays information about fast food."
+  "romane-faupin": {
+    "title": "Romane Faupin",
+    "description": "Projet freelance pour <a>Romane Faupin</a>, artiste peintre et illustratrice basée à Paris. J'ai développé un site vitrine moderne et responsive pour présenter son univers artistique unique, mêlant peinture, illustration et gravure. Le site met en valeur son portfolio, ses expositions et ses collaborations.<br></br><br></br>Le projet comprend une galerie d'œuvres interactive, une section actualités pour ses expositions, et une présentation détaillée de son parcours artistique. Le site a été conçu pour offrir une expérience immersive qui reflète la sensibilité artistique de Romane.",
+    "metas": {
+      "title": "Romane Faupin — Site Vitrine d'Artiste Peintre | Noé Philippe",
+      "description": "Découvre le site vitrine de Romane Faupin, artiste peintre et illustratrice à Paris. Un projet freelance mêlant design moderne et présentation d'œuvres d'art.",
+      "keywords": "artiste peintre, illustration, gravure, site vitrine artiste, développement web freelance, design responsive, portfolio artistique"
+    }
   }
 }

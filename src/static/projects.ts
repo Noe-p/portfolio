@@ -7,7 +7,7 @@ export const projects: Project[] = [
     description: 'sakana-san.description',
     date: '2024-04-10',
     type: ProjectType.FREELANCE,
-    media: {
+    images: {
       mobile: [
         '/projects/sakana-san/sakana-san-mobile-1.webP',
         '/projects/sakana-san/sakana-san-mobile-2.webP',
@@ -26,10 +26,7 @@ export const projects: Project[] = [
         '/projects/sakana-san/sakana-san-desktop-5.webP',
         '/projects/sakana-san/sakana-san-desktop-6.webP',
       ],
-      videos: [
-        '/projects/sakana-san/sakana-san.mp4',
-        '/projects/sakana-san/sakana-san-mobile.mp4',
-      ],
+      header: '/projects/sakana-san/sakana-san-desktop-1.webP',
     },
     tags: [
       ProjectTag.NEXTJS,
@@ -44,5 +41,85 @@ export const projects: Project[] = [
     github: 'https://github.com/noep-sakana-san/sakana-san-web',
     link: 'https://sakana-san.noe-philippe.fr/',
     customerUrl: 'https://www.instagram.com/sakana__san_',
+  },
+  {
+    id: '1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p',
+    title: 'tildev.title',
+    description: 'tildev.description',
+    date: '2024-05-15',
+    type: ProjectType.FREELANCE,
+    images: {
+      mobile: [
+        '/projects/tildev/tildev-mobile-1.webP',
+        '/projects/tildev/tildev-mobile-2.webP',
+        '/projects/tildev/tildev-mobile-3.webP',
+        '/projects/tildev/tildev-mobile-4.webP',
+      ],
+      desktop: [
+        '/projects/tildev/tildev-desktop-1.webP',
+        '/projects/tildev/tildev-desktop-2.webP',
+        '/projects/tildev/tildev-desktop-3.webP',
+        '/projects/tildev/tildev-desktop-4.webP',
+      ],
+      header: '/projects/tildev/tildev-desktop-1.webP',
+    },
+    tags: [ProjectTag.NEXTJS, ProjectTag.TYPESCRIPT, ProjectTag.TAILWIND],
+    slug: 'tildev',
+    link: 'https://tildev.fr/',
+    customerUrl: 'https://tildev.fr/',
+  },
+  {
+    id: '2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q',
+    title: 'kerluskellik.title',
+    description: 'kerluskellik.description',
+    date: '2024-01-05',
+    type: ProjectType.FREELANCE,
+    images: {
+      mobile: [
+        '/projects/kerluskellik/kerluskellik-mobile-1.webP',
+        '/projects/kerluskellik/kerluskellik-mobile-2.webP',
+        '/projects/kerluskellik/kerluskellik-mobile-3.webP',
+        '/projects/kerluskellik/kerluskellik-mobile-4.webP',
+      ],
+      desktop: [
+        '/projects/kerluskellik/kerluskellik-desktop-1.webP',
+        '/projects/kerluskellik/kerluskellik-desktop-2.webP',
+        '/projects/kerluskellik/kerluskellik-desktop-3.webP',
+        '/projects/kerluskellik/kerluskellik-desktop-4.webP',
+        '/projects/kerluskellik/kerluskellik-desktop-5.webP',
+      ],
+      header: '/projects/kerluskellik/kerluskellik-desktop-1.webP',
+    },
+    tags: [ProjectTag.NEXTJS, ProjectTag.TYPESCRIPT, ProjectTag.TAILWIND],
+    slug: 'kerluskellik',
+    github: 'https://github.com/Noe-p/kerluskellik',
+    link: 'https://www.kerluskellik.fr/',
+    customerUrl: 'https://www.kerluskellik.fr/',
+  },
+  {
+    id: '3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r',
+    title: 'romane-faupin.title',
+    description: 'romane-faupin.description',
+    date: '2023-02-18',
+    type: ProjectType.FREELANCE,
+    images: {
+      mobile: [
+        '/projects/romane-faupin/romane-faupin-mobile-1.webP',
+        '/projects/romane-faupin/romane-faupin-mobile-2.webP',
+        '/projects/romane-faupin/romane-faupin-mobile-3.webP',
+        '/projects/romane-faupin/romane-faupin-mobile-4.webP',
+      ],
+      desktop: [
+        '/projects/romane-faupin/romane-faupin-desktop-1.webP',
+        '/projects/romane-faupin/romane-faupin-desktop-2.webP',
+        '/projects/romane-faupin/romane-faupin-desktop-3.webP',
+      ],
+      header: '/projects/romane-faupin/romane-faupin-desktop-1.webP',
+    },
+    tags: [ProjectTag.NEXTJS, ProjectTag.TYPESCRIPT, ProjectTag.TAILWIND],
+    slug: 'romane-faupin',
+    github: 'https://github.com/Noe-p/romane-faupin',
+    link: 'https://www.romanefaupin.fr/',
+    customerUrl: 'https://www.romanefaupin.fr/',
   },
 ];

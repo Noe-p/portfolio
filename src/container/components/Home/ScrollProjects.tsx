@@ -10,10 +10,32 @@ import { projects } from '@/static/projects';
 import { Project } from '@/types/project';
 import { ArrowUpRightSquareIcon, ChevronRight } from 'lucide-react';
 import { useFormatter, useTranslations } from 'next-intl';
+import Image, { ImageProps } from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { useMediaQuery } from 'usehooks-ts';
+
+interface ImageHeaderProps extends Omit<ImageProps, 'className'> {
+  className?: string;
+  alt: string;
+}
+
+const ImageHeader = forwardRef<HTMLImageElement, ImageHeaderProps>(
+  (props, ref) => (
+    <Image
+      {...props}
+      ref={ref}
+      alt={props.alt || ''}
+      className={cn(
+        'absolute inset-0 object-cover transition-all duration-700',
+        props.className
+      )}
+    />
+  )
+);
+
+ImageHeader.displayName = 'ImageHeader';
 
 export function ScrollProjects(): JSX.Element {
   const tCommon = useTranslations('common');
@@ -28,7 +50,7 @@ export function ScrollProjects(): JSX.Element {
   const GAPSPACING = isMobile ? 15 : 25;
   const SLOWDOWN_FACTOR = isMobile ? 4 : 3;
   const { setIsTransitionStartOpen } = useAppContext();
-  const videoRefs = useRef<HTMLVideoElement[]>([]);
+  const imageRefs = useRef<HTMLImageElement[]>([]);
 
   useEffect(() => {
     async function initGsap() {
@@ -79,15 +101,6 @@ export function ScrollProjects(): JSX.Element {
         },
       });
 
-      if (isMobile) {
-        videoRefs.current.forEach((video) => {
-          if (video) {
-            video.style.transition = 'opacity 0.4s ease-out';
-            video.style.willChange = 'opacity, transform';
-          }
-        });
-      }
-
       ScrollTrigger.refresh();
     }
 
@@ -104,18 +117,12 @@ export function ScrollProjects(): JSX.Element {
   }, [isMobile]);
 
   useEffect(() => {
-    videoRefs.current.forEach((vid, i) => {
-      if (!vid) return;
+    imageRefs.current.forEach((img, i) => {
+      if (!img) return;
       if (projects[i] === currentProject) {
-        vid.style.opacity = '1';
-        if (isMobile) {
-          vid.playbackRate = 0.8;
-        }
-        vid.play().catch(() => {});
+        img.style.opacity = '1';
       } else {
-        vid.style.opacity = '0';
-        vid.pause();
-        vid.currentTime = 0;
+        img.style.opacity = '0';
       }
     });
   }, [currentProject, isMobile]);
@@ -139,30 +146,23 @@ export function ScrollProjects(): JSX.Element {
           {tCommon('generics.projects')}
         </Title>
 
-        <VideoContainer>
+        <ImageContainer>
           <Col className='w-full h-full relative opacity-70 md:opacity-100'>
             {projects.map((project, i) => (
-              <VideoHeader
+              <ImageHeader
                 key={project.id}
                 ref={(el) => {
-                  if (el) videoRefs.current[i] = el;
+                  if (el) imageRefs.current[i] = el;
                 }}
-                className={cn(
-                  'absolute inset-0 object-cover transition-all duration-700',
-                  project === currentProject ? 'scale-100' : 'scale-75'
-                )}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload={project === currentProject ? 'auto' : 'none'}
-                poster={project.media.desktop[0]}
-              >
-                <source src={project.media.videos[0]} type='video/mp4' />
-              </VideoHeader>
+                src={project.images.header || ''}
+                alt={tProject(project.title)}
+                fill
+                sizes='(max-width: 768px) 100vw, 50vw'
+                priority={i === 0}
+              />
             ))}
           </Col>
-        </VideoContainer>
+        </ImageContainer>
 
         <ProjectInfoBar>
           <ProjectLink
@@ -230,7 +230,7 @@ const Container = tw.div`
   relative w-full h-screen overflow-hidden
 `;
 
-const VideoContainer = tw.div`
+const ImageContainer = tw.div`
   absolute
   top-36 md:top-20
   bottom-36 md:bottom-20
@@ -241,10 +241,6 @@ const VideoContainer = tw.div`
   rounded
   overflow-hidden
   opacity-40 md:opacity-100
-`;
-
-const VideoHeader = tw.video`
-  w-full h-full
 `;
 
 const ProjectInfoBar = tw(Row)`

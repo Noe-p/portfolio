@@ -1,18 +1,38 @@
 {
   "sakana-san": {
     "title": "Sakana San",
-    "description": "Freelance project for <a>Sakana San</a> (Louis Renier), a tattoo artist based in Pont l'Abbé, Brittany. The goal was to design a modern, responsive, and bilingual showcase website to highlight his creations (tattoos, drawings, t-shirts, music) while reflecting his unique artistic identity. The project also includes a minimalist, mobile-friendly backoffice, allowing him to manage his content, events, and homepage updates independently.<br></br><br></br>The site was designed mobile-first and optimized for SEO. It was deployed on a VPS using Docker Compose, and includes traffic tracking via Google Analytics."
+    "description": "Freelance project for <a>Sakana San</a> (Louis Renier), a tattoo artist based in Pont l'Abbé, Brittany. The goal was to design a modern, responsive, and bilingual showcase website to highlight his creations (tattoos, drawings, t-shirts, music) while reflecting his unique artistic identity. The project also includes a minimalist, mobile-friendly backoffice, allowing him to manage his content, events, and homepage updates independently.<br></br><br></br>The site was designed mobile-first and optimized for SEO. It was deployed on a VPS using Docker Compose, and includes traffic tracking via Google Analytics.",
+    "metas": {
+      "title": "Sakana San — Tattoo Artist Showcase | Noé Philippe",
+      "description": "Discover the bilingual and responsive showcase website of Sakana San, tattoo artist in Pont l'Abbé. A freelance project combining modern design, custom backoffice and SEO optimization.",
+      "keywords": "artist showcase, Finistère tattoo artist, freelance web development, responsive design, custom backoffice, SEO optimization, Docker Compose"
+    }
   },
-  "romane-faupin": {
-    "title": "Romane Faupin",
-    "description": "Romane Faupin is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about Romane Faupin."
+  "tildev": {
+    "title": "Tildev",
+    "description": "Freelance project for <a>Tildev</a>, a company specialized in developing digital medical record management solutions for the healthcare sector. I created the company's showcase website as well as their flagship solution Syopé, an intervention management platform used by more than 635 organizations and establishments. The project also included maintenance of their various solutions, including eFiBi, a victim management system developed in collaboration with the BSPP (Paris Fire Brigade).<br></br><br></br>During these three weeks, I implemented a modern and scalable architecture while ensuring compatibility with existing systems. The showcase website was designed to highlight Tildev's expertise in healthcare and IT, while clearly presenting their innovative solutions.",
+    "metas": {
+      "title": "Tildev — Medical Record Management Solutions | Noé Philippe",
+      "description": "Discover Tildev's showcase website and their innovative solutions for digital medical record management. A freelance project combining web development and healthcare solutions maintenance.",
+      "keywords": "Tildev, Syopé, eFiBi, medical record management, healthcare digitalization, freelance web development, application maintenance, BSPP"
+    }
   },
   "kerluskellik": {
     "title": "Kerluskellik",
-    "description": "Kerluskellik is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about Kerluskellik."
+    "description": "Freelance project for <a>Kerluskellik</a>, a character house located on the Île de Batz. I developed a modern and responsive showcase website to present this magnificent captain's house, South-facing and overlooking the sea. The site highlights the different rooms, available amenities, and rental rates.<br></br><br></br>The project includes an intuitive user interface with a photo gallery, interactive map, and testimonial system. The site has been optimized for natural referencing and offers a smooth user experience across all devices.",
+    "metas": {
+      "title": "Kerluskellik — House Rental on Île de Batz | Noé Philippe",
+      "description": "Discover the showcase website of Kerluskellik, a magnificent character house for rent on Île de Batz. A freelance project combining modern design and real estate presentation.",
+      "keywords": "Île de Batz rental, character house, Brittany vacation rental, freelance web development, real estate showcase website, SEO optimization"
+    }
   },
-  "fast-foodie": {
-    "title": "Fast & Foodie",
-    "description": "Fast Foodie is a demo project for the Sakana framework. It uses the Sakana framework to create a demo application that displays information about fast food."
+  "romane-faupin": {
+    "title": "Romane Faupin",
+    "description": "Freelance project for <a>Romane Faupin</a>, a painter and illustrator based in Paris. I developed a modern and responsive showcase website to present her unique artistic universe, combining painting, illustration, and engraving. The site highlights her portfolio, exhibitions, and collaborations.<br></br><br></br>The project includes an interactive artwork gallery, a news section for her exhibitions, and a detailed presentation of her artistic journey. The site was designed to offer an immersive experience that reflects Romane's artistic sensitivity.",
+    "metas": {
+      "title": "Romane Faupin — Painter Artist Showcase | Noé Philippe",
+      "description": "Discover the showcase website of Romane Faupin, painter and illustrator in Paris. A freelance project combining modern design and artwork presentation.",
+      "keywords": "painter artist, illustration, engraving, artist showcase website, freelance web development, responsive design, artistic portfolio"
+    }
   }
 }

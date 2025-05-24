@@ -1,6 +1,44 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ProjectDetail } from '@/container/pages/ProjectDetail';
+import { getMessages } from '@/i18n/config';
+import { defaultMetadata } from '@/services/metadata';
 import { projects } from '@/static/projects';
 import { PageBaseProps } from '@/types';
+import { Metadata } from 'next';
+
+export async function generateMetadata(
+  props: PageBaseProps
+): Promise<Metadata> {
+  const params = await props.params;
+  const messages = await getMessages(params.locale);
+  const project = projects.find((p) => p.slug === params.slug);
+
+  if (!messages?.projects || !project) {
+    console.error(
+      `Messages not found for locale: ${params.locale} or project: ${params.slug}`
+    );
+    return defaultMetadata;
+  }
+
+  const projectData = (messages.projects as any)[project.slug];
+
+  if (!projectData?.metas) {
+    console.error(`Project metadata not found for: ${project.slug}`);
+    return defaultMetadata;
+  }
+
+  return {
+    ...defaultMetadata,
+    title: projectData.metas.title,
+    description: projectData.metas.description,
+    keywords: projectData.metas.keywords,
+    openGraph: {
+      ...defaultMetadata.openGraph,
+      title: projectData.metas.title,
+      description: projectData.metas.description,
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const locales = ['fr', 'en'];
