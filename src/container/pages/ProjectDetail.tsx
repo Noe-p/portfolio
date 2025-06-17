@@ -12,18 +12,18 @@ import {
   P16,
   Row,
 } from '@/components';
+import { ImagesFullScreen } from '@/components/Medias/ImagesFullScreen';
 import { Badge } from '@/components/ui/Badge';
 import { Marquee } from '@/components/ui/marquee';
 import { useAppContext } from '@/contexts';
 import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
 import { projects } from '@/static/projects';
-import { ArrowUpRightSquareIcon } from 'lucide-react';
+import { ArrowUpRightSquareIcon, Maximize } from 'lucide-react';
 import { useFormatter, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useRef } from 'react';
-import Masonry from 'react-masonry-css';
+import { useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { useMediaQuery } from 'usehooks-ts';
 
@@ -41,6 +41,13 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
   const router = useRouter();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const { setIsTransitionStartOpen } = useAppContext();
+
+  // État pour la galerie d'images
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [selectedImageType, setSelectedImageType] = useState<
+    'desktop' | 'mobile'
+  >('desktop');
 
   // Références pour le parallax
   const titleRef = useRef<HTMLDivElement>(null);
@@ -70,6 +77,17 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
     setIsTransitionStartOpen(true);
     setTimeout(() => router.push(slug, undefined), 700);
   };
+
+  const handleImageClick = (type: 'desktop' | 'mobile', index: number) => {
+    setSelectedImageType(type);
+    setSelectedImageIndex(index);
+    setIsGalleryOpen(true);
+  };
+
+  const allImages = [
+    ...(project?.images.desktop || []),
+    ...(project?.images.mobile || []),
+  ];
 
   return project ? (
     <Layout isNavClose={false}>
@@ -209,19 +227,12 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
               <P16 className='uppercase text-foreground/60 '>
                 {tCommon('projects.desktopImages')}
               </P16>
-              <Masonry
-                breakpointCols={{
-                  default: project.images.desktop.length === 1 ? 1 : 3,
-                  900: project.images.desktop.length === 1 ? 1 : 2,
-                  750: 1,
-                }}
-                className='flex -ml-4 w-auto mt-4'
-                columnClassName='pl-4 bg-clip-padding'
-              >
+              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
                 {project.images.desktop.map((image: string, index: number) => (
                   <div
                     key={`image-${index}`}
-                    className='mb-4 overflow-hidden rounded-md'
+                    className='overflow-hidden rounded-md cursor-pointer relative group'
+                    onClick={() => handleImageClick('desktop', index)}
                   >
                     <Image
                       src={image}
@@ -230,10 +241,16 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                       width={project.images.desktop.length === 1 ? 1200 : 500}
                       height={project.images.desktop.length === 1 ? 800 : 300}
                       priority={index === 0}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      quality={90}
+                      sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
                     />
+                    <div className='absolute bottom-2 right-2 bg-black/30 p-1.5 md:p-2 rounded-full backdrop-blur-sm opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity'>
+                      <Maximize className='h-3.5 w-3.5 md:h-4 md:w-4 text-white' />
+                    </div>
                   </div>
                 ))}
-              </Masonry>
+              </div>
             </div>
           )}
 
@@ -242,20 +259,12 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
               <P16 className='uppercase text-foreground/60'>
                 {tCommon('projects.mobileImages')}
               </P16>
-              <Masonry
-                breakpointCols={{
-                  default: project.images.mobile.length === 1 ? 1 : 4,
-                  1200: project.images.mobile.length === 1 ? 1 : 3,
-                  900: project.images.mobile.length === 1 ? 1 : 2,
-                  750: 1,
-                }}
-                className='flex -ml-4 w-auto mt-4'
-                columnClassName='pl-4 bg-clip-padding'
-              >
+              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4'>
                 {project.images.mobile.map((image: string, index: number) => (
                   <div
                     key={`image-${index}`}
-                    className='mb-4 overflow-hidden rounded-md'
+                    className='overflow-hidden rounded-md cursor-pointer relative group'
+                    onClick={() => handleImageClick('mobile', index)}
                   >
                     <Image
                       src={image}
@@ -264,14 +273,31 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                       width={project.images.mobile.length === 1 ? 800 : 300}
                       height={project.images.mobile.length === 1 ? 1200 : 450}
                       priority={index === 0}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      quality={90}
+                      sizes='(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw'
                     />
+                    <div className='absolute bottom-2 right-2 bg-black/30 p-1.5 md:p-2 rounded-full backdrop-blur-sm opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity'>
+                      <Maximize className='h-3.5 w-3.5 md:h-4 md:w-4 text-white' />
+                    </div>
                   </div>
                 ))}
-              </Masonry>
+              </div>
             </div>
           )}
         </div>
       </Main>
+
+      <ImagesFullScreen
+        images={allImages}
+        isOpen={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
+        initialIndex={
+          selectedImageType === 'desktop'
+            ? selectedImageIndex
+            : project.images.desktop?.length + selectedImageIndex
+        }
+      />
     </Layout>
   ) : (
     <FullPageLoader />

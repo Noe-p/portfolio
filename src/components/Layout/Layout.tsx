@@ -10,6 +10,43 @@ import tw from 'tailwind-styled-components';
 import { Row } from '../Helpers';
 import { P16 } from '../Texts';
 
+const LanguageSwitcher = () => {
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleLanguageChange = (lang: string) => {
+    const segments = pathname.split('/').filter(Boolean);
+    const pathWithoutLocale =
+      segments[0] === 'en' || segments[0] === 'fr'
+        ? segments.slice(1).join('/')
+        : segments.join('/');
+
+    router.push(`/${lang}/${pathWithoutLocale}`);
+  };
+
+  return (
+    <Row className='hidden md:flex absolute z-40 gap-1 top-5 right-10'>
+      {['Fr', 'En'].map((lang) => (
+        <React.Fragment key={lang}>
+          <P16
+            className={cn(
+              'cursor-pointer transition duration-300',
+              locale === lang.toLocaleLowerCase()
+                ? 'text-primary'
+                : 'text-foreground/50 hover:text-foreground/80'
+            )}
+            onClick={() => handleLanguageChange(lang.toLocaleLowerCase())}
+          >
+            {lang}
+          </P16>
+          {lang === 'Fr' && <P16 className='text-foreground/50'>{'/'}</P16>}
+        </React.Fragment>
+      ))}
+    </Row>
+  );
+};
+
 interface LayoutProps {
   children?: ReactNode;
   className?: string;
@@ -18,12 +55,7 @@ interface LayoutProps {
 
 export function Layout(props: LayoutProps): React.JSX.Element {
   const { children, className } = props;
-  const locale = useLocale();
-
-  const router = useRouter();
   const { setIsTransitionStartOpen } = useAppContext();
-  const pathname = usePathname();
-
   const [isVisible, setIsVisible] = useState(true);
   const loaderRef = useRef<HTMLDivElement>(null);
 
@@ -44,26 +76,14 @@ export function Layout(props: LayoutProps): React.JSX.Element {
     };
 
     setTimeout(() => {
-      setIsTransitionStartOpen(false); // transition d'entrée finie
-      animateOut(); // on lance la sortie GSAP
-    }, 300); // timing à ajuster selon le rendu souhaité
+      setIsTransitionStartOpen(false);
+      animateOut();
+    }, 300);
   }, []);
-
-  const handleLanguageChange = (lang: string) => {
-    const segments = pathname.split('/').filter(Boolean);
-    // On retire le préfixe de langue s'il existe
-    const pathWithoutLocale =
-      segments[0] === 'en' || segments[0] === 'fr'
-        ? segments.slice(1).join('/')
-        : segments.join('/');
-
-    router.push(`/${lang}/${pathWithoutLocale}`);
-  };
 
   return (
     <>
       <div
-        key={locale}
         className='relative px-5 md:px-40 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove'
         style={{ '--x': '30%', '--y': '30%' } as React.CSSProperties}
       >
@@ -83,26 +103,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
         )}
 
         <NavBar />
-
-        <Row className='hidden md:flex absolute z-40 gap-1 top-5 right-10'>
-          {['Fr', 'En'].map((lang) => (
-            <React.Fragment key={lang}>
-              <P16
-                className={cn(
-                  'cursor-pointer transition duration-300',
-                  locale === lang.toLocaleLowerCase()
-                    ? 'text-primary'
-                    : 'text-foreground/50 hover:text-foreground/80'
-                )}
-                onClick={() => handleLanguageChange(lang.toLocaleLowerCase())}
-              >
-                {lang}
-              </P16>
-              {lang === 'Fr' && <P16 className='text-foreground/50'>{'/'}</P16>}
-            </React.Fragment>
-          ))}
-        </Row>
-
+        <LanguageSwitcher />
         <Page className={className}>{children}</Page>
         <Footer />
       </div>
