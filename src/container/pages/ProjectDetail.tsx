@@ -50,17 +50,11 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
   >('desktop');
 
   // Références pour le parallax
-  const titleRef = useRef<HTMLDivElement>(null);
   const descriptionRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<HTMLDivElement>(null);
 
   // Configuration du parallax
   useParallax([
-    {
-      ref: titleRef,
-      speed: -50,
-      easing: 'easeOutQuad',
-    },
     {
       ref: descriptionRef,
       speed: 50,
@@ -109,7 +103,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
         <P16 className='w-full text-primary/70'>{tProjects(project.title)}</P16>
       </Row>
       <Main>
-        <div ref={titleRef}>
+        <div>
           <Marquee pauseOnHover={false} speed={isMobile ? 50 : 100}>
             <Text>{tProjects(project.title)}</Text>
           </Marquee>

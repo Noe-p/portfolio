@@ -1,12 +1,12 @@
 {
   "home": {
-    "title": "Noé Philippe — Développeur Fullstack Freelance",
-    "description": "Développeur fullstack freelance basé à Quimper et disponible à distance. Découvre le portfolio de Noé Philippe et imaginons ensemble ton prochain projet web.",
-    "keywords": "Noé Philippe, développeur fullstack freelance, portfolio, développement web, photographie, musique, sport"
+    "title": "Noé Philippe — Développeur Fullstack Freelance à Quimper",
+    "description": "Développeur fullstack freelance à Quimper, je conçois des applications web modernes alliant performance, design et expérience utilisateur. Découvre mon portfolio et lançons ton prochain projet digital.",
+    "keywords": "Noé Philippe, développeur web freelance, développeur fullstack Quimper, Next.js, projets web, portfolio développeur, développement frontend backend"
   },
   "about": {
-    "title": "À propos de Noé Philippe — Développeur Fullstack Freelance",
-    "description": "Découvre le parcours de Noé Philippe, développeur fullstack freelance basé à Quimper, entre un road-trip d’un an en van en Nouvelle-Zélande et des projets mêlant code, photo et musique.",
-    "keywords": "Noé Philippe, développeur fullstack, freelance, Nouvelle-Zélande, photographie, musique, sport, parcours développeur"
+    "title": "À propos de Noé Philippe — Développeur Web & Chef de projet digital",
+    "description": "De la gestion de projet à la réalisation technique, découvre le profil hybride de Noé Philippe : développeur fullstack freelance formé au pilotage de projets digitaux, passionné par l'image, le code et la création.",
+    "keywords": "développeur fullstack, freelance Quimper, gestion de projet digital, développeur Next.js, parcours développeur, développeur créatif, road-trip Nouvelle-Zélande"
   }
 }

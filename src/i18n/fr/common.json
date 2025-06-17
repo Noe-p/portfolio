@@ -24,28 +24,28 @@
   },
   "about": {
     "andMore": "(Mais pas que)",
-    "smallDesc": "Salut ! Moi c’est Noé, développeur fullstack… mais pas que ! Passionné de photo, de musique et de sport, je suis toujours partant pour apprendre et créer. N’hésite pas à scroller pour en découvrir plus sur moi ! 👇",
-    "resume": "Je suis un développeur fullstack curieux et créatif, avec une solide formation technique et un vrai goût pour l’image, la musique et les expériences interactives. Après un an de road-trip en Nouvelle-Zélande et plusieurs années d’alternance en agence, je suis dispo pour de nouveaux projets, que ce soit en freelance ou en collaboration. N’hésite pas à me contacter si tu veux qu’on crée quelque chose ensemble.",
+    "smallDesc": "Salut ! Moi c’est Noé, développeur fullstack avec une casquette de chef de projet. Créatif, curieux, passionné d’images, de sons et de mouvements, j’aime autant concevoir que coder. Si tu veux en savoir plus sur mon parcours un peu atypique, fais défiler 👇",
+    "resume": "Je suis développeur fullstack avec une approche orientée gestion de projet, formé à la fois au code et à la coordination. Grâce à mon Master en management de projet digital, mon expérience en agence et une curiosité toujours en éveil, je suis capable de piloter un projet web de A à Z — côté technique, fonctionnel et humain. De retour d’un an de road-trip en Nouvelle-Zélande, je suis dispo pour de nouveaux défis, en freelance ou en équipe.",
     "description": {
       "part1": {
         "part": "À propos",
         "title": "Hello ! Moi c’est Noé",
-        "text": "Je reviens tout juste d’un road-trip d’un an en van à travers la Nouvelle-Zélande ! Une parenthèse pendant laquelle j’ai mis le développement un peu de côté pour prendre le temps de vivre, d’explorer, et de faire des rencontres. J’en ai profité pour améliorer mon anglais (il partait de loin, on va pas se mentir), et surtout pour m’adonner à la photographie. Là-bas, c’est presque triché : les paysages sont spectaculaires à chaque virage."
+        "text": "Je rentre d’un road-trip d’un an en van à travers la Nouvelle-Zélande : une expérience de vie marquante qui m’a permis de sortir du cadre, de m’ouvrir à d’autres cultures et de renforcer mon anglais (il partait de loin, on va pas se mentir). J’ai mis le code entre parenthèses le temps de mieux observer le monde et le capturer en photo. Un vrai bol d’air… qui m’a aussi permis de revenir avec plus de recul, d’envies et d’idées."
       },
       "part2": {
         "part": "études",
         "title": "Du prof de maths au code",
-        "text": "Avant de partir en Nouvelle-Zélande, j’étais en Master Manager de Projet Digitaux à Rennes, en alternance. Je me suis spécialisé en développement fullstack, ce qui m’a permis de monter en compétences sur toute la chaîne de production web. À la base, je voulais devenir professeur de mathématiques. J’aimais la logique, la rigueur et l’élégance des maths, mais j’ai vite eu envie de quelque chose de plus concret. Le développement s’est imposé comme un juste équilibre entre technique, logique et créativité."
+        "text": "J’ai suivi un Master de Manager de Projet Digitaux à Rennes, avec une spécialisation en développement fullstack. Cette double casquette m’a permis de développer des compétences autant techniques que stratégiques : coder proprement, structurer des projets, collaborer avec des clients ou des équipes pluridisciplinaires. Mon parcours a commencé avec une passion pour les maths, mais c’est en me tournant vers le développement que j’ai trouvé ce qui me correspondait : un métier qui allie rigueur, logique et créativité."
       },
       "part3": {
         "part": "expérience",
         "title": "3 ans chez Bob le Développeur",
-        "text": "Mon aventure professionnelle s’est construite chez Bob Le Développeur, une agence web parisienne où j’ai passé trois années d’alternance. J’y ai travaillé sur une variété de projets avec des stacks comme Next.js et Nest.js, expérimenté de nombreuses librairies, échangé avec les clients et géré des projets du début à la fin. Une expérience ultra formatrice, dans une équipe à taille humaine."
+        "text": "J’ai passé trois années chez Bob Le Développeur, une agence web parisienne où j’ai évolué comme développeur fullstack en alternance. J’y ai conçu des applications sur-mesure avec des stacks modernes comme Next.js et Nest.js, tout en participant à la gestion de projet : échanges clients, suivi des besoins, organisation des sprints… Cette expérience en petite équipe m’a appris à porter plusieurs casquettes et à garder une vision produit tout au long du process."
       },
       "part4": {
         "part": "passions",
         "title": "Ce qui m’anime en dehors du code",
-        "text": "En dehors du développement, j’ai une vraie passion pour la musique et la photo. J’aime composer, jouer en groupe, explorer des sons et capturer des images. Ce sont des disciplines qui, à mes yeux, se marient bien avec le code : elles demandent de la précision, de la créativité et un certain sens du détail. Et pour bouger après de longues heures devant l’écran, je me tourne vers la natation et l’escalade, mes deux sports de cœur."
+        "text": "En dehors du code, je suis passionné par la musique et la photo. Composer, expérimenter, cadrer… ce sont pour moi des formes d’expression complémentaires au développement : elles demandent de la rigueur, du feeling, et un vrai sens du détail. Pour équilibrer les longues sessions devant l’écran, je pratique la natation et l’escalade — deux disciplines qui m’aident à rester concentré, en forme, et aligné."
       }
     },
     "education": {
