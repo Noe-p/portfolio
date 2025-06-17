@@ -5,11 +5,12 @@ import { ProjectCard } from '@/components/ProjectCard';
 import { Badge } from '@/components/ui/Badge';
 import { useAppContext } from '@/contexts';
 import { ROUTES } from '@/routes';
+import { cn } from '@/services/utils';
 import { projects } from '@/static/projects';
 import { ProjectTag, ProjectType } from '@/types/project';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 export function ProjectsPage(): React.JSX.Element {
@@ -20,6 +21,14 @@ export function ProjectsPage(): React.JSX.Element {
   const { setIsTransitionStartOpen } = useAppContext();
   const [selectedTags, setSelectedTags] = useState<ProjectTag[]>([]);
   const [selectedType, setSelectedType] = useState<ProjectType | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsVisible(true);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   const handleBack = (slug: string) => {
     setIsTransitionStartOpen(true);
@@ -111,12 +120,22 @@ export function ProjectsPage(): React.JSX.Element {
           </P16>
         ) : (
           <ProjectsGrid>
-            {filteredProjects.map((project) => (
-              <ProjectCard
+            {filteredProjects.map((project, index) => (
+              <div
                 key={project.id}
-                project={project}
-                onClick={() => handleProjectClick(project.slug)}
-              />
+                className={cn(
+                  'transition-all duration-500 ease-out',
+                  isVisible
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-10',
+                  `delay-${index * 100}`
+                )}
+              >
+                <ProjectCard
+                  project={project}
+                  onClick={() => handleProjectClick(project.slug)}
+                />
+              </div>
             ))}
           </ProjectsGrid>
         )}
