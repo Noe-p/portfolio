@@ -34,5 +34,23 @@
       "description": "Découvre le site vitrine de Romane Faupin, artiste peintre et illustratrice à Paris. Un projet freelance mêlant design moderne et présentation d'œuvres d'art.",
       "keywords": "artiste peintre, illustration, gravure, site vitrine artiste, développement web freelance, design responsive, portfolio artistique"
     }
+  },
+  "fast-foodie": {
+    "title": "Fast&Foodie",
+    "description": "Application web mobile-friendly pour la gestion des repas et des courses, mettant l'accent sur la simplicité et le gain de temps. Le projet comprend une gestion complète des plats avec photos et recettes, une planification des repas de la semaine, et une liste de courses interactive organisée par rayons.<br></br><br></br>Développée avec Next.js, TypeScript et TailwindCSS, l'application offre une interface utilisateur intuitive avec des modales glissantes et une navigation par tab bar. La base de données PostgreSQL assure la persistance des données, tandis que les composants UI de Tanstack et Shadcn garantissent une expérience utilisateur moderne et réactive.",
+    "metas": {
+      "title": "Fast&Foodie — Application de Gestion des Repas | Noé Philippe",
+      "description": "Découvre Fast&Foodie, une application web moderne pour la gestion des repas et des courses. Un projet combinant design mobile-first et fonctionnalités pratiques.",
+      "keywords": "gestion des repas, liste de courses, application web, Next.js, TypeScript, TailwindCSS, PostgreSQL, design mobile-first"
+    }
+  },
+  "iggy": {
+    "title": "Iggy",
+    "description": "Projet de fin d'études pour mon Master en Management de Projet Digitaux. Iggy est une application mobile dédiée au bien-être animal, permettant aux familles de gérer efficacement les soins de leurs animaux de compagnie. L'application facilite la coordination entre parents et enfants pour les tâches quotidiennes liées aux animaux, tout en offrant un suivi de leur bien-être.<br></br><br></br>Développée avec React Native (Expo) et NestJS, l'application comprend également un back-office Next.js pour la gestion administrative. Le projet met l'accent sur la sécurité des données personnelles avec un chiffrement poussé, et utilise Docker pour la conteneurisation. L'architecture technique a été soigneusement pensée pour assurer une expérience utilisateur fluide et une maintenance simplifiée.",
+    "metas": {
+      "title": "Iggy — Application de Gestion du Bien-être Animal | Noé Philippe",
+      "description": "Découvre Iggy, une application mobile innovante pour la gestion du bien-être animal en famille. Un projet de fin d'études combinant design mobile et sécurité des données.",
+      "keywords": "bien-être animal, application mobile, React Native, NestJS, Next.js, Docker, sécurité des données, projet de fin d'études"
+    }
   }
 }

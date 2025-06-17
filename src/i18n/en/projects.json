@@ -34,5 +34,23 @@
       "description": "Discover the showcase website of Romane Faupin, painter and illustrator in Paris. A freelance project combining modern design and artwork presentation.",
       "keywords": "painter artist, illustration, engraving, artist showcase website, freelance web development, responsive design, artistic portfolio"
     }
+  },
+  "fast-foodie": {
+    "title": "Fast&Foodie",
+    "description": "Mobile-friendly web application for meal and grocery management, focusing on simplicity and time-saving. The project includes comprehensive meal management with photos and recipes, weekly meal planning, and an interactive grocery list organized by departments.<br></br><br></br>Built with Next.js, TypeScript, and TailwindCSS, the application offers an intuitive user interface with sliding modals and tab bar navigation. PostgreSQL database ensures data persistence, while Tanstack and Shadcn UI components guarantee a modern and responsive user experience.",
+    "metas": {
+      "title": "Fast&Foodie — Meal Management Application | Noé Philippe",
+      "description": "Discover Fast&Foodie, a modern web application for meal and grocery management. A project combining mobile-first design and practical features.",
+      "keywords": "meal management, grocery list, web application, Next.js, TypeScript, TailwindCSS, PostgreSQL, mobile-first design"
+    }
+  },
+  "iggy": {
+    "title": "Iggy",
+    "description": "Final project for my Master's degree in Digital Project Management. Iggy is a mobile application dedicated to pet welfare, helping families effectively manage their pets' care. The app facilitates coordination between parents and children for daily pet-related tasks while providing welfare monitoring.<br></br><br></br>Developed with React Native (Expo) and NestJS, the application also includes a Next.js back-office for administrative management. The project emphasizes personal data security with advanced encryption and uses Docker for containerization. The technical architecture was carefully designed to ensure a smooth user experience and simplified maintenance.",
+    "metas": {
+      "title": "Iggy — Pet Welfare Management Application | Noé Philippe",
+      "description": "Discover Iggy, an innovative mobile application for family pet welfare management. A final year project combining mobile design and data security.",
+      "keywords": "pet welfare, mobile application, React Native, NestJS, Next.js, Docker, data security, final year project"
+    }
   }
 }
