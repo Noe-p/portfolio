@@ -26,6 +26,7 @@ export function ImagesFullScreen({
   initialIndex = 0,
 }: ImagesFullScreenProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+  const [isLoading, setIsLoading] = useState(true);
 
   // Réinitialiser l'index quand la galerie s'ouvre
   useEffect(() => {
@@ -34,11 +35,32 @@ export function ImagesFullScreen({
     }
   }, [isOpen, initialIndex]);
 
+  // Précharger les images adjacentes
+  useEffect(() => {
+    const preloadImages = () => {
+      const nextIndex = (currentIndex + 1) % images.length;
+      const prevIndex =
+        currentIndex === 0 ? images.length - 1 : currentIndex - 1;
+
+      const preloadImage = (src: string) => {
+        const img = new window.Image();
+        img.src = src;
+      };
+
+      preloadImage(images[nextIndex]);
+      preloadImage(images[prevIndex]);
+    };
+
+    preloadImages();
+  }, [currentIndex, images]);
+
   const handlePrevious = () => {
+    setIsLoading(true);
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
+    setIsLoading(true);
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
@@ -67,12 +89,20 @@ export function ImagesFullScreen({
         >
           {/* Image principale */}
           <div className='relative w-full h-[80vh] flex items-center justify-center'>
+            {isLoading && (
+              <div className='absolute inset-0 flex items-center justify-center bg-black/20'>
+                <div className='w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin' />
+              </div>
+            )}
             <Image
               src={images[currentIndex]}
               alt={`Image ${currentIndex + 1} sur ${images.length}`}
               fill
               className='object-contain'
               priority
+              quality={90}
+              onLoadingComplete={() => setIsLoading(false)}
+              sizes='(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw'
             />
           </div>
 

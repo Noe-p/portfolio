@@ -52,5 +52,14 @@
       "description": "Découvre Iggy, une application mobile innovante pour la gestion du bien-être animal en famille. Un projet de fin d'études combinant design mobile et sécurité des données.",
       "keywords": "bien-être animal, application mobile, React Native, NestJS, Next.js, Docker, sécurité des données, projet de fin d'études"
     }
+  },
+  "perdus-en-foret": {
+    "title": "Perdus en Forêt",
+    "description": "Projet de fin d'études pour ma Licence Pro Développement Web et Mobile à la Sorbonne. Perdus en Forêt est une application mobile et web permettant de répertorier les points de secours sur les chemins de randonnée. L'objectif est de réduire le temps d'intervention des secours en cas d'accident.<br></br><br></br>Développée avec React Native et Firebase, l'application intègre une carte Google Maps interactive, un système d'authentification robuste, et une synchronisation en temps réel avec Redux. Le projet a été réalisé en suivant les méthodes agiles (Scrum) avec une équipe de développeurs, incluant des revues de code régulières et du pair programming.",
+    "metas": {
+      "title": "Perdus en Forêt — Application de Sécurité en Randonnée | Noé Philippe",
+      "description": "Découvre Perdus en Forêt, une application mobile et web pour la sécurité des randonneurs. Un projet de fin d'études combinant cartographie et gestion des secours.",
+      "keywords": "sécurité randonnée, application mobile, React Native, Firebase, Google Maps, Redux, Scrum, pair programming"
+    }
   }
 }

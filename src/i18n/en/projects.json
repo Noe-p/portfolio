@@ -52,5 +52,14 @@
       "description": "Discover Iggy, an innovative mobile application for family pet welfare management. A final year project combining mobile design and data security.",
       "keywords": "pet welfare, mobile application, React Native, NestJS, Next.js, Docker, data security, final year project"
     }
+  },
+  "perdus-en-foret": {
+    "title": "Lost in the Forest",
+    "description": "Final project for my Professional Bachelor's degree in Web and Mobile Development at Sorbonne University. Lost in the Forest is a mobile and web application that maps rescue points along hiking trails. The goal is to reduce emergency response time in case of accidents.<br></br><br></br>Developed with React Native and Firebase, the application features an interactive Google Maps integration, a robust authentication system, and real-time synchronization with Redux. The project was implemented following agile methodologies (Scrum) with a team of developers, including regular code reviews and pair programming.",
+    "metas": {
+      "title": "Lost in the Forest — Hiking Safety Application | Noé Philippe",
+      "description": "Discover Lost in the Forest, a mobile and web application for hiker safety. A final year project combining mapping and emergency management.",
+      "keywords": "hiking safety, mobile application, React Native, Firebase, Google Maps, Redux, Scrum, pair programming"
+    }
   }
 }

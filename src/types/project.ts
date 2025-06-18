@@ -40,4 +40,5 @@ export interface Project {
   github?: string;
   link?: string;
   customerUrl?: string;
+  favorite: boolean;
 }

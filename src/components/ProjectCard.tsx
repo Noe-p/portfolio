@@ -19,7 +19,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
   if (!tProjects || !tEnums || !project) return null;
 
   return (
-    <Card>
+    <Card onClick={onClick}>
       <ImageContainer>
         <Image
           src={project.images.header}
@@ -40,7 +40,10 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
 
         <Button
           variant='outline'
-          onClick={onClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick();
+          }}
           className='w-full mt-4 group/button'
         >
           <span>{tCommon('generics.seeMore')}</span>

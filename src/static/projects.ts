@@ -7,6 +7,7 @@ export const projects: Project[] = [
     description: 'sakana-san.description',
     date: '2024-04-10',
     type: ProjectType.FREELANCE,
+    favorite: true,
     images: {
       mobile: [
         '/projects/sakana-san/sakana-san-mobile-1.webP',
@@ -48,6 +49,7 @@ export const projects: Project[] = [
     description: 'tildev.description',
     date: '2024-05-15',
     type: ProjectType.FREELANCE,
+    favorite: true,
     images: {
       mobile: [
         '/projects/tildev/tildev-mobile-1.webP',
@@ -74,6 +76,7 @@ export const projects: Project[] = [
     description: 'kerluskellik.description',
     date: '2024-01-05',
     type: ProjectType.FREELANCE,
+    favorite: true,
     images: {
       mobile: [
         '/projects/kerluskellik/kerluskellik-mobile-1.webP',
@@ -102,6 +105,7 @@ export const projects: Project[] = [
     description: 'romane-faupin.description',
     date: '2023-02-18',
     type: ProjectType.FREELANCE,
+    favorite: false,
     images: {
       mobile: [
         '/projects/romane-faupin/romane-faupin-mobile-1.webP',
@@ -128,6 +132,7 @@ export const projects: Project[] = [
     description: 'fast-foodie.description',
     date: '2024-12-06',
     type: ProjectType.PERSONAL,
+    favorite: true,
     images: {
       mobile: [
         '/projects/fast-foodie/fast-foodie-mobile-1.webP',
@@ -158,6 +163,7 @@ export const projects: Project[] = [
     description: 'iggy.description',
     date: '2023-10-27',
     type: ProjectType.SCHOOL,
+    favorite: true,
     images: {
       mobile: [
         '/projects/iggy/iggy-mobile-1.webP',
@@ -179,10 +185,32 @@ export const projects: Project[] = [
       ProjectTag.NEXTJS,
       ProjectTag.NESTJS,
       ProjectTag.DOCKER,
-      ProjectTag.PROG_WEB_APP,
     ],
     slug: 'iggy',
     github: 'https://github.com/orgs/noep-iggy/repositories',
     link: 'https://iggy-landing-six.vercel.app/',
+  },
+  {
+    id: '6f7g8h9i-0j1k-2l3m-4n5o-6p7q8r9s0t1u',
+    title: 'perdus-en-foret.title',
+    description: 'perdus-en-foret.description',
+    date: '2022-06-16',
+    type: ProjectType.SCHOOL,
+    favorite: false,
+    images: {
+      mobile: [
+        '/projects/perdus-en-foret/perdus-en-foret-mobile-1.webP',
+        '/projects/perdus-en-foret/perdus-en-foret-mobile-2.webP',
+        '/projects/perdus-en-foret/perdus-en-foret-mobile-3.webP',
+        '/projects/perdus-en-foret/perdus-en-foret-mobile-4.webP',
+        '/projects/perdus-en-foret/perdus-en-foret-mobile-5.webP',
+        '/projects/perdus-en-foret/perdus-en-foret-mobile-6.webP',
+      ],
+      desktop: [],
+      header: '/projects/perdus-en-foret/perdus-en-foret-mobile-1.webP',
+    },
+    tags: [ProjectTag.REACT_NATIVE, ProjectTag.TYPESCRIPT, ProjectTag.TAILWIND],
+    slug: 'perdus-en-foret',
+    github: 'https://github.com/VineBast/perdus-en-foret',
   },
 ];

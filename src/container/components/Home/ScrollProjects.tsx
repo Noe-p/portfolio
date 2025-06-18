@@ -45,7 +45,10 @@ export function ScrollProjects(): JSX.Element {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const titlesRef = useRef<HTMLDivElement>(null);
-  const [currentProject, setCurrentProject] = useState<Project>(projects[0]);
+  const favoriteProjects = projects.filter((project) => project.favorite);
+  const [currentProject, setCurrentProject] = useState<Project>(
+    favoriteProjects[0]
+  );
   const isMobile = useMediaQuery('(max-width: 768px)');
   const GAPSPACING = isMobile ? 15 : 25;
   const SLOWDOWN_FACTOR = isMobile ? 4 : 3;
@@ -62,7 +65,7 @@ export function ScrollProjects(): JSX.Element {
       const firstTitle = titlesContainer.querySelector<HTMLElement>('.title')!;
       const titleHeight = firstTitle.offsetHeight;
       const step = titleHeight + GAPSPACING;
-      const totalSteps = projects.length - 1;
+      const totalSteps = favoriteProjects.length - 1;
       const totalDistance = step * totalSteps + 38;
 
       const position = isMobile
@@ -94,7 +97,7 @@ export function ScrollProjects(): JSX.Element {
           pinSpacing: true,
           onUpdate(self) {
             const idx = Math.round(self.progress * totalSteps);
-            setCurrentProject(projects[idx]);
+            setCurrentProject(favoriteProjects[idx]);
           },
           fastScrollEnd: isMobile,
           preventOverlaps: isMobile,
@@ -119,7 +122,7 @@ export function ScrollProjects(): JSX.Element {
   useEffect(() => {
     imageRefs.current.forEach((img, i) => {
       if (!img) return;
-      if (projects[i] === currentProject) {
+      if (favoriteProjects[i] === currentProject) {
         img.style.opacity = '1';
       } else {
         img.style.opacity = '0';
@@ -148,7 +151,7 @@ export function ScrollProjects(): JSX.Element {
 
         <ImageContainer>
           <Col className='w-full h-full relative opacity-70 md:opacity-100'>
-            {projects.map((project, i) => (
+            {favoriteProjects.map((project, i) => (
               <ImageHeader
                 key={project.id}
                 ref={(el) => {
@@ -190,7 +193,7 @@ export function ScrollProjects(): JSX.Element {
           )}
           style={{ gap: `${GAPSPACING}px` }}
         >
-          {projects.map((project, i) => (
+          {favoriteProjects.map((project, i) => (
             <ProjectTitle
               key={i}
               onClick={() => handleClick(ROUTES.projects.project(project.slug))}

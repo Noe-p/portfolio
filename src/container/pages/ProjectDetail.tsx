@@ -25,7 +25,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
-import { useMediaQuery } from 'usehooks-ts';
 
 interface ProjectDetailProps {
   slug: string;
@@ -39,7 +38,6 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
   const format = useFormatter();
 
   const router = useRouter();
-  const isMobile = useMediaQuery('(max-width: 768px)');
   const { setIsTransitionStartOpen } = useAppContext();
 
   // État pour la galerie d'images
@@ -104,7 +102,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
       </Row>
       <Main>
         <div>
-          <Marquee pauseOnHover={false} speed={isMobile ? 50 : 100}>
+          <Marquee pauseOnHover={false}>
             <Text>{tProjects(project.title)}</Text>
           </Marquee>
         </div>

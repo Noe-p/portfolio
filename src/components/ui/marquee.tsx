@@ -1,10 +1,8 @@
-import { useScroll } from '@/hooks/useScroll';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 interface MarqueeProps {
   children: React.ReactNode;
-  speed?: number;
   className?: string;
   pauseOnHover?: boolean;
   baseSpeed?: number;
@@ -32,15 +30,12 @@ const MarqueeItem = styled.div`
 
 export function Marquee({
   children,
-  speed = 50,
   className,
   pauseOnHover = false,
   baseSpeed = 0.5,
 }: MarqueeProps) {
   const contentRef = useRef<HTMLDivElement>(null);
-  const lastScrollY = useRef<number>(0);
   const raf = useRef<number>();
-  const { scrollY } = useScroll();
   const [isPaused, setIsPaused] = useState(false);
   const lastTime = useRef<number>(0);
   const position = useRef<number>(0);
@@ -52,18 +47,14 @@ export function Marquee({
         return;
       }
 
-      const scrollDiff = scrollY - lastScrollY.current;
-      lastScrollY.current = scrollY;
-
       if (contentRef.current) {
         // Calcul du défilement automatique
         const deltaTime = timestamp - lastTime.current;
         lastTime.current = timestamp;
         const autoScroll = baseSpeed * (deltaTime / 16); // 16ms = 60fps
 
-        // Combinaison du défilement automatique et du scroll
-        const scrollEffect = scrollDiff * (speed / 100);
-        position.current -= autoScroll + scrollEffect;
+        // Application du défilement automatique
+        position.current -= autoScroll;
 
         // Calcul de la largeur d'un élément
         const firstItem = contentRef.current.firstElementChild as HTMLElement;
@@ -87,7 +78,7 @@ export function Marquee({
         cancelAnimationFrame(raf.current);
       }
     };
-  }, [scrollY, speed, isPaused, baseSpeed]);
+  }, [isPaused, baseSpeed]);
 
   const handleMouseEnter = () => {
     if (pauseOnHover) {
