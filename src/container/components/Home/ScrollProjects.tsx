@@ -199,8 +199,8 @@ export function ScrollProjects(): JSX.Element {
               onClick={() => handleClick(ROUTES.projects.project(project.slug))}
               className={cn(
                 project === currentProject
-                  ? 'opacity-100 md:bg-background/0 bg-background/90 cursor-pointer'
-                  : 'opacity-60 bg-background/50 md:opacity-30 md:bg-background/0'
+                  ? 'opacity-100 bg-background/90 cursor-pointer'
+                  : 'opacity-60 bg-background/50 md:opacity-30'
               )}
             >
               <H1

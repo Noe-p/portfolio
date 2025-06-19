@@ -5,8 +5,6 @@ export enum ProjectType {
   PERSONAL = 'PERSONAL',
   SCHOOL = 'SCHOOL',
   WORK = 'WORK',
-  MUSIC = 'MUSIC',
-  TRAVEL = 'TRAVEL',
 }
 
 export enum ProjectTag {
@@ -15,10 +13,8 @@ export enum ProjectTag {
   TAILWIND = 'TAILWIND',
   NESTJS = 'NESTJS',
   REACT_NATIVE = 'REACT_NATIVE',
-  ANIMATION = 'ANIMATION',
   DOCKER = 'DOCKER',
   POSTGRESQL = 'POSTGRESQL',
-  GSAP = 'GSAP',
   PROG_WEB_APP = 'PROG_WEB_APP',
 }
 

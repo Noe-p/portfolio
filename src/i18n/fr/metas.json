@@ -8,5 +8,10 @@
     "title": "À propos de Noé Philippe — Développeur Web & Chef de projet digital",
     "description": "De la gestion de projet à la réalisation technique, découvre le profil hybride de Noé Philippe : développeur fullstack freelance formé au pilotage de projets digitaux, passionné par l'image, le code et la création.",
     "keywords": "développeur fullstack, freelance Quimper, gestion de projet digital, développeur Next.js, parcours développeur, développeur créatif, road-trip Nouvelle-Zélande"
+  },
+  "projects": {
+    "title": "Projets — Portfolio de Noé Philippe",
+    "description": "Découvre une sélection de projets web réalisés par Noé Philippe, démontrant son expertise en développement fullstack, créativité et technologies web modernes.",
+    "keywords": "projets web, portfolio, Noé Philippe, développeur fullstack, développement créatif, projets Next.js, frontend backend, portfolio digital"
   }
 }

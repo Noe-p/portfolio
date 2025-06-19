@@ -61,5 +61,14 @@
       "description": "Découvre Perdus en Forêt, une application mobile et web pour la sécurité des randonneurs. Un projet de fin d'études combinant cartographie et gestion des secours.",
       "keywords": "sécurité randonnée, application mobile, React Native, Firebase, Google Maps, Redux, Scrum, pair programming"
     }
+  },
+  "bob-le-developpeur": {
+    "title": "Bob le Développeur",
+    "description": "Projet réalisé en équipe chez <a>Bob le Développeur</a>, une agence web parisienne spécialisée dans la création d'applications sur-mesure pour des clients variés. J'ai participé à la conception et au développement de plateformes web et mobiles pour des clients majeurs, en front comme en back, en collaboration avec des équipes pluridisciplinaires.<br /><br />Voici quelques projets phares réalisés :<ul><li><b>Athome</b> : Digitalisation des process internes et création de plateformes en ligne pour la gestion de projets de rénovation énergétique. Outils sur-mesure pour automatiser et simplifier la gestion des clients et des chantiers.</li><li><b>Racing Club de Strasbourg</b> : Application collaborative pour connecter les acteurs locaux, promouvoir les offres et faciliter la communication entre entreprises partenaires autour du club.</li><li><b>Surge</b> : Développement d'outils d'analyse et de visualisation pour la médecine prédictive, en collaboration avec des experts médicaux pour transformer des besoins métiers complexes en solutions logicielles innovantes.</li><li><b>Alfred</b> : Plateforme de coaching financier pour le Groupe Pluralle, permettant aux utilisateurs d'optimiser leur fiscalité et de gérer leurs projets financiers grâce à une expérience utilisateur fluide et personnalisée.</li><li><b>Allocab</b> : Refonte complète du site du 1er réseau de VTC en France, avec génération de milliers de pages statiques et optimisation du parcours client pour des dizaines de milliers d'utilisateurs quotidiens.</li></ul><br />Chaque projet a été l'occasion de travailler sur des architectures modernes (Next.js, NestJS, React Native, Docker, PostgreSQL), d'assurer la qualité technique, la sécurité et la performance, tout en collaborant étroitement avec les clients et les équipes pour répondre à des besoins métiers exigeants.",
+    "metas": {
+      "title": "Bob le Développeur — Réalisations d'agence sur-mesure | Noé Philippe",
+      "description": "Découvre les projets réalisés chez Bob le Développeur : plateformes web, applications mobiles et outils métiers pour des clients majeurs. Un travail d'équipe mêlant expertise technique, innovation et gestion de projet.",
+      "keywords": "Bob le Développeur, agence web, développement sur-mesure, Next.js, NestJS, React Native, Docker, PostgreSQL, digitalisation, gestion de projet, applications web, applications mobiles, clients majeurs"
+    }
   }
 }

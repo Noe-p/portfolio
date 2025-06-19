@@ -194,20 +194,30 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             </Col>
           </GridCol1>
           <GridCol2 className='md:ml-25 mt-10 md:mt-0'>
-            <P16>
+            <div className='text-[16px] font-mono font-normal text-foreground leading-5'>
               {tProjects.rich(project.description, {
-                a: (chunks) => (
-                  <PurpleTextSmall
-                    href={project.customerUrl}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    {chunks}
-                  </PurpleTextSmall>
-                ),
+                a: (chunks) =>
+                  project.customerUrl ? (
+                    <PurpleTextSmall
+                      href={project.customerUrl}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      {chunks}
+                    </PurpleTextSmall>
+                  ) : (
+                    <span className='font-semibold text-primary/90'>
+                      {chunks}
+                    </span>
+                  ),
                 br: () => <br />,
+                ul: (chunks) => (
+                  <ul className='list-disc pl-5 my-2'>{chunks}</ul>
+                ),
+                li: (chunks) => <li className='mb-2'>{chunks}</li>,
+                b: (chunks) => <b className='font-semibold'>{chunks}</b>,
               })}
-            </P16>
+            </div>
           </GridCol2>
         </Grid3>
         <div

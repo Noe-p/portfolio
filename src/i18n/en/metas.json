@@ -1,12 +1,17 @@
 {
   "home": {
     "title": "Noé Philippe — Freelance Fullstack Developer based in Quimper",
-    "description": "I’m a freelance fullstack developer from Quimper, crafting modern and user-focused web apps. Explore my portfolio and let’s build your next digital project together.",
+    "description": "I'm a freelance fullstack developer from Quimper, crafting modern and user-focused web apps. Explore my portfolio and let's build your next digital project together.",
     "keywords": "Noé Philippe, fullstack developer, freelance web developer, portfolio, frontend backend developer, Next.js, modern web apps, creative developer"
   },
   "about": {
     "title": "About Noé Philippe — Fullstack Developer & Digital Project Manager",
-    "description": "From technical development to project management, discover Noé Philippe’s unique background combining web development, visual creativity, and a year-long road trip through New Zealand.",
+    "description": "From technical development to project management, discover Noé Philippe's unique background combining web development, visual creativity, and a year-long road trip through New Zealand.",
     "keywords": "freelance developer, fullstack developer, digital project manager, creative developer, New Zealand road trip, developer profile, fullstack portfolio, remote web developer"
+  },
+  "projects": {
+    "title": "Projects — Noé Philippe's Portfolio",
+    "description": "Browse a curated selection of web projects developed by Noé Philippe, showcasing expertise in fullstack development, creative solutions, and modern web technologies.",
+    "keywords": "web projects, portfolio, Noé Philippe, fullstack developer, creative web development, Next.js projects, frontend backend, digital portfolio"
   }
 }

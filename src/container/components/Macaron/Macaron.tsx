@@ -18,6 +18,7 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
   const lastScrollY = useRef<number>(0);
   const raf = useRef<number>();
   const [isVisible, setIsVisible] = useState(true);
+  const [rotationSpeed, setRotationSpeed] = useState(0.5);
 
   const { scrollY } = useScroll();
 
@@ -47,8 +48,11 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
     const animate = async () => {
       const { gsap } = await getGsap();
 
+      const minSpeed = 0.2;
+      const friction = 0.95;
+      const maxSpeed = 10;
+
       const tick = () => {
-        // Ne pas animer si le macaron n'est pas visible
         if (!isVisible) {
           raf.current = requestAnimationFrame(tick);
           return;
@@ -57,8 +61,18 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
         const scrollDiff = scrollY - lastScrollY.current;
         lastScrollY.current = scrollY;
 
-        const rotationSpeed = scrollDiff !== 0 ? scrollDiff * 0.5 : 0.1;
-        rotation.current += rotationSpeed;
+        let newSpeed = rotationSpeed;
+        if (scrollDiff !== 0) {
+          newSpeed += scrollDiff * 0.02;
+          newSpeed = Math.max(Math.min(newSpeed, maxSpeed), -maxSpeed);
+        } else {
+          newSpeed *= friction;
+          if (Math.abs(newSpeed) < minSpeed) {
+            newSpeed = newSpeed >= 0 ? minSpeed : -minSpeed;
+          }
+        }
+        setRotationSpeed(newSpeed);
+        rotation.current += newSpeed;
 
         if (svgRef.current) {
           gsap.to(svgRef.current, {
@@ -79,7 +93,7 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
     return () => {
       if (raf.current) cancelAnimationFrame(raf.current);
     };
-  }, [scrollY, isVisible]);
+  }, [scrollY, isVisible, rotationSpeed]);
 
   return (
     <Wrapper className={className}>

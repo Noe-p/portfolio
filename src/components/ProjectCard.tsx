@@ -31,12 +31,15 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
       </ImageContainer>
       <Content>
         <P16 className='font-medium text-lg'>{tProjects(project.title)}</P16>
-        <P16 className='text-foreground/70 line-clamp-4 min-h-[80px]'>
+        <div className='text-foreground/70 line-clamp-4 min-h-[80px] text-[16px] font-mono font-normal leading-5'>
           {tProjects.rich(project.description, {
             a: (chunks) => <PurpleTextSmall>{chunks}</PurpleTextSmall>,
             br: () => <br />,
+            ul: (chunks) => <ul className='list-disc pl-5 my-2'>{chunks}</ul>,
+            li: (chunks) => <li className='mb-2'>{chunks}</li>,
+            b: (chunks) => <b className='font-semibold'>{chunks}</b>,
           })}
-        </P16>
+        </div>
 
         <Button
           variant='outline'

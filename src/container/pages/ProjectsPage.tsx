@@ -61,7 +61,10 @@ export function ProjectsPage(): React.JSX.Element {
       );
     }
 
-    return filtered;
+    // Trie les projets favoris en premier
+    return filtered
+      .slice()
+      .sort((a, b) => (b.favorite ? 1 : 0) - (a.favorite ? 1 : 0));
   }, [selectedTags, selectedType]);
 
   const toggleFilter = (filter: ProjectType | ProjectTag) => {
