@@ -2,6 +2,7 @@
 
 import { Layout } from '@/components';
 import { Separator } from '@/components/ui/separator';
+// import { Spotify } from 'react-spotify-embed';
 import { Header, ScrollProjects } from '../components';
 
 export function HomePage(): JSX.Element {
@@ -12,7 +13,7 @@ export function HomePage(): JSX.Element {
       <Header />
       <Separator className='mt-10 z-10' />
       <ScrollProjects />
-      {/* <Col className='w-full items-start md:mt-10'>
+      {/* <Col id={MenuKeys.MUSIC} className='w-full items-start md:pt-10'>
         <Col className='md:w-10/12 w-full'>
           <Title>{tCommon('music.title')}</Title>
           <P16 className='text-muted-foreground mt-6'>

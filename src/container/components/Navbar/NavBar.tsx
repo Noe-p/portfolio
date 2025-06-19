@@ -131,6 +131,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
           className='group items-start w-fit'
           onClick={() => {
             setSelectedMenuItem(menu);
+            setIsMenuOpen(false);
             scrollTo(menu);
             redirectTo(menu);
           }}

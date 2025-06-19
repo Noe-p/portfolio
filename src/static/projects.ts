@@ -2,6 +2,42 @@ import { Project, ProjectTag, ProjectType } from '@/types/project';
 
 export const projects: Project[] = [
   {
+    id: 'bob-le-developpeur-2024',
+    title: 'bob-le-developpeur.title',
+    description: 'bob-le-developpeur.description',
+    date: '2024-06-30',
+    type: ProjectType.WORK,
+    favorite: false,
+    images: {
+      mobile: [
+        '/projects/bob/bob-mobile-1.webP',
+        '/projects/bob/bob-mobile-2.webP',
+      ],
+      desktop: [
+        '/projects/bob/bob-desktop-1.webP',
+        '/projects/bob/bob-desktop-2.webP',
+        '/projects/bob/bob-desktop-3.webP',
+        '/projects/bob/bob-desktop-4.webP',
+        '/projects/bob/bob-desktop-5.webP',
+        '/projects/bob/bob-desktop-6.webP',
+        '/projects/bob/bob-desktop-7.webP',
+      ],
+      header: '/projects/bob/bob-desktop-1.webP',
+    },
+    tags: [
+      ProjectTag.NEXTJS,
+      ProjectTag.TYPESCRIPT,
+      ProjectTag.TAILWIND,
+      ProjectTag.NESTJS,
+      ProjectTag.POSTGRESQL,
+      ProjectTag.DOCKER,
+      ProjectTag.PROG_WEB_APP,
+      ProjectTag.REACT_NATIVE,
+    ],
+    slug: 'bob-le-developpeur',
+    link: 'https://www.bob-le-developpeur.com/portfolio',
+  },
+  {
     id: '08347cc0-e16c-49d4-bd10-31ae7c341b52',
     title: 'sakana-san.title',
     description: 'sakana-san.description',
@@ -70,50 +106,14 @@ export const projects: Project[] = [
     link: 'https://tildev.fr/',
     customerUrl: 'https://tildev.fr/',
   },
-  {
-    id: 'bob-le-developpeur-2024',
-    title: 'bob-le-developpeur.title',
-    description: 'bob-le-developpeur.description',
-    date: '2024-06-30',
-    type: ProjectType.WORK,
-    favorite: true,
-    images: {
-      mobile: [
-        '/projects/bob/bob-mobile-1.webP',
-        '/projects/bob/bob-mobile-2.webP',
-      ],
-      desktop: [
-        '/projects/bob/bob-desktop-1.webP',
-        '/projects/bob/bob-desktop-2.webP',
-        '/projects/bob/bob-desktop-3.webP',
-        '/projects/bob/bob-desktop-4.webP',
-        '/projects/bob/bob-desktop-5.webP',
-        '/projects/bob/bob-desktop-6.webP',
-        '/projects/bob/bob-desktop-7.webP',
-      ],
-      header: '/projects/bob/bob-desktop-1.webP',
-    },
-    tags: [
-      ProjectTag.NEXTJS,
-      ProjectTag.TYPESCRIPT,
-      ProjectTag.TAILWIND,
-      ProjectTag.NESTJS,
-      ProjectTag.POSTGRESQL,
-      ProjectTag.DOCKER,
-      ProjectTag.PROG_WEB_APP,
-      ProjectTag.REACT_NATIVE,
-    ],
-    slug: 'bob-le-developpeur',
-    link: 'https://www.bob-le-developpeur.com/portfolio',
-    customerUrl: 'https://www.bob-le-developpeur.com/portfolio',
-  },
+
   {
     id: '2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q',
     title: 'kerluskellik.title',
     description: 'kerluskellik.description',
     date: '2024-01-05',
     type: ProjectType.FREELANCE,
-    favorite: false,
+    favorite: true,
     images: {
       mobile: [
         '/projects/kerluskellik/kerluskellik-mobile-1.webP',
