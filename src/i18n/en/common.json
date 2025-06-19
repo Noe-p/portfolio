@@ -22,6 +22,10 @@
   "position": "Fullstack Developer",
   "location": "Currently in Quimper, France",
   "hey": "Hey you!",
+  "music": {
+    "title": "Discover my music",
+    "description": "Outside of coding, music plays an essential role in my life. I’ve been playing guitar for many years, with a special love for saturated, atmospheric, and energetic sounds. From psychedelic rock to stoner, sometimes touching on heavier metal influences.<br></br><br></br>During my two years in Rennes, this passion came to life through an album project with three musician friends: Hugo, Charles, and Adrien. Together, we crafted a sound that reflects who we are, blending progressive rock, psychedelia, and heavier sonic journeys."
+  },
   "about": {
     "andMore": "(But not only)",
     "smallDesc": "Hi! I’m Noé, a fullstack developer with a bit of a project manager mindset. I’m passionate about visuals, sound and movement,  always ready to learn and build things. Scroll down if you want to know more about my slightly offbeat journey 👇",

@@ -22,6 +22,10 @@
   "home": {
     "name": "home"
   },
+  "music": {
+    "title": "Découvre ma musique",
+    "description": "En dehors du code, la musique occupe une place essentielle dans ma vie. Je joue de la guitare depuis de nombreuses années, avec une affinité particulière pour les sons saturés, planants ou énergiques. Du rock psyché au stoner, en passant parfois par des teintes plus métal.<br></br><br></br>Pendant mes deux années passées à Rennes, ce goût s'est concrétisé dans un projet d'album avec trois amis musiciens : Hugo, Charles et Adrien. Ensemble, on a façonné un univers qui nous ressemble, entre rock progressif, psychédélique et envolées plus lourdes."
+  },
   "about": {
     "andMore": "(Mais pas que)",
     "smallDesc": "Salut ! Moi c’est Noé, développeur fullstack avec une casquette de chef de projet. Créatif, curieux, passionné d’images, de sons et de mouvements, j’aime autant concevoir que coder. Si tu veux en savoir plus sur mon parcours un peu atypique, fais défiler 👇",
