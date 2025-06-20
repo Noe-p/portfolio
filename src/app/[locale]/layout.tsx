@@ -1,6 +1,7 @@
 // app/layout.tsx (mise à jour)
 'use client';
 
+import GoogleAnalyticsComponent from '@/components/GoogleAnalytics';
 import { AppProvider } from '@/contexts';
 import { Locale, messages } from '@/i18n/config';
 import { IntlProvider } from 'next-intl';
@@ -50,6 +51,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         >
           <AppProvider>{children}</AppProvider>
         </IntlProvider>
+        <GoogleAnalyticsComponent gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
       </body>
     </html>
   );

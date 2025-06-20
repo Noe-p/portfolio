@@ -37,6 +37,7 @@ jobs:
       - name: Generate .env.production file
         run: |
           echo "NEXT_PUBLIC_APP_URL=${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" >> .env.production
+          echo "NEXT_PUBLIC_GA_ID=${{ secrets.ENV_NEXT_PUBLIC_GA_ID }}" >> .env.production
 
       - name: Build & push image with short SHA tag
         run: |

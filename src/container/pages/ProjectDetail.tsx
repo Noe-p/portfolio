@@ -16,14 +16,13 @@ import { ImagesFullScreen } from '@/components/Medias/ImagesFullScreen';
 import { Badge } from '@/components/ui/Badge';
 import { Marquee } from '@/components/ui/marquee';
 import { useAppContext } from '@/contexts';
-import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
 import { projects } from '@/static/projects';
 import { ArrowUpRightSquareIcon, Maximize } from 'lucide-react';
 import { useFormatter, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 interface ProjectDetailProps {
@@ -46,24 +45,6 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
   const [selectedImageType, setSelectedImageType] = useState<
     'desktop' | 'mobile'
   >('desktop');
-
-  // Références pour le parallax
-  const descriptionRef = useRef<HTMLDivElement>(null);
-  const imagesRef = useRef<HTMLDivElement>(null);
-
-  // Configuration du parallax
-  useParallax([
-    {
-      ref: descriptionRef,
-      speed: 50,
-      easing: 'linear',
-    },
-    {
-      ref: imagesRef,
-      speed: -20,
-      easing: 'easeInCubic',
-    },
-  ]);
 
   const handleBack = (slug: string) => {
     setIsTransitionStartOpen(true);
@@ -106,7 +87,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             <Text>{tProjects(project.title)}</Text>
           </Marquee>
         </div>
-        <Grid3 ref={descriptionRef} className='md:gap-20 mt-5'>
+        <Grid3 className='md:gap-20 mt-5'>
           <GridCol1>
             <Col className='w-full gap-5 md:gap-10'>
               <Row className='w-full justify-between'>
@@ -220,10 +201,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             </div>
           </GridCol2>
         </Grid3>
-        <div
-          className='w-full md:mt-20 mt-15 bg-foreground/15 rounded-md p-4'
-          ref={imagesRef}
-        >
+        <div className='w-full md:mt-20 mt-15 bg-foreground/15 rounded-md p-4'>
           {project.images.desktop && project.images.desktop.length > 0 && (
             <div className='mb-10'>
               <P16 className='uppercase text-foreground/60 '>

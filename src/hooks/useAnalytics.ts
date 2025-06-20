@@ -1,0 +1,40 @@
+import { trackEvent, trackPageView } from '@/lib/analytics';
+import { useCallback } from 'react';
+
+export const useAnalytics = () => {
+  const trackCustomEvent = useCallback(
+    (action: string, category: string, label?: string, value?: number) => {
+      trackEvent(action, category, label, value);
+    },
+    []
+  );
+
+  const trackPageViewEvent = useCallback((url: string) => {
+    trackPageView(url);
+  }, []);
+
+  const trackButtonClick = useCallback((buttonName: string) => {
+    trackEvent('click', 'button', buttonName);
+  }, []);
+
+  const trackProjectView = useCallback((projectName: string) => {
+    trackEvent('view', 'project', projectName);
+  }, []);
+
+  const trackContactForm = useCallback((formType: string) => {
+    trackEvent('submit', 'form', formType);
+  }, []);
+
+  const trackDownload = useCallback((fileName: string, fileType: string) => {
+    trackEvent('download', 'file', `${fileName}.${fileType}`);
+  }, []);
+
+  return {
+    trackCustomEvent,
+    trackPageViewEvent,
+    trackButtonClick,
+    trackProjectView,
+    trackContactForm,
+    trackDownload,
+  };
+};

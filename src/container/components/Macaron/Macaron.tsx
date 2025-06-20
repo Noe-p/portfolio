@@ -19,6 +19,7 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
   const raf = useRef<number>();
   const [isVisible, setIsVisible] = useState(true);
   const [rotationSpeed, setRotationSpeed] = useState(0.5);
+  const wasVisible = useRef<boolean>(true);
 
   const { scrollY } = useScroll();
 
@@ -43,6 +44,14 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
       }
     };
   }, []);
+
+  // Réinitialiser lastScrollY seulement lors de la transition invisible -> visible
+  useEffect(() => {
+    if (isVisible && !wasVisible.current) {
+      lastScrollY.current = scrollY;
+    }
+    wasVisible.current = isVisible;
+  }, [isVisible, scrollY]);
 
   useEffect(() => {
     const animate = async () => {
