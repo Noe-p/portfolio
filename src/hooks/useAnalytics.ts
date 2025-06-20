@@ -1,4 +1,4 @@
-import { trackEvent, trackPageView } from '@/lib/analytics';
+import { trackEvent } from '@/lib/analytics';
 import { useCallback } from 'react';
 
 export const useAnalytics = () => {
@@ -8,10 +8,6 @@ export const useAnalytics = () => {
     },
     []
   );
-
-  const trackPageViewEvent = useCallback((url: string) => {
-    trackPageView(url);
-  }, []);
 
   const trackButtonClick = useCallback((buttonName: string) => {
     trackEvent('click', 'button', buttonName);
@@ -31,7 +27,6 @@ export const useAnalytics = () => {
 
   return {
     trackCustomEvent,
-    trackPageViewEvent,
     trackButtonClick,
     trackProjectView,
     trackContactForm,

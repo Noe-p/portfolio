@@ -142,6 +142,11 @@
     "fact29": "La tour Eiffel grandit en été.",
     "fact30": "Les oiseaux sont les plus proches parents vivants des dinosaures."
   },
+  "cookieConsent": {
+    "description": "J'utilise des cookies pour analyser le trafic et améliorer votre expérience. Ces données sont anonymisées et ne permettent pas de vous identifier personnellement.",
+    "accept": "Accepter",
+    "decline": "Refuser"
+  },
   "footer": {
     "title": "Envie de construire quelque chose ensemble ? N'hésite pas à me contacter !"
   }

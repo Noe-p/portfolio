@@ -142,6 +142,11 @@
     "fact29": "The Eiffel Tower grows taller in summer.",
     "fact30": "Birds are the closest living relatives of dinosaurs."
   },
+  "cookieConsent": {
+    "description": "I use cookies to analyze traffic and improve your experience. This data is anonymized and does not personally identify you.",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
   "footer": {
     "title": "Thinking about building something together? Don't hesitate to get in touch!"
   }

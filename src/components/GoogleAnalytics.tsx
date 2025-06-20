@@ -1,9 +1,7 @@
 'use client';
 
-import { trackPageView } from '@/lib/analytics';
+import { useCookieConsent } from '@/hooks/useCookieConsent';
 import { GoogleAnalytics } from '@next/third-parties/google';
-import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
 
 interface GoogleAnalyticsProps {
   gaId: string;
@@ -12,16 +10,9 @@ interface GoogleAnalyticsProps {
 export default function GoogleAnalyticsComponent({
   gaId,
 }: GoogleAnalyticsProps) {
-  const pathname = usePathname();
+  const { hasConsent } = useCookieConsent();
 
-  useEffect(() => {
-    // Track page view when pathname changes
-    if (pathname) {
-      trackPageView(pathname);
-    }
-  }, [pathname]);
-
-  if (!gaId) {
+  if (!gaId || hasConsent !== true) {
     return null;
   }
 

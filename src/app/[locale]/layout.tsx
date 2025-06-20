@@ -1,6 +1,7 @@
 // app/layout.tsx (mise à jour)
 'use client';
 
+import { CookieConsent } from '@/components/CookieConsent';
 import GoogleAnalyticsComponent from '@/components/GoogleAnalytics';
 import { AppProvider } from '@/contexts';
 import { Locale, messages } from '@/i18n/config';
@@ -49,7 +50,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           messages={messages[locale]}
           locale={locale}
         >
-          <AppProvider>{children}</AppProvider>
+          <AppProvider>
+            {children}
+            <CookieConsent />
+          </AppProvider>
         </IntlProvider>
         <GoogleAnalyticsComponent gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
       </body>
