@@ -50,7 +50,7 @@ export function ScrollProjects(): JSX.Element {
     favoriteProjects[0]
   );
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const GAPSPACING = isMobile ? 15 : 25;
+  const GAPSPACING = isMobile ? 25 : 25;
   const SLOWDOWN_FACTOR = isMobile ? 4 : 3;
   const { setIsTransitionStartOpen } = useAppContext();
   const imageRefs = useRef<HTMLImageElement[]>([]);

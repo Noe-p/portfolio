@@ -35,6 +35,15 @@ const socialLinks = [
 export function Footer({ className }: FooterProps): React.JSX.Element {
   const t = useTranslations('common');
 
+  const handleDownloadCV = () => {
+    const link = document.createElement('a');
+    link.href = '/CV.pdf';
+    link.download = 'Noe_Philippe_CV.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <Main className={className} id={NavKeys.CONTACT}>
       <Macaron />
@@ -57,21 +66,30 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
           ))}
         </Col>
 
-        {/* Title + Button */}
+        {/* Title + Buttons */}
         <Col className='md:w-2/3 order-1 md:order-2'>
           <H2 className='md:text-3xl text-2xl leading-none -translate-y-2'>
             {t('footer.title')}
           </H2>
-          <a
-            href='mailto:noephilippe29@gmail.com'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='w-full block group'
-          >
-            <Button className='w-full md:w-fit mt-2' variant='outline'>
-              {t('generics.sendEmail')}
+          <Row className='w-fit gap-2 mt-2 flex-row'>
+            <a
+              href='mailto:noephilippe29@gmail.com'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='w-full block group'
+            >
+              <Button className='w-full md:w-fit' variant='outline'>
+                {t('generics.sendEmail')}
+              </Button>
+            </a>
+            <Button
+              onClick={handleDownloadCV}
+              className='w-full md:w-fit'
+              variant='outline'
+            >
+              {t('generics.downloadCV')}
             </Button>
-          </a>
+          </Row>
         </Col>
       </RowBetween>
 
