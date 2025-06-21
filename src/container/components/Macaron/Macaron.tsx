@@ -9,9 +9,13 @@ import tw from 'tailwind-styled-components';
 
 interface MacaronProps {
   className?: string;
+  enableScrollRotation?: boolean;
 }
 
-export function Macaron({ className }: MacaronProps): JSX.Element {
+export function Macaron({
+  className,
+  enableScrollRotation = false,
+}: MacaronProps): JSX.Element {
   const t = useTranslations('common');
   const svgRef = useRef<SVGSVGElement>(null);
   const rotation = useRef<number>(0);
@@ -47,13 +51,49 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
 
   // Réinitialiser lastScrollY seulement lors de la transition invisible -> visible
   useEffect(() => {
+    if (!enableScrollRotation) return;
+
     if (isVisible && !wasVisible.current) {
       lastScrollY.current = scrollY;
     }
     wasVisible.current = isVisible;
-  }, [isVisible, scrollY]);
+  }, [isVisible, scrollY, enableScrollRotation]);
 
   useEffect(() => {
+    if (!enableScrollRotation) {
+      // Rotation automatique de base
+      const animate = async () => {
+        const { gsap } = await getGsap();
+
+        const tick = () => {
+          if (!isVisible) {
+            raf.current = requestAnimationFrame(tick);
+            return;
+          }
+
+          rotation.current += 0.1; // Vitesse constante de rotation réduite
+
+          if (svgRef.current) {
+            gsap.to(svgRef.current, {
+              rotate: rotation.current,
+              duration: 0.7,
+              ease: 'power2.out',
+            });
+          }
+
+          raf.current = requestAnimationFrame(tick);
+        };
+
+        raf.current = requestAnimationFrame(tick);
+      };
+
+      animate();
+
+      return () => {
+        if (raf.current) cancelAnimationFrame(raf.current);
+      };
+    }
+
     const animate = async () => {
       const { gsap } = await getGsap();
 
@@ -102,7 +142,7 @@ export function Macaron({ className }: MacaronProps): JSX.Element {
     return () => {
       if (raf.current) cancelAnimationFrame(raf.current);
     };
-  }, [scrollY, isVisible, rotationSpeed]);
+  }, [scrollY, isVisible, rotationSpeed, enableScrollRotation]);
 
   return (
     <Wrapper className={className}>

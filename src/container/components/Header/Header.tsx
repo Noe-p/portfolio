@@ -79,14 +79,17 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
               style={{ width: 'auto', height: 'auto' }}
             />
           </div>
-          <Macaron className='w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28' />
+          <Macaron
+            className='w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28'
+            enableScrollRotation={true}
+          />
         </Row>
         <HeaderContent onClick={handleClick} t={t} />
       </Col>
 
       {/* Desktop */}
       <RowBetween className='mt-15 justify-around w-full hidden md:flex'>
-        <Macaron className='top-10 left-20' />
+        <Macaron className='top-10 left-20' enableScrollRotation={true} />
         <Col>
           <RowBetween ref={positionRef}>
             <H2 className='text-foreground/80 normal-case'>{t('position')}</H2>

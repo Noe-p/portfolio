@@ -82,11 +82,11 @@ export function ScrollProjects(): JSX.Element {
       }
 
       gsap.set(titlesContainer, {
-        y: position,
+        y: isMobile ? position - 40 : position,
       });
 
       gsap.to(titlesContainer, {
-        y: position - totalDistance,
+        y: (isMobile ? position - 40 : position) - totalDistance,
         ease: 'none',
         scrollTrigger: {
           trigger: container,
@@ -188,28 +188,48 @@ export function ScrollProjects(): JSX.Element {
         <div
           ref={titlesRef}
           className={cn(
-            'absolute left-0 top-0 w-fit h-min flex flex-col items-start z-10 md:z-10',
-            isMobile ? 'ml-8' : 'ml-16'
+            'absolute left-0 w-fit h-min flex flex-col items-start z-10 md:z-10',
+            isMobile ? 'ml-8' : 'ml-16 top-0'
           )}
           style={{ gap: `${GAPSPACING}px` }}
         >
           {favoriteProjects.map((project, i) => (
-            <ProjectTitle
-              key={i}
-              onClick={() => handleClick(ROUTES.projects.project(project.slug))}
-              className={cn(
-                project === currentProject
-                  ? 'opacity-100 bg-background/90 cursor-pointer'
-                  : 'opacity-60 bg-background/50 md:opacity-30'
-              )}
-            >
-              <H1
-                className={cn('title md:text-6xl text-2xl transition-opacity')}
+            <div key={i} className='relative'>
+              <Image
+                src={project.images.header || ''}
+                alt={tProject(project.title)}
+                width={120}
+                height={160}
+                className='md:hidden absolute right-0 translate-x-10 -top-full -translate-y-5 w-30 h-40 rounded z-10 object-cover transition-all duration-700 ease-out'
+                style={{
+                  opacity: project === currentProject ? 1 : 0,
+                  transform:
+                    project === currentProject
+                      ? 'translate(40px, -20px) scale(1) rotate(0deg)'
+                      : 'translate(40px, -20px) scale(0.8) rotate(-5deg)',
+                }}
+              />
+              <ProjectTitle
+                onClick={() =>
+                  handleClick(ROUTES.projects.project(project.slug))
+                }
+                className={cn(
+                  'relative rounded px-2 py-1 transition-all duration-500',
+                  project === currentProject
+                    ? 'opacity-100 bg-background/90 cursor-pointer relative z-20 backdrop-blur-lg animate-in zoom-in-95 duration-300'
+                    : 'opacity-60 bg-background/50 md:opacity-30 relative z-0 backdrop-blur-sm md:backdrop-blur-none'
+                )}
               >
-                {tProject(project.title)}
-              </H1>
-              <ProjectType>{tEnums(project.type)}</ProjectType>
-            </ProjectTitle>
+                <H1
+                  className={cn(
+                    'title md:text-6xl text-2xl transition-opacity'
+                  )}
+                >
+                  {tProject(project.title)}
+                </H1>
+                <ProjectType>{tEnums(project.type)}</ProjectType>
+              </ProjectTitle>
+            </div>
           ))}
         </div>
 
@@ -244,9 +264,11 @@ const ImageContainer = tw.div`
   rounded
   overflow-hidden
   opacity-40 md:opacity-100
+  hidden md:flex
 `;
 
 const ProjectInfoBar = tw(Row)`
+  hidden md:flex
   md:w-1/2 w-full 
   items-center 
   justify-between 
@@ -278,8 +300,6 @@ const ProjectLink = tw(Row)`
 
 const ProjectTitle = tw.div`
   relative 
-  backdrop-blur-md 
-  md:backdrop-blur-none 
   rounded 
   px-2 
   py-1 
@@ -305,6 +325,8 @@ const ScrollIndicator = tw(ChevronRight)`
   -translate-y-1/2 
   z-10
   text-primary
+  md:top-1/2
+  top-[calc(50%-40px)]
 `;
 
 const SeeAllButton = tw(Button)`
