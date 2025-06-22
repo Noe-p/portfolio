@@ -1,3 +1,4 @@
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { Project } from '@/types/project';
 import { ArrowRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -17,11 +18,17 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
   const tEnums = useTranslations('enums');
   const tProjects = useTranslations('projects');
   const tCommon = useTranslations('common');
+  const { trackProjectView } = useAnalytics();
 
   if (!tProjects || !tEnums || !project) return null;
 
+  const handleProjectClick = () => {
+    trackProjectView(project.slug);
+    onClick();
+  };
+
   return (
-    <Card onClick={onClick}>
+    <Card onClick={handleProjectClick}>
       <ImageContainer>
         <Image
           src={project.images.header}
@@ -57,7 +64,7 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           variant='outline'
           onClick={(e) => {
             e.stopPropagation();
-            onClick();
+            handleProjectClick();
           }}
           className='w-full mt-4 group/button md:hidden'
         >

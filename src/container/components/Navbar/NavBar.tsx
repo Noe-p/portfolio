@@ -4,6 +4,7 @@ import { Col, Row } from '@/components';
 import { H3, P14, P16 } from '@/components/Texts';
 import { useAppContext } from '@/contexts';
 import { useRedirectTo } from '@/hooks/redirectTo';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { getGsap } from '@/services/registerGsap';
 import { cn, scrollTo } from '@/services/utils';
 import { MEDIA_QUERIES } from '@/static/constants';
@@ -46,6 +47,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
   const menuRef = useRef<HTMLDivElement>(null);
   const menuItemsRefs = useRef<HTMLDivElement[]>([]);
   const redirectTo = useRedirectTo();
+  const { trackButtonClick } = useAnalytics();
 
   // verrouillage du scroll mobile
   useEffect(() => {
@@ -130,6 +132,7 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
         <Col
           className='group items-start w-fit'
           onClick={() => {
+            trackButtonClick(`nav_${menu.toLowerCase()}`);
             setSelectedMenuItem(menu);
             setIsMenuOpen(false);
             scrollTo(menu);

@@ -16,6 +16,7 @@ import { ImagesFullScreen } from '@/components/Medias/ImagesFullScreen';
 import { Badge } from '@/components/ui/Badge';
 import { Marquee } from '@/components/ui/marquee';
 import { useAppContext } from '@/contexts';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { ROUTES } from '@/routes';
 import { projects } from '@/static/projects';
 import { ArrowUpRightSquareIcon, Maximize } from 'lucide-react';
@@ -35,6 +36,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
   const tEnums = useTranslations('enums');
   const tCommon = useTranslations('common');
   const format = useFormatter();
+  const { trackButtonClick, trackCustomEvent } = useAnalytics();
 
   const router = useRouter();
   const { setIsTransitionStartOpen } = useAppContext();
@@ -52,9 +54,18 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
   };
 
   const handleImageClick = (type: 'desktop' | 'mobile', index: number) => {
+    trackCustomEvent(
+      'open',
+      'project_gallery',
+      `${project?.slug}_${type}_${index + 1}`
+    );
     setSelectedImageType(type);
     setSelectedImageIndex(index);
     setIsGalleryOpen(true);
+  };
+
+  const handleExternalLinkClick = (type: 'github' | 'website') => {
+    trackButtonClick(`${type}_link_${project?.slug}`);
   };
 
   const allImages = [
@@ -96,6 +107,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                     href={project.github}
                     target='_blank'
                     rel='noopener noreferrer'
+                    onClick={() => handleExternalLinkClick('github')}
                   >
                     <P16 className='text-foreground/80 group-hover:text-primary transition-colors'>
                       {tCommon('projects.seeGithub')}
@@ -121,6 +133,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                     href={project.link}
                     target='_blank'
                     rel='noopener noreferrer'
+                    onClick={() => handleExternalLinkClick('website')}
                   >
                     <P16 className='text-foreground/80 group-hover:text-primary transition-colors'>
                       {tCommon('projects.seeWeb')}
@@ -277,6 +290,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             ? selectedImageIndex
             : project.images.desktop?.length + selectedImageIndex
         }
+        projectName={project?.slug}
       />
     </Layout>
   ) : (

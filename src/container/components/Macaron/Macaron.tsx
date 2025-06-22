@@ -17,6 +17,20 @@ interface MacaronProps {
 let gsapInstance: unknown = null;
 let gsapPromise: Promise<{ gsap: unknown }> | null = null;
 
+// Compteur statique pour générer des IDs uniques de manière déterministe
+let macaronCounter = 0;
+
+// Hook personnalisé pour générer un ID unique de manière déterministe
+function useMacaronId(baseId: string = 'macaron'): string {
+  const idRef = useRef<string>();
+
+  if (!idRef.current) {
+    idRef.current = `${baseId}-${++macaronCounter}`;
+  }
+
+  return idRef.current;
+}
+
 // Fonction pour obtenir GSAP de manière optimisée
 const getGsapOptimized = async () => {
   if (gsapInstance) {
@@ -44,9 +58,9 @@ export function Macaron({
   const raf = useRef<number>();
   const rotationSpeed = useRef<number>(0.5);
   const [isVisible, setIsVisible] = useState(true);
-  const instanceId = useRef<string>(
-    `${id}-${Math.random().toString(36).substr(2, 9)}`
-  );
+
+  // Utiliser le hook personnalisé pour générer un ID unique
+  const instanceId = useMacaronId(id);
 
   const { scrollY } = useScroll();
 
@@ -171,11 +185,11 @@ export function Macaron({
         ref={svgRef}
         viewBox='0 0 100 100'
         className='w-full h-full fill-current text-foreground origin-center'
-        data-macaron-id={instanceId.current}
+        data-macaron-id={instanceId}
       >
         <defs>
           <path
-            id={`circlePath-${instanceId.current}`}
+            id={`circlePath-${instanceId}`}
             d='M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0'
           />
         </defs>
@@ -184,7 +198,7 @@ export function Macaron({
           className='font-title text-foreground tracking-widest'
         >
           <textPath
-            href={`#circlePath-${instanceId.current}`}
+            href={`#circlePath-${instanceId}`}
             startOffset='0%'
             textLength='100%'
           >
@@ -192,10 +206,7 @@ export function Macaron({
           </textPath>
         </text>
         <text fontSize='10' className='font-title tracking-widest'>
-          <textPath
-            href={`#circlePath-${instanceId.current}`}
-            startOffset='47%'
-          >
+          <textPath href={`#circlePath-${instanceId}`} startOffset='47%'>
             <tspan className='text-green-400'>{'•\u00A0'}</tspan>
           </textPath>
         </text>
@@ -204,7 +215,7 @@ export function Macaron({
           className='font-title text-foreground tracking-widest'
         >
           <textPath
-            href={`#circlePath-${instanceId.current}`}
+            href={`#circlePath-${instanceId}`}
             startOffset='50%'
             textLength='100%'
           >
@@ -212,10 +223,7 @@ export function Macaron({
           </textPath>
         </text>
         <text fontSize='10' className='font-title tracking-widest'>
-          <textPath
-            href={`#circlePath-${instanceId.current}`}
-            startOffset='97%'
-          >
+          <textPath href={`#circlePath-${instanceId}`} startOffset='97%'>
             <tspan className='text-green-400'>{'•\u00A0'}</tspan>
           </textPath>
         </text>
@@ -225,7 +233,7 @@ export function Macaron({
   );
 
   return (
-    <Wrapper className={className} data-macaron-instance={instanceId.current}>
+    <Wrapper className={className} data-macaron-instance={instanceId}>
       {svgContent}
       <div className='absolute inset-0 flex items-center justify-center'>
         <div className='w-4 h-4 bg-primary rounded-full' />

@@ -1,7 +1,8 @@
 'use client';
-import { Col, Row, RowBetween } from '@/components';
+import { Col, ColCenter, Row, RowBetween } from '@/components';
 import { H2, P14, P16 } from '@/components/Texts';
 import { Button } from '@/components/ui/button';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { useTranslations } from 'next-intl';
 
 import { Download } from 'lucide-react';
@@ -18,31 +19,45 @@ const socialLinks = [
   {
     href: 'mailto:noephilippe29@gmail.com',
     labelKey: 'generics.email',
+    analyticsLabel: 'email_contact',
   },
   {
     href: 'https://github.com/Noe-p',
     labelKey: 'generics.github',
+    analyticsLabel: 'github_profile',
   },
   {
     href: 'https://www.linkedin.com/in/noe-philippe/',
     labelKey: 'generics.linkedin',
+    analyticsLabel: 'linkedin_profile',
   },
   {
     href: 'https://www.instagram.com/noefdrgv/',
     labelKey: 'generics.instagram',
+    analyticsLabel: 'instagram_profile',
   },
 ];
 
 export function Footer({ className }: FooterProps): React.JSX.Element {
   const t = useTranslations('common');
+  const { trackButtonClick, trackDownload } = useAnalytics();
 
   const handleDownloadCV = () => {
+    trackDownload('Noe_Philippe_CV', 'pdf');
     const link = document.createElement('a');
     link.href = '/CV.pdf';
     link.download = 'Noe_Philippe_CV.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const handleSocialLinkClick = (analyticsLabel: string) => {
+    trackButtonClick(analyticsLabel);
+  };
+
+  const handleEmailButtonClick = () => {
+    trackButtonClick('email_button_footer');
   };
 
   return (
@@ -52,13 +67,14 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
       <RowBetween className='flex-col md:flex-row w-full mt-15'>
         {/* Social Links */}
         <Col className='flex-row md:flex-col mt-10 md:mt-0 justify-between md:justify-start md:gap-3 order-2 md:order-1'>
-          {socialLinks.map(({ href, labelKey }) => (
+          {socialLinks.map(({ href, labelKey, analyticsLabel }) => (
             <a
               key={href}
               href={href}
               target='_blank'
               rel='noopener noreferrer'
               className='w-full block group'
+              onClick={() => handleSocialLinkClick(analyticsLabel)}
             >
               <P16 className='group-hover:text-primary cursor-pointer text-foreground transition-all duration-300'>
                 {t(labelKey)}
@@ -78,6 +94,7 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
               target='_blank'
               rel='noopener noreferrer'
               className='w-full block group'
+              onClick={handleEmailButtonClick}
             >
               <Button className='w-full md:w-fit' variant='outline'>
                 {t('generics.sendEmail')}
@@ -104,9 +121,21 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
         </Col>
 
         {/* Center (Desktop Only) */}
-        <CopyRight className='text-foreground/50 hidden md:flex'>
-          {t('generics.copyright')}
-        </CopyRight>
+        <Col className='w-full items-center  hidden md:flex'>
+          <CopyRight className='text-foreground/50 w-fit'>
+            {t('generics.copyright')}
+          </CopyRight>
+          <a
+            href='/privacy-policy.html'
+            target='_blank'
+            rel='noopener noreferrer'
+            onClick={() => trackButtonClick('privacy_policy_link')}
+          >
+            <P14 className='text-foreground/50 hover:text-primary transition-colors cursor-pointer'>
+              {t('generics.privacyPolicy')}
+            </P14>
+          </a>
+        </Col>
 
         {/* Right */}
         <Col className='w-full items-end'>
@@ -119,9 +148,21 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
       </Row>
 
       {/* CopyRight for Mobile */}
-      <CopyRight className='text-foreground/50 md:hidden mt-10'>
-        {t('generics.copyright')}
-      </CopyRight>
+      <ColCenter className=' md:hidden'>
+        <CopyRight className='text-foreground/50 mt-10'>
+          {t('generics.copyright')}
+        </CopyRight>
+        <a
+          href='/privacy-policy.html'
+          target='_blank'
+          rel='noopener noreferrer'
+          onClick={() => trackButtonClick('privacy_policy_link')}
+        >
+          <P14 className='text-foreground/50 hover:text-primary transition-colors cursor-pointer'>
+            {t('generics.privacyPolicy')}
+          </P14>
+        </a>
+      </ColCenter>
     </Main>
   );
 }
@@ -137,5 +178,4 @@ const Main = tw.div`
 
 const CopyRight = tw(P14)`
   text-center
-  w-3/4
 `;

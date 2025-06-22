@@ -3,6 +3,7 @@
 import { Col, H1, P12, P16, Row, Title } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { ROUTES } from '@/routes';
 import { getGsap } from '@/services/registerGsap';
 import { cn } from '@/services/utils';
@@ -54,6 +55,7 @@ export function ScrollProjects(): JSX.Element {
   const SLOWDOWN_FACTOR = isMobile ? 4 : 3;
   const { setIsTransitionStartOpen } = useAppContext();
   const imageRefs = useRef<HTMLImageElement[]>([]);
+  const { trackProjectView, trackButtonClick } = useAnalytics();
 
   useEffect(() => {
     async function initGsap() {
@@ -131,6 +133,17 @@ export function ScrollProjects(): JSX.Element {
   }, [currentProject, isMobile]);
 
   const handleClick = (nav: string) => {
+    if (nav.includes('/projects/')) {
+      // C'est un clic sur un projet spécifique
+      const projectSlug = nav.split('/').pop();
+      if (projectSlug) {
+        trackProjectView(projectSlug);
+      }
+    } else if (nav === ROUTES.projects.all) {
+      // C'est un clic sur "Voir tous les projets"
+      trackButtonClick('see_all_projects');
+    }
+
     setIsTransitionStartOpen(true);
     setTimeout(() => {
       router.push(nav);
@@ -175,7 +188,7 @@ export function ScrollProjects(): JSX.Element {
                   width={200}
                   height={160}
                   className={cn(
-                    'absolute top-1/2 -translate-y-1/2 w-[200px] h-[160px] rounded z-10 object-cover transition-all delay-200 duration-700 ease-out',
+                    'absolute top-1/2 -translate-y-1/2 w-[200px] h-[160px] rounded z-10 object-cover transition-all delay-75 duration-700 ease-out',
                     i % 2 === 0 ? 'left-0' : 'right-0',
                     project === currentProject
                       ? 'opacity-100 scale-100'
@@ -210,7 +223,7 @@ export function ScrollProjects(): JSX.Element {
                     {tProject(project.title)}
                     <ProjectType
                       className={cn(
-                        'absolute -bottom-8 z-10 normal-case transition-all delay-200 duration-500 ease-out',
+                        'absolute -bottom-8 z-10 normal-case transition-all delay-75 duration-500 ease-out',
                         project === currentProject
                           ? 'opacity-100 translate-y-0'
                           : 'opacity-0 translate-y-2',

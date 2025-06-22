@@ -4,6 +4,7 @@ import { Layout, P16, Row, Title } from '@/components';
 import { ProjectCard } from '@/components/ProjectCard';
 import { Badge } from '@/components/ui/Badge';
 import { useAppContext } from '@/contexts';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { ROUTES } from '@/routes';
 import { cn } from '@/services/utils';
 import { projects } from '@/static/projects';
@@ -17,6 +18,7 @@ export function ProjectsPage(): React.JSX.Element {
   const router = useRouter();
   const tCommons = useTranslations('common');
   const tEnums = useTranslations('enums');
+  const { trackButtonClick } = useAnalytics();
 
   const { setIsTransitionStartOpen } = useAppContext();
   const [selectedTags, setSelectedTags] = useState<ProjectTag[]>([]);
@@ -36,6 +38,7 @@ export function ProjectsPage(): React.JSX.Element {
   };
 
   const handleProjectClick = (slug: string) => {
+    trackButtonClick(`project_card_${slug}`);
     setIsTransitionStartOpen(true);
     setTimeout(() => router.push(ROUTES.projects.project(slug)), 700);
   };
@@ -68,14 +71,16 @@ export function ProjectsPage(): React.JSX.Element {
   }, [selectedTags, selectedType]);
 
   const toggleFilter = (filter: ProjectType | ProjectTag) => {
-    if (Object.values(ProjectType).includes(filter as ProjectType)) {
-      setSelectedType((prev) =>
-        prev === filter ? null : (filter as ProjectType)
-      );
+    const isType = Object.values(ProjectType).includes(filter as ProjectType);
+    const filterType = isType ? 'type' : 'tag';
+    trackButtonClick(`filter_${filterType}_${filter.toLowerCase()}`);
+
+    if (isType) {
+      setSelectedType(selectedType === filter ? null : (filter as ProjectType));
     } else {
       setSelectedTags((prev) =>
         prev.includes(filter as ProjectTag)
-          ? prev.filter((t) => t !== filter)
+          ? prev.filter((tag) => tag !== filter)
           : [...prev, filter as ProjectTag]
       );
     }

@@ -14,7 +14,8 @@
     "projects": "Projets",
     "tags": "Technologies",
     "date": "Date",
-    "customer": "Client"
+    "customer": "Client",
+    "privacyPolicy": "Politique de confidentialité"
   },
   "status": "Prêt à travailler",
   "position": "Développeur Fullstack",

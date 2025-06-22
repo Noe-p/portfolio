@@ -14,7 +14,8 @@
     "projects": "Projects",
     "tags": "Tech Stack",
     "date": "Date",
-    "customer": "Customer"
+    "customer": "Customer",
+    "privacyPolicy": "Privacy Policy"
   },
   "home": {
     "name": "home"

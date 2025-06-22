@@ -7,6 +7,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { cn } from '@/services/utils';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import Image from 'next/image';
@@ -17,6 +18,7 @@ interface ImagesFullScreenProps {
   isOpen: boolean;
   onClose: () => void;
   initialIndex?: number;
+  projectName?: string;
 }
 
 export function ImagesFullScreen({
@@ -24,16 +26,20 @@ export function ImagesFullScreen({
   isOpen,
   onClose,
   initialIndex = 0,
+  projectName,
 }: ImagesFullScreenProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
   const [isLoading, setIsLoading] = useState(true);
+  const { trackCustomEvent } = useAnalytics();
 
   // Réinitialiser l'index quand la galerie s'ouvre
   useEffect(() => {
     if (isOpen) {
       setCurrentIndex(initialIndex);
+      // Tracker l'ouverture de la galerie
+      trackCustomEvent('open', 'gallery', projectName || 'project_gallery');
     }
-  }, [isOpen, initialIndex]);
+  }, [isOpen, initialIndex, projectName, trackCustomEvent]);
 
   // Précharger les images adjacentes
   useEffect(() => {
@@ -57,17 +63,29 @@ export function ImagesFullScreen({
   const handlePrevious = () => {
     setIsLoading(true);
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    trackCustomEvent('navigate', 'gallery', 'previous', currentIndex);
   };
 
   const handleNext = () => {
     setIsLoading(true);
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    trackCustomEvent('navigate', 'gallery', 'next', currentIndex);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowLeft') handlePrevious();
     if (e.key === 'ArrowRight') handleNext();
     if (e.key === 'Escape') onClose();
+  };
+
+  const handleClose = () => {
+    trackCustomEvent('close', 'gallery', projectName || 'project_gallery');
+    onClose();
+  };
+
+  const handleImageClick = (index: number) => {
+    setCurrentIndex(index);
+    trackCustomEvent('select', 'gallery', `image_${index + 1}`, index);
   };
 
   return (
@@ -131,7 +149,7 @@ export function ImagesFullScreen({
             variant='ghost'
             size='icon'
             className='absolute top-4 right-4 bg-black/30 hover:bg-black/50 text-white hover:text-primary focus:outline-none focus:ring-0 transition-colors'
-            onClick={onClose}
+            onClick={handleClose}
             aria-label='Fermer la galerie'
           >
             <X className='h-8 w-8' />
@@ -148,7 +166,7 @@ export function ImagesFullScreen({
                     ? 'bg-white scale-125'
                     : 'bg-white/50 hover:bg-primary/75'
                 )}
-                onClick={() => setCurrentIndex(index)}
+                onClick={() => handleImageClick(index)}
                 aria-label={`Aller à l'image ${index + 1}`}
                 aria-current={currentIndex === index}
               />

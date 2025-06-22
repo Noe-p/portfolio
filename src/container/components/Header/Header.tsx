@@ -3,6 +3,7 @@
 import { Col, H2, P14, P16, P24, Row, RowBetween, Title } from '@/components';
 import { Button } from '@/components/ui/button';
 import { useAppContext } from '@/contexts';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
 import { cn } from '@/services/utils';
@@ -22,6 +23,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
   const t = useTranslations('common');
   const router = useRouter();
   const { setIsTransitionStartOpen } = useAppContext();
+  const { trackButtonClick } = useAnalytics();
 
   const imageRef = useRef<HTMLDivElement>(null);
   const philRef = useRef<HTMLDivElement>(null);
@@ -34,6 +36,7 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
   ]);
 
   const handleClick = () => {
+    trackButtonClick('see_more_about');
     setIsTransitionStartOpen(true);
     setTimeout(() => {
       router.push(ROUTES.about);
