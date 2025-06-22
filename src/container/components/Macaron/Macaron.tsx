@@ -4,30 +4,56 @@
 import { useScroll } from '@/hooks/useScroll';
 import { getGsap } from '@/services/registerGsap';
 import { useTranslations } from 'next-intl';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 
 interface MacaronProps {
   className?: string;
   enableScrollRotation?: boolean;
+  id?: string; // ID unique pour éviter les conflits
 }
+
+// Cache global pour GSAP
+let gsapInstance: unknown = null;
+let gsapPromise: Promise<{ gsap: unknown }> | null = null;
+
+// Fonction pour obtenir GSAP de manière optimisée
+const getGsapOptimized = async () => {
+  if (gsapInstance) {
+    return gsapInstance as { gsap: unknown };
+  }
+
+  if (gsapPromise) {
+    return await gsapPromise;
+  }
+
+  gsapPromise = getGsap();
+  gsapInstance = await gsapPromise;
+  return gsapInstance as { gsap: unknown };
+};
 
 export function Macaron({
   className,
   enableScrollRotation = false,
+  id = 'macaron',
 }: MacaronProps): JSX.Element {
   const t = useTranslations('common');
   const svgRef = useRef<SVGSVGElement>(null);
   const rotation = useRef<number>(0);
   const lastScrollY = useRef<number>(0);
   const raf = useRef<number>();
+  const rotationSpeed = useRef<number>(0.5);
   const [isVisible, setIsVisible] = useState(true);
-  const [rotationSpeed, setRotationSpeed] = useState(0.5);
-  const wasVisible = useRef<boolean>(true);
+  const instanceId = useRef<string>(
+    `${id}-${Math.random().toString(36).substr(2, 9)}`
+  );
 
   const { scrollY } = useScroll();
 
-  // Détection de visibilité
+  // Mémoriser le texte pour éviter les re-renders
+  const statusText = useMemo(() => t('status'), [t]);
+
+  // IntersectionObserver pour optimiser les performances
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -35,6 +61,7 @@ export function Macaron({
       },
       {
         threshold: 0.1,
+        rootMargin: '50px',
       }
     );
 
@@ -49,111 +76,106 @@ export function Macaron({
     };
   }, []);
 
-  // Réinitialiser lastScrollY seulement lors de la transition invisible -> visible
-  useEffect(() => {
-    if (!enableScrollRotation) return;
+  // Animation de rotation automatique
+  const startAutoRotation = useCallback(async () => {
+    const { gsap } = await getGsapOptimized();
 
-    if (isVisible && !wasVisible.current) {
-      lastScrollY.current = scrollY;
-    }
-    wasVisible.current = isVisible;
-  }, [isVisible, scrollY, enableScrollRotation]);
-
-  useEffect(() => {
-    if (!enableScrollRotation) {
-      // Rotation automatique de base
-      const animate = async () => {
-        const { gsap } = await getGsap();
-
-        const tick = () => {
-          if (!isVisible) {
-            raf.current = requestAnimationFrame(tick);
-            return;
-          }
-
-          rotation.current += 0.1; // Vitesse constante de rotation réduite
-
-          if (svgRef.current) {
-            gsap.to(svgRef.current, {
-              rotate: rotation.current,
-              duration: 0.7,
-              ease: 'power2.out',
-            });
-          }
-
-          raf.current = requestAnimationFrame(tick);
-        };
-
+    const tick = () => {
+      if (!isVisible) {
         raf.current = requestAnimationFrame(tick);
-      };
+        return;
+      }
 
-      animate();
+      rotation.current += 0.1;
 
-      return () => {
-        if (raf.current) cancelAnimationFrame(raf.current);
-      };
-    }
-
-    const animate = async () => {
-      const { gsap } = await getGsap();
-
-      const minSpeed = 0.2;
-      const friction = 0.95;
-      const maxSpeed = 10;
-
-      const tick = () => {
-        if (!isVisible) {
-          raf.current = requestAnimationFrame(tick);
-          return;
-        }
-
-        const scrollDiff = scrollY - lastScrollY.current;
-        lastScrollY.current = scrollY;
-
-        let newSpeed = rotationSpeed;
-        if (scrollDiff !== 0) {
-          newSpeed += scrollDiff * 0.02;
-          newSpeed = Math.max(Math.min(newSpeed, maxSpeed), -maxSpeed);
-        } else {
-          newSpeed *= friction;
-          if (Math.abs(newSpeed) < minSpeed) {
-            newSpeed = newSpeed >= 0 ? minSpeed : -minSpeed;
-          }
-        }
-        setRotationSpeed(newSpeed);
-        rotation.current += newSpeed;
-
-        if (svgRef.current) {
-          gsap.to(svgRef.current, {
-            rotate: rotation.current,
-            duration: 0.7,
-            ease: 'power2.out',
-          });
-        }
-
-        raf.current = requestAnimationFrame(tick);
-      };
+      if (svgRef.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (gsap as any).to(svgRef.current, {
+          rotate: rotation.current,
+          duration: 0.7,
+          ease: 'power2.out',
+        });
+      }
 
       raf.current = requestAnimationFrame(tick);
     };
 
-    animate();
+    raf.current = requestAnimationFrame(tick);
+  }, [isVisible]);
+
+  // Animation de rotation basée sur le scroll
+  const startScrollRotation = useCallback(async () => {
+    const { gsap } = await getGsapOptimized();
+
+    const tick = () => {
+      if (!isVisible) {
+        raf.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      const scrollDiff = scrollY - lastScrollY.current;
+      lastScrollY.current = scrollY;
+
+      let newSpeed = rotationSpeed.current;
+      if (scrollDiff !== 0) {
+        newSpeed += scrollDiff * 0.02;
+        newSpeed = Math.max(Math.min(newSpeed, 10), -10);
+      } else {
+        newSpeed *= 0.95;
+        if (Math.abs(newSpeed) < 0.2) {
+          newSpeed = newSpeed >= 0 ? 0.2 : -0.2;
+        }
+      }
+
+      rotationSpeed.current = newSpeed;
+      rotation.current += newSpeed;
+
+      if (svgRef.current) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (gsap as any).to(svgRef.current, {
+          rotate: rotation.current,
+          duration: 0.7,
+          ease: 'power2.out',
+        });
+      }
+
+      raf.current = requestAnimationFrame(tick);
+    };
+
+    raf.current = requestAnimationFrame(tick);
+  }, [scrollY, isVisible]);
+
+  // Gestion des animations
+  useEffect(() => {
+    if (raf.current) {
+      cancelAnimationFrame(raf.current);
+    }
+
+    if (enableScrollRotation) {
+      startScrollRotation();
+    } else {
+      startAutoRotation();
+    }
 
     return () => {
-      if (raf.current) cancelAnimationFrame(raf.current);
+      if (raf.current) {
+        cancelAnimationFrame(raf.current);
+      }
     };
-  }, [scrollY, isVisible, rotationSpeed, enableScrollRotation]);
+  }, [enableScrollRotation, startScrollRotation, startAutoRotation]);
 
-  return (
-    <Wrapper className={className}>
+  // Mémoriser le SVG pour éviter les re-renders
+  const svgContent = useMemo(
+    () => (
       <svg
         ref={svgRef}
         viewBox='0 0 100 100'
         className='w-full h-full fill-current text-foreground origin-center'
+        data-macaron-id={instanceId.current}
       >
         <defs>
           <path
-            id='circlePath'
+            id={`circlePath-${instanceId.current}`}
             d='M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0'
           />
         </defs>
@@ -161,12 +183,19 @@ export function Macaron({
           fontSize='10'
           className='font-title text-foreground tracking-widest'
         >
-          <textPath href='#circlePath' startOffset='0%' textLength='100%'>
-            {t('status')}
+          <textPath
+            href={`#circlePath-${instanceId.current}`}
+            startOffset='0%'
+            textLength='100%'
+          >
+            {statusText}
           </textPath>
         </text>
         <text fontSize='10' className='font-title tracking-widest'>
-          <textPath href='#circlePath' startOffset='47%'>
+          <textPath
+            href={`#circlePath-${instanceId.current}`}
+            startOffset='47%'
+          >
             <tspan className='text-green-400'>{'•\u00A0'}</tspan>
           </textPath>
         </text>
@@ -174,16 +203,30 @@ export function Macaron({
           fontSize='10'
           className='font-title text-foreground tracking-widest'
         >
-          <textPath href='#circlePath' startOffset='50%' textLength='100%'>
-            {t('status')}
+          <textPath
+            href={`#circlePath-${instanceId.current}`}
+            startOffset='50%'
+            textLength='100%'
+          >
+            {statusText}
           </textPath>
         </text>
         <text fontSize='10' className='font-title tracking-widest'>
-          <textPath href='#circlePath' startOffset='97%'>
+          <textPath
+            href={`#circlePath-${instanceId.current}`}
+            startOffset='97%'
+          >
             <tspan className='text-green-400'>{'•\u00A0'}</tspan>
           </textPath>
         </text>
       </svg>
+    ),
+    [statusText, instanceId]
+  );
+
+  return (
+    <Wrapper className={className} data-macaron-instance={instanceId.current}>
+      {svgContent}
       <div className='absolute inset-0 flex items-center justify-center'>
         <div className='w-4 h-4 bg-primary rounded-full' />
       </div>

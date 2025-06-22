@@ -50,7 +50,7 @@ export function ScrollProjects(): JSX.Element {
     favoriteProjects[0]
   );
   const isMobile = useMediaQuery('(max-width: 768px)');
-  const GAPSPACING = isMobile ? 25 : 25;
+  const GAPSPACING = isMobile ? 60 : 25;
   const SLOWDOWN_FACTOR = isMobile ? 4 : 3;
   const { setIsTransitionStartOpen } = useAppContext();
   const imageRefs = useRef<HTMLImageElement[]>([]);
@@ -137,20 +137,124 @@ export function ScrollProjects(): JSX.Element {
     }, 700);
   };
 
+  // Fonction pour calculer l'opacité basée sur la distance
+  const getOpacityByDistance = (projectIndex: number) => {
+    const currentIndex = favoriteProjects.findIndex(
+      (p) => p === currentProject
+    );
+    const distance = Math.abs(projectIndex - currentIndex);
+
+    if (distance === 0) return 1; // Titre actuel
+    if (distance === 1) return 0.4; // Titres adjacents
+    if (distance === 2) return 0.15; // Titres à 2 positions
+    return 0.05; // Titres plus éloignés
+  };
+
+  // Rendu Mobile
+  if (isMobile) {
+    return (
+      <Col className='w-full items-center mt-10'>
+        <Container ref={containerRef}>
+          <Title className='absolute left-0 top-20 z-20'>
+            {tCommon('generics.projects')}
+          </Title>
+
+          <div
+            ref={titlesRef}
+            className='absolute left-1/2 -translate-x-1/2 h-min flex flex-col items-center z-10'
+            style={{ gap: `${GAPSPACING}px` }}
+          >
+            {favoriteProjects.map((project, i) => (
+              <div
+                key={i}
+                className='relative w-fit min-w-[300px] flex justify-center'
+              >
+                <Image
+                  src={project.images.header || ''}
+                  alt={tProject(project.title)}
+                  width={200}
+                  height={160}
+                  className={cn(
+                    'absolute top-1/2 -translate-y-1/2 w-[200px] h-[160px] rounded z-10 object-cover transition-all delay-200 duration-700 ease-out',
+                    i % 2 === 0 ? 'left-0' : 'right-0',
+                    project === currentProject
+                      ? 'opacity-100 scale-100'
+                      : 'opacity-0 scale-80'
+                  )}
+                  style={{
+                    transform:
+                      project === currentProject
+                        ? 'translateY(-50%) scale(1)'
+                        : 'translateY(-50%) scale(0.80)',
+                  }}
+                />
+                <ProjectTitle
+                  onClick={() =>
+                    handleClick(ROUTES.projects.project(project.slug))
+                  }
+                  className={cn(
+                    'relative rounded px-2 transition-all z-20 duration-500 text-center',
+                    project === currentProject
+                      ? 'bg-background/60 cursor-pointer backdrop-blur-md animate-in zoom-in-95 duration-300'
+                      : 'bg-background/50 backdrop-blur-sm'
+                  )}
+                  style={{
+                    opacity: getOpacityByDistance(i),
+                  }}
+                >
+                  <H1
+                    className={cn(
+                      'title  transition-all duration-300 relative',
+                      project === currentProject
+                        ? 'font-bold text-3xl'
+                        : 'font-thin text-2xl'
+                    )}
+                  >
+                    {tProject(project.title)}
+                    <ProjectType
+                      className={cn(
+                        'absolute -bottom-8 z-10 normal-case transition-all delay-200 duration-500 ease-out',
+                        project === currentProject
+                          ? 'opacity-100 translate-y-0'
+                          : 'opacity-0 translate-y-2',
+                        i % 2 === 0
+                          ? 'right-10 left-auto'
+                          : 'right-auto left-10'
+                      )}
+                    >
+                      {tEnums(project.type)}
+                    </ProjectType>
+                  </H1>
+                </ProjectTitle>
+              </div>
+            ))}
+          </div>
+
+          <SeeAllButton
+            onClick={() => handleClick(ROUTES.projects.all)}
+            variant='outline'
+          >
+            {tCommon('projects.seeAll')}
+            <ArrowUpRightSquareIcon
+              className='text-foreground/70 group-hover:text-primary transition-colors'
+              size={15}
+            />
+          </SeeAllButton>
+        </Container>
+      </Col>
+    );
+  }
+
+  // Rendu Desktop
   return (
-    <Col className='w-full items-center mt-10 md:mt-0'>
+    <Col className='w-full items-center mt-0'>
       <Container ref={containerRef}>
-        <Title
-          className={cn(
-            'absolute left-0 top-20 z-20',
-            isMobile ? '' : 'md:text-3xl'
-          )}
-        >
+        <Title className='absolute left-0 top-20 z-20 md:text-3xl'>
           {tCommon('generics.projects')}
         </Title>
 
         <ImageContainer>
-          <Col className='w-full h-full relative opacity-70 md:opacity-100'>
+          <Col className='w-full h-full relative opacity-100'>
             {favoriteProjects.map((project, i) => (
               <ImageHeader
                 key={project.id}
@@ -160,7 +264,7 @@ export function ScrollProjects(): JSX.Element {
                 src={project.images.header || ''}
                 alt={tProject(project.title)}
                 fill
-                sizes='(max-width: 768px) 100vw, 50vw'
+                sizes='50vw'
                 priority={i === 0}
               />
             ))}
@@ -176,7 +280,7 @@ export function ScrollProjects(): JSX.Element {
             <P16 className='text-foreground'>{tCommon('projects.seeOne')}</P16>
             <ArrowUpRightSquareIcon className='text-foreground' size={15} />
           </ProjectLink>
-          <P16 className='text-[14px] md:text-[16px] font-semibold'>
+          <P16 className='text-[16px] font-semibold'>
             {format.dateTime(new Date(currentProject.date), {
               year: 'numeric',
               month: 'long',
@@ -187,44 +291,26 @@ export function ScrollProjects(): JSX.Element {
 
         <div
           ref={titlesRef}
-          className={cn(
-            'absolute left-0 w-fit h-min flex flex-col items-start z-10 md:z-10',
-            isMobile ? 'ml-8' : 'ml-16 top-0'
-          )}
+          className='absolute left-0 ml-16 top-0 w-fit h-min flex flex-col items-start z-10'
           style={{ gap: `${GAPSPACING}px` }}
         >
           {favoriteProjects.map((project, i) => (
             <div key={i} className='relative'>
-              <Image
-                src={project.images.header || ''}
-                alt={tProject(project.title)}
-                width={120}
-                height={160}
-                className='md:hidden absolute right-0 translate-x-10 -top-full -translate-y-5 w-30 h-40 rounded z-10 object-cover transition-all duration-700 ease-out'
-                style={{
-                  opacity: project === currentProject ? 1 : 0,
-                  transform:
-                    project === currentProject
-                      ? 'translate(40px, -20px) scale(1) rotate(0deg)'
-                      : 'translate(40px, -20px) scale(0.8) rotate(-5deg)',
-                }}
-              />
               <ProjectTitle
                 onClick={() =>
                   handleClick(ROUTES.projects.project(project.slug))
                 }
                 className={cn(
-                  'relative rounded px-2 py-1 transition-all duration-500',
+                  'relative rounded px-2 py-1 transition-all duration-500 w-auto text-left',
                   project === currentProject
-                    ? 'opacity-100 bg-background/90 cursor-pointer relative z-20 backdrop-blur-lg animate-in zoom-in-95 duration-300'
-                    : 'opacity-60 bg-background/50 md:opacity-30 relative z-0 backdrop-blur-sm md:backdrop-blur-none'
+                    ? 'bg-background/90 cursor-pointer backdrop-blur-lg animate-in zoom-in-95 duration-300'
+                    : 'bg-background/50'
                 )}
+                style={{
+                  opacity: getOpacityByDistance(i),
+                }}
               >
-                <H1
-                  className={cn(
-                    'title md:text-6xl text-2xl transition-opacity'
-                  )}
-                >
+                <H1 className='title md:text-6xl transition-opacity'>
                   {tProject(project.title)}
                 </H1>
                 <ProjectType>{tEnums(project.type)}</ProjectType>
@@ -233,7 +319,7 @@ export function ScrollProjects(): JSX.Element {
           ))}
         </div>
 
-        <ScrollIndicator size={isMobile ? 30 : 60} />
+        <ScrollIndicator size={60} />
         <SeeAllButton
           onClick={() => handleClick(ROUTES.projects.all)}
           variant='outline'
@@ -301,7 +387,6 @@ const ProjectLink = tw(Row)`
 const ProjectTitle = tw.div`
   relative 
   rounded 
-  px-2 
   py-1 
   transition-all 
   duration-500
@@ -327,6 +412,7 @@ const ScrollIndicator = tw(ChevronRight)`
   text-primary
   md:top-1/2
   top-[calc(50%-40px)]
+  hidden md:block
 `;
 
 const SeeAllButton = tw(Button)`

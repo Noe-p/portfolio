@@ -4,6 +4,7 @@ import { H2, P14, P16 } from '@/components/Texts';
 import { Button } from '@/components/ui/button';
 import { useTranslations } from 'next-intl';
 
+import { Download } from 'lucide-react';
 import React from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
@@ -46,7 +47,7 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
 
   return (
     <Main className={className} id={NavKeys.CONTACT}>
-      <Macaron />
+      <Macaron enableScrollRotation={true} />
 
       <RowBetween className='flex-col md:flex-row w-full mt-15'>
         {/* Social Links */}
@@ -71,7 +72,7 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
           <H2 className='md:text-3xl text-2xl leading-none -translate-y-2'>
             {t('footer.title')}
           </H2>
-          <Row className='w-fit gap-2 mt-2 flex-row'>
+          <Row className='md:w-fit w-full gap-2 mt-2 flex-row'>
             <a
               href='mailto:noephilippe29@gmail.com'
               target='_blank'
@@ -87,6 +88,7 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
               className='w-full md:w-fit'
               variant='outline'
             >
+              <Download className='mr-2 w-4 h-4' />
               {t('generics.downloadCV')}
             </Button>
           </Row>
