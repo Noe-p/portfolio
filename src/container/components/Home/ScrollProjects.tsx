@@ -204,10 +204,7 @@ export function ScrollProjects(): JSX.Element {
                 >
                   <H1
                     className={cn(
-                      'title  transition-all duration-300 relative',
-                      project === currentProject
-                        ? 'font-bold text-3xl'
-                        : 'font-thin text-2xl'
+                      'title text-3xl  transition-all duration-300 relative'
                     )}
                   >
                     {tProject(project.title)}
