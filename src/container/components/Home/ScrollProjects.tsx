@@ -165,6 +165,30 @@ export function ScrollProjects(): JSX.Element {
 
   // Rendu Mobile
   if (isMobile) {
+    const currentIndex = favoriteProjects.findIndex(
+      (p) => p.id === currentProject.id
+    );
+    const BASE_GAP_MOBILE = 60;
+
+    const getDynamicGap = (itemIndex: number) => {
+      const distance = Math.min(
+        Math.abs(itemIndex - currentIndex),
+        Math.abs(itemIndex + 1 - currentIndex)
+      );
+      if (distance === 0) return BASE_GAP_MOBILE;
+      if (distance === 1) return 40;
+      if (distance === 2) return 25;
+      return 20;
+    };
+
+    const translations = favoriteProjects.map((_, i) => {
+      if (i === 0) return 0;
+      return favoriteProjects.slice(0, i).reduce((acc, _, j) => {
+        const gap = getDynamicGap(j);
+        return acc + (gap - BASE_GAP_MOBILE);
+      }, 0);
+    });
+
     return (
       <Col className='w-full items-center mt-10'>
         <Container ref={containerRef}>
@@ -180,7 +204,8 @@ export function ScrollProjects(): JSX.Element {
             {favoriteProjects.map((project, i) => (
               <div
                 key={i}
-                className='relative w-fit min-w-[300px] flex justify-center'
+                className='relative w-fit min-w-[300px] flex justify-center transition-transform duration-300 ease-out'
+                style={{ transform: `translateY(${translations[i]}px)` }}
               >
                 <Image
                   src={project.images.header || ''}
@@ -188,18 +213,14 @@ export function ScrollProjects(): JSX.Element {
                   width={200}
                   height={160}
                   className={cn(
-                    'absolute top-1/2 -translate-y-1/2 w-[200px] h-[160px] rounded z-10 object-cover transition-all delay-75 duration-700 ease-out',
+                    'absolute top-1/2 -translate-y-1/2 w-[200px] h-[160px] rounded z-10 object-cover transition-all duration-700 ease-out',
                     i % 2 === 0 ? 'left-0' : 'right-0',
                     project === currentProject
-                      ? 'opacity-100 scale-100'
-                      : 'opacity-0 scale-80'
+                      ? 'opacity-100 scale-100 translate-x-0'
+                      : 'opacity-0 scale-80',
+                    project !== currentProject &&
+                      (i % 2 === 0 ? '-translate-x-10' : 'translate-x-10')
                   )}
-                  style={{
-                    transform:
-                      project === currentProject
-                        ? 'translateY(-50%) scale(1)'
-                        : 'translateY(-50%) scale(0.80)',
-                  }}
                 />
                 <ProjectTitle
                   onClick={() =>
@@ -209,7 +230,7 @@ export function ScrollProjects(): JSX.Element {
                     'relative rounded px-2 transition-all z-20 duration-500 text-center',
                     project === currentProject
                       ? 'bg-background/60 cursor-pointer backdrop-blur-md animate-in zoom-in-95 duration-300'
-                      : 'bg-background/50 backdrop-blur-sm'
+                      : 'bg-background/50 backdrop-blur-sm scale-90'
                   )}
                   style={{
                     opacity: getOpacityByDistance(i),
@@ -223,7 +244,7 @@ export function ScrollProjects(): JSX.Element {
                     {tProject(project.title)}
                     <ProjectType
                       className={cn(
-                        'absolute -bottom-8 z-10 normal-case transition-all delay-75 duration-500 ease-out',
+                        'absolute -bottom-8 z-10 normal-case transition-all delay-200 duration-500 ease-out',
                         project === currentProject
                           ? 'opacity-100 translate-y-0'
                           : 'opacity-0 translate-y-2',
@@ -433,7 +454,7 @@ const SeeAllButton = tw(Button)`
   group 
   absolute 
   md:bottom-20 
-  bottom-15 
+  bottom-36
   left-0 
   z-10
 `;
