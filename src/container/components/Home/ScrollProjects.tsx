@@ -165,30 +165,6 @@ export function ScrollProjects(): JSX.Element {
 
   // Rendu Mobile
   if (isMobile) {
-    const currentIndex = favoriteProjects.findIndex(
-      (p) => p.id === currentProject.id
-    );
-    const BASE_GAP_MOBILE = 60;
-
-    const getDynamicGap = (itemIndex: number) => {
-      const distance = Math.min(
-        Math.abs(itemIndex - currentIndex),
-        Math.abs(itemIndex + 1 - currentIndex)
-      );
-      if (distance === 0) return BASE_GAP_MOBILE;
-      if (distance === 1) return 40;
-      if (distance === 2) return 25;
-      return 20;
-    };
-
-    const translations = favoriteProjects.map((_, i) => {
-      if (i === 0) return 0;
-      return favoriteProjects.slice(0, i).reduce((acc, _, j) => {
-        const gap = getDynamicGap(j);
-        return acc + (gap - BASE_GAP_MOBILE);
-      }, 0);
-    });
-
     return (
       <Col className='w-full items-center mt-10'>
         <Container ref={containerRef}>
@@ -204,8 +180,7 @@ export function ScrollProjects(): JSX.Element {
             {favoriteProjects.map((project, i) => (
               <div
                 key={i}
-                className='relative w-fit min-w-[300px] flex justify-center transition-transform duration-300 ease-out'
-                style={{ transform: `translateY(${translations[i]}px)` }}
+                className='relative w-fit min-w-[300px] flex justify-center'
               >
                 <Image
                   src={project.images.header || ''}
@@ -262,7 +237,7 @@ export function ScrollProjects(): JSX.Element {
             <Button
               onClick={() => handleClick(ROUTES.projects.all)}
               variant='outline'
-              className='w-full'
+              className='w-full translate-y-10'
               style={{
                 opacity: getOpacityByDistance(favoriteProjects.length - 1),
               }}
