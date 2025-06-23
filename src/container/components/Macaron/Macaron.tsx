@@ -17,20 +17,6 @@ interface MacaronProps {
 let gsapInstance: unknown = null;
 let gsapPromise: Promise<{ gsap: unknown }> | null = null;
 
-// Compteur statique pour générer des IDs uniques de manière déterministe
-let macaronCounter = 0;
-
-// Hook personnalisé pour générer un ID unique de manière déterministe
-function useMacaronId(baseId: string = 'macaron'): string {
-  const idRef = useRef<string>();
-
-  if (!idRef.current) {
-    idRef.current = `${baseId}-${++macaronCounter}`;
-  }
-
-  return idRef.current;
-}
-
 // Fonction pour obtenir GSAP de manière optimisée
 const getGsapOptimized = async () => {
   if (gsapInstance) {
@@ -59,8 +45,8 @@ export function Macaron({
   const rotationSpeed = useRef<number>(0.5);
   const [isVisible, setIsVisible] = useState(true);
 
-  // Utiliser le hook personnalisé pour générer un ID unique
-  const instanceId = useMacaronId(id);
+  // Utiliser l'id passé en prop, ou 'macaron' par défaut
+  const instanceId = id;
 
   const { scrollY } = useScroll();
 

@@ -62,7 +62,7 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
 
   return (
     <Main className={className} id={NavKeys.CONTACT}>
-      <Macaron enableScrollRotation={true} />
+      <Macaron enableScrollRotation={true} id='macaron-footer' />
 
       <RowBetween className='flex-col md:flex-row w-full mt-15'>
         {/* Social Links */}
@@ -88,7 +88,7 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
           <H2 className='md:text-3xl text-2xl leading-none -translate-y-2'>
             {t('footer.title')}
           </H2>
-          <Row className='md:w-fit w-full gap-2 mt-2 flex-row'>
+          <Row className='md:w-fit flex-wrap md:flex-nowrap w-full gap-2 mt-2 flex-row'>
             <a
               href='mailto:noephilippe29@gmail.com'
               target='_blank'

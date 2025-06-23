@@ -259,18 +259,21 @@ export function ScrollProjects(): JSX.Element {
                 </ProjectTitle>
               </div>
             ))}
+            <Button
+              onClick={() => handleClick(ROUTES.projects.all)}
+              variant='outline'
+              className='w-full'
+              style={{
+                opacity: getOpacityByDistance(favoriteProjects.length - 1),
+              }}
+            >
+              {tCommon('projects.seeAll')}
+              <ArrowUpRightSquareIcon
+                className='text-foreground/70 ml-2 group-hover:text-primary transition-colors'
+                size={15}
+              />
+            </Button>
           </div>
-
-          <SeeAllButton
-            onClick={() => handleClick(ROUTES.projects.all)}
-            variant='outline'
-          >
-            {tCommon('projects.seeAll')}
-            <ArrowUpRightSquareIcon
-              className='text-foreground/70 group-hover:text-primary transition-colors'
-              size={15}
-            />
-          </SeeAllButton>
         </Container>
       </Col>
     );
