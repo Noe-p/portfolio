@@ -62,8 +62,10 @@ export const projects: Project[] = [
         '/projects/sakana-san/sakana-san-desktop-4.webP',
         '/projects/sakana-san/sakana-san-desktop-5.webP',
         '/projects/sakana-san/sakana-san-desktop-6.webP',
+        '/projects/sakana-san/sakana-san-desktop-7.webP',
+        '/projects/sakana-san/sakana-san-desktop-8.webP',
       ],
-      header: '/projects/sakana-san/sakana-san-desktop-1.webP',
+      header: '/projects/sakana-san/sakana-san-desktop-2.webP',
     },
     tags: [
       ProjectTag.NEXTJS,

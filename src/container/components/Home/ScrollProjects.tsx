@@ -29,7 +29,7 @@ const ImageHeader = forwardRef<HTMLImageElement, ImageHeaderProps>(
       ref={ref}
       alt={props.alt || ''}
       className={cn(
-        'absolute inset-0 object-cover transition-all duration-700',
+        'absolute inset-0 object-cover transition-all duration-300 hover:opacity-80 cursor-pointer',
         props.className
       )}
     />
@@ -187,8 +187,11 @@ export function ScrollProjects(): JSX.Element {
                   alt={tProject(project.title)}
                   width={200}
                   height={160}
+                  onClick={() =>
+                    handleClick(ROUTES.projects.project(project.slug))
+                  }
                   className={cn(
-                    'absolute top-1/2 -translate-y-1/2 w-[200px] h-[160px] rounded z-10 object-cover transition-all duration-700 ease-out',
+                    'absolute top-1/2 -translate-y-1/2 w-[200px] h-[160px] rounded z-10 object-cover transition-all duration-700 ease-out cursor-pointer',
                     i % 2 === 0 ? 'left-0' : 'right-0',
                     project === currentProject
                       ? 'opacity-100 scale-100 translate-x-0'
@@ -262,7 +265,12 @@ export function ScrollProjects(): JSX.Element {
           {tCommon('generics.projects')}
         </Title>
 
-        <ImageContainer>
+        <ImageContainer
+          className='group cursor-pointer'
+          onClick={() =>
+            handleClick(ROUTES.projects.project(currentProject.slug))
+          }
+        >
           <Col className='w-full h-full relative opacity-100'>
             {favoriteProjects.map((project, i) => (
               <ImageHeader
@@ -275,6 +283,12 @@ export function ScrollProjects(): JSX.Element {
                 fill
                 sizes='50vw'
                 priority={i === 0}
+                className={cn(
+                  'transition-all duration-500 ease-out',
+                  project === currentProject
+                    ? 'opacity-100 scale-100'
+                    : 'opacity-0 scale-95'
+                )}
               />
             ))}
           </Col>
@@ -386,8 +400,10 @@ const ProjectLink = tw(Row)`
   cursor-pointer 
   bg-primary 
   hover:bg-primary/80 
+  hover:scale-105
+  hover:shadow-lg
   transition-all 
-  duration-500  
+  duration-300  
   rounded-md 
   px-4 
   py-2

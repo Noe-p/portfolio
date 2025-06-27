@@ -18,11 +18,16 @@ export function useRedirectTo() {
       if (!isHome) {
         setIsTransitionStartOpen(true);
         setTimeout(() => {
-          router.push(`/${locale}/#MUSIC`);
+          router.push(`/${locale}/`);
+          setTimeout(() => {
+            window.location.hash = MenuKeys.MUSIC;
+          }, 800);
         }, 700);
       } else {
         const el = document.getElementById(MenuKeys.MUSIC);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        if (el) {
+          el.scrollIntoView({ behavior: 'auto' });
+        }
       }
       return;
     }
