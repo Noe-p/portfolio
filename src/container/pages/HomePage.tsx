@@ -4,7 +4,7 @@ import { Col, Layout, P16, Title } from '@/components';
 import { Separator } from '@/components/ui/separator';
 import { MenuKeys } from '@/container/components';
 import { useTranslations } from 'next-intl';
-import { Spotify } from 'react-spotify-embed';
+import { YouTubeEmbed } from '@/components/Medias/YouTubeEmbed';
 import { Header, ScrollProjects } from '../components';
 
 export function HomePage(): JSX.Element {
@@ -23,11 +23,9 @@ export function HomePage(): JSX.Element {
               br: () => <br />,
             })}
           </P16>
-          <Spotify
+          <YouTubeEmbed
             className='w-full mt-10'
-            link={
-              'https://open.spotify.com/intl-fr/album/1EwDpZ3NaEkcCGyRPEHpPP?si=-2RPwvqpQaKaUizxYDQXlQ'
-            }
+            link={'https://www.youtube.com/watch?v=b4vVALR8IpA&list=RDb4vVALR8IpA&start_radio=1'}
           />
         </Col>
       </Col>

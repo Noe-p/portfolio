@@ -29,10 +29,6 @@ const nextConfig = {
         source: '/(.*)',
         headers: [
           {
-            key: 'Permissions-Policy',
-            value: 'interest-cohort=()',
-          },
-          {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
           },

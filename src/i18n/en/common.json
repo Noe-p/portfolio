@@ -31,7 +31,7 @@
   "about": {
     "andMore": "(But not only)",
     "smallDesc": "Hi! I’m Noé, a fullstack developer with a bit of a project manager mindset. I’m passionate about visuals, sound and movement,  always ready to learn and build things. Scroll down if you want to know more about my slightly offbeat journey 👇",
-    "resume": "I'm a fullstack developer with a project-oriented approach, trained in both code and coordination. With a Master's degree in digital project management, agency experience, and a constant curiosity, I'm able to handle a web project from end to end,   technically, functionally, and humanly. Back from a year-long road trip through New Zealand, I'm now available for new challenges, as a freelancer or as part of a team.",
+    "resume": "I'm a fullstack developer with a project-oriented approach, trained in both code and coordination. With a Master's degree in digital project management, agency experience, and a constant curiosity, I'm able to handle a web project from end to end, technically, functionally, and humanly. Back from a year-long road trip through New Zealand, I'm now available for new challenges, as a freelancer or as part of a team.",
     "description": {
       "part1": {
         "part": "About",
@@ -41,7 +41,7 @@
       "part2": {
         "part": "education",
         "title": "From math teacher to developer",
-        "text": "I studied for a Master’s degree in Digital Project Management in Rennes, where I specialized in fullstack development. That dual profile gave me both technical and strategic skills: clean coding, solid architecture, but also client communication, planning, and teamwork. I originally planned to become a math teacher,  I liked the logic and precision,  but I eventually found coding to be the perfect balance between logic, creativity, and impact."
+        "text": "I studied for a Master’s degree in Digital Project Management in Rennes, where I specialized in fullstack development. That dual profile gave me both technical and strategic skills: clean coding, solid architecture, but also client communication, planning, and teamwork. I originally planned to become a math teacher, I liked the logic and precision, but I eventually found coding to be the perfect balance between logic, creativity, and impact."
       },
       "part3": {
         "part": "experience",
@@ -51,7 +51,7 @@
       "part4": {
         "part": "passions",
         "title": "What drives me outside of code",
-        "text": "Outside of development, I'm passionate about music and photography. I love composing, experimenting with sound, capturing moments,  they’re creative outlets that complement coding well: they require precision, intuition, and attention to detail. To stay balanced after long hours in front of the screen, I turn to swimming and climbing,  two sports that help me stay focused, grounded, and energized."
+        "text": "Outside of development, I'm passionate about music and photography. I love composing, experimenting with sound, capturing moments, they’re creative outlets that complement coding well: they require precision, intuition, and attention to detail. To stay balanced after long hours in front of the screen, I turn to swimming and climbing, two sports that help me stay focused, grounded, and energized."
       }
     },
     "education": {
