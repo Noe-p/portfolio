@@ -1,15 +1,28 @@
-import { sendGAEvent } from '@next/third-parties/google';
-
-// Fonction pour tracker les événements
+// Fonction pour tracker les événements via Umami
+// Voir API client exposée par le script: window.umami.track(name, data?)
 export const trackEvent = (
   action: string,
   category: string,
   label?: string,
   value?: number
 ) => {
-  sendGAEvent(action, {
+  if (typeof window === 'undefined') return;
+
+  const payload: Record<string, unknown> = {
     event_category: category,
     event_label: label,
-    value: value,
-  });
+  };
+
+  if (typeof value === 'number') {
+    payload.value = value;
+  }
+
+  // umami.track accepte un nom et un objet data
+  try {
+    // @ts-ignore - umami est injecté par le script
+    if (window.umami && typeof window.umami.track === 'function') {
+      // @ts-ignore
+      window.umami.track(action, payload);
+    }
+  } catch {}
 };
