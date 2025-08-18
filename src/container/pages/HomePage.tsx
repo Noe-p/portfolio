@@ -4,7 +4,7 @@ import { Col, Layout, P16, Title } from '@/components';
 import { Separator } from '@/components/ui/separator';
 import { MenuKeys } from '@/container/components';
 import { useTranslations } from 'next-intl';
-import { YouTubeEmbed } from '@/components/Medias/YouTubeEmbed';
+import { RootsAndWingsPlayer } from '@/components/Medias/RootsAndWingsPlayer';
 import { Header, ScrollProjects } from '../components';
 
 export function HomePage(): JSX.Element {
@@ -23,10 +23,7 @@ export function HomePage(): JSX.Element {
               br: () => <br />,
             })}
           </P16>
-          <YouTubeEmbed
-            className='w-full mt-10'
-            link={'https://www.youtube.com/watch?v=b4vVALR8IpA&list=RDb4vVALR8IpA&start_radio=1'}
-          />
+          <RootsAndWingsPlayer className='w-full mt-10' />
         </Col>
       </Col>
     </Layout>
