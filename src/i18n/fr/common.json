@@ -31,17 +31,17 @@
   "about": {
     "andMore": "(Mais pas que)",
     "smallDesc": "Salut ! Moi c’est Noé, développeur fullstack avec une casquette de chef de projet. Créatif, curieux, passionné d’images, de sons et de mouvements, j’aime autant concevoir que coder. Si tu veux en savoir plus sur mon parcours un peu atypique, fais défiler 👇",
-    "resume": "Je suis développeur fullstack avec une approche orientée gestion de projet, formé à la fois au code et à la coordination. Grâce à mon Master en management de projet digital, mon expérience en agence et une curiosité toujours en éveil, je suis capable de piloter un projet web de A à Z autant du côté technique, fonctionnel et humain. De retour d’un an de road-trip en Nouvelle-Zélande, je suis dispo pour de nouveaux défis, en freelance ou en équipe.",
+    "resume": "Développeur web, j’aide entreprises, associations et indépendants à créer des sites et applications clairs, rapides et fiables. Je propose des solutions concrètes et respecte délais et budget. Disponible pour une mission ponctuelle ou un accompagnement durable. N'hésitez pas à me contacter pour une mission.",
     "description": {
       "part1": {
         "part": "À propos",
         "title": "Hello ! Moi c’est Noé",
-        "text": "Je rentre d’un road-trip d’un an en van à travers la Nouvelle-Zélande : une expérience de vie marquante qui m’a permis de sortir du cadre, de m’ouvrir à d’autres cultures et de renforcer mon anglais (il partait de loin, on va pas se mentir). J’ai mis le code entre parenthèses le temps de mieux observer le monde et le capturer en photo. Un vrai bol d’air… qui m’a aussi permis de revenir avec plus de recul, d’envies et d’idées."
+        "text": "Je rentre d’un road-trip d’un an en van à travers la Nouvelle-Zélande. J’ai mis le code entre parenthèses le temps de mieux observer le monde et le capturer en photo. Un vrai bol d’air… qui m’a aussi permis de revenir avec plus de recul, d’envies et d’idées."
       },
       "part2": {
         "part": "études",
         "title": "Du prof de maths au code",
-        "text": "J’ai suivi un Master de Manager de Projet Digitaux à Rennes, avec une spécialisation en développement fullstack. Cette double casquette m’a permis de développer des compétences autant techniques que stratégiques : coder proprement, structurer des projets, collaborer avec des clients ou des équipes pluridisciplinaires. Mon parcours a commencé avec une passion pour les maths, mais c’est en me tournant vers le développement que j’ai trouvé ce qui me correspondait : un métier qui allie rigueur, logique et créativité."
+        "text": "J’ai suivi un Master de Manager de Projet Digitaux à Rennes, avec une spécialisation en développement fullstack. Cette double casquette m’a permis de développer des compétences autant techniques que stratégiques : coder proprement, structurer des projets, collaborer avec des clients ou en équipes. Mon parcours a commencé avec une passion pour les maths, mais c’est en me tournant vers le développement que j’ai trouvé ce qui me correspondait : un métier qui allie rigueur, logique et créativité."
       },
       "part3": {
         "part": "expérience",

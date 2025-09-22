@@ -1,17 +1,17 @@
 {
   "home": {
-    "title": "Noé Philippe — Développeur Fullstack Freelance à Quimper",
-    "description": "Développeur fullstack freelance à Quimper, je conçois des applications web modernes alliant performance, design et expérience utilisateur. Découvre mon portfolio et lançons ton prochain projet digital.",
-    "keywords": "Noé Philippe, développeur web freelance, développeur fullstack Quimper, Next.js, projets web, portfolio développeur, développement frontend backend"
+    "title": "Développeur Web à Pont-l’Abbé — Noé Philippe",
+    "description": "Développeur web à Pont-l’Abbé (Pays Bigouden, Finistère). Je conçois des sites vitrines, e-commerce et applications web rapides, SEO-friendly et accessibles. Intervention locale (Pont-l’Abbé, Quimper, Pays Bigouden) ou à distance. Demande de devis gratuite.",
+    "keywords": "développeur web Pont l'Abbé, développeur web Pont-l’Abbé, web Pont-l'Abbé, développeur fullstack Quimper, création site internet Pont-l’Abbé, Next.js, SEO, site vitrine, e-commerce, application web, maintenance"
   },
   "about": {
-    "title": "À propos de Noé Philippe — Développeur Web & Chef de projet digital",
-    "description": "De la gestion de projet à la réalisation technique, découvre le profil hybride de Noé Philippe : développeur fullstack freelance formé au pilotage de projets digitaux, passionné par l'image, le code et la création.",
-    "keywords": "développeur fullstack, freelance Quimper, gestion de projet digital, développeur Next.js, parcours développeur, développeur créatif, road-trip Nouvelle-Zélande"
+    "title": "À propos — Développeur Web à Pont-l’Abbé",
+    "description": "Je suis Noé, développeur fullstack basé à Pont-l’Abbé. J’accompagne entreprises, associations et indépendants : cadrage, design system, développement Next.js, optimisation des performances et du référencement.",
+    "keywords": "développeur Pont-l’Abbé, développeur web Finistère, Next.js, optimisation SEO, performance web, chef de projet digital, Pays Bigouden"
   },
   "projects": {
-    "title": "Projets — Portfolio de Noé Philippe",
-    "description": "Découvre une sélection de projets web réalisés par Noé Philippe, démontrant son expertise en développement fullstack, créativité et technologies web modernes.",
-    "keywords": "projets web, portfolio, Noé Philippe, développeur fullstack, développement créatif, projets Next.js, frontend backend, portfolio digital"
+    "title": "Projets & Réalisations — Portfolio de Noé Philippe (Pont-l’Abbé)",
+    "description": "Sélection de projets web réalisés pour des clients locaux et à distance : sites vitrines, e-commerce et apps sur-mesure en Next.js, avec un soin particulier porté à l’UX, à la performance et au SEO.",
+    "keywords": "portfolio développeur, projets web Next.js, réalisations, sites vitrines, e-commerce, applications web, Pont-l’Abbé, Quimper"
   }
 }
