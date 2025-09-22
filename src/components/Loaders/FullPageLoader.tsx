@@ -9,7 +9,7 @@ export function FullPageLoader(props: LoaderProps): React.JSX.Element {
 
   return (
     <Layout className={`justify-center items-center ${className}`}>
-      <PageLoader className='h-full' />
+      <PageLoader className="h-full" />
     </Layout>
   );
 }

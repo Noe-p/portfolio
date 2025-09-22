@@ -10,9 +10,7 @@ export async function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata(
-  props: PageBaseProps
-): Promise<Metadata> {
+export async function generateMetadata(props: PageBaseProps): Promise<Metadata> {
   const params = await props.params;
   const messages = await getMessages(params.locale);
 

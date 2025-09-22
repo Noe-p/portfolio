@@ -110,9 +110,7 @@ body::-webkit-scrollbar {
   }
 }
 
-@supports (
-  (text-stroke: 1px black) or (-webkit-text-stroke: 1.5px hsl(var(--primary)))
-) {
+@supports ((text-stroke: 1px black) or (-webkit-text-stroke: 1.5px hsl(var(--primary)))) {
   .outline-text-primary {
     color: transparent;
     -webkit-text-stroke: 1.5px hsl(var(--primary));

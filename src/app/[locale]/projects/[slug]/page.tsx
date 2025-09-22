@@ -6,17 +6,13 @@ import { projects } from '@/static/projects';
 import { PageBaseProps } from '@/types';
 import { Metadata } from 'next';
 
-export async function generateMetadata(
-  props: PageBaseProps
-): Promise<Metadata> {
+export async function generateMetadata(props: PageBaseProps): Promise<Metadata> {
   const params = await props.params;
   const messages = await getMessages(params.locale);
   const project = projects.find((p) => p.slug === params.slug);
 
   if (!messages?.projects || !project) {
-    console.error(
-      `Messages not found for locale: ${params.locale} or project: ${params.slug}`
-    );
+    console.error(`Messages not found for locale: ${params.locale} or project: ${params.slug}`);
     return defaultMetadata;
   }
 
@@ -48,7 +44,7 @@ export async function generateStaticParams() {
         locale,
         slug: project.slug,
       };
-    })
+    }),
   );
   return paths;
 }

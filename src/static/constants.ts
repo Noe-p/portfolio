@@ -3,8 +3,7 @@ export const IMAGE_FALLBACK =
 
 export const LOGO_URL = '/img/logo.svg';
 
-export const AVATAR_PLACEHOLDER_URL =
-  'https://www.w3schools.com/howto/img_avatar.png';
+export const AVATAR_PLACEHOLDER_URL = 'https://www.w3schools.com/howto/img_avatar.png';
 
 export const BREAKPOINTS = {
   SM: 768 + 1,

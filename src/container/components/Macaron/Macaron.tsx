@@ -62,7 +62,7 @@ export function Macaron({
       {
         threshold: 0.1,
         rootMargin: '50px',
-      }
+      },
     );
 
     if (svgRef.current) {
@@ -169,60 +169,46 @@ export function Macaron({
     () => (
       <svg
         ref={svgRef}
-        viewBox='0 0 100 100'
-        className='w-full h-full fill-current text-foreground origin-center'
+        viewBox="0 0 100 100"
+        className="w-full h-full fill-current text-foreground origin-center"
         data-macaron-id={instanceId}
       >
         <defs>
           <path
             id={`circlePath-${instanceId}`}
-            d='M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0'
+            d="M50,50 m-35,0 a35,35 0 1,1 70,0 a35,35 0 1,1 -70,0"
           />
         </defs>
-        <text
-          fontSize='10'
-          className='font-title text-foreground tracking-widest'
-        >
-          <textPath
-            href={`#circlePath-${instanceId}`}
-            startOffset='0%'
-            textLength='100%'
-          >
+        <text fontSize="10" className="font-title text-foreground tracking-widest">
+          <textPath href={`#circlePath-${instanceId}`} startOffset="0%" textLength="100%">
             {statusText}
           </textPath>
         </text>
-        <text fontSize='10' className='font-title tracking-widest'>
-          <textPath href={`#circlePath-${instanceId}`} startOffset='47%'>
-            <tspan className='text-green-400'>{'•\u00A0'}</tspan>
+        <text fontSize="10" className="font-title tracking-widest">
+          <textPath href={`#circlePath-${instanceId}`} startOffset="47%">
+            <tspan className="text-green-400">{'•\u00A0'}</tspan>
           </textPath>
         </text>
-        <text
-          fontSize='10'
-          className='font-title text-foreground tracking-widest'
-        >
-          <textPath
-            href={`#circlePath-${instanceId}`}
-            startOffset='50%'
-            textLength='100%'
-          >
+        <text fontSize="10" className="font-title text-foreground tracking-widest">
+          <textPath href={`#circlePath-${instanceId}`} startOffset="50%" textLength="100%">
             {statusText}
           </textPath>
         </text>
-        <text fontSize='10' className='font-title tracking-widest'>
-          <textPath href={`#circlePath-${instanceId}`} startOffset='97%'>
-            <tspan className='text-green-400'>{'•\u00A0'}</tspan>
+        <text fontSize="10" className="font-title tracking-widest">
+          <textPath href={`#circlePath-${instanceId}`} startOffset="97%">
+            <tspan className="text-green-400">{'•\u00A0'}</tspan>
           </textPath>
         </text>
       </svg>
     ),
-    [statusText, instanceId]
+    [statusText, instanceId],
   );
 
   return (
     <Wrapper className={className} data-macaron-instance={instanceId}>
       {svgContent}
-      <div className='absolute inset-0 flex items-center justify-center'>
-        <div className='w-4 h-4 bg-primary rounded-full' />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-4 h-4 bg-primary rounded-full" />
       </div>
     </Wrapper>
   );

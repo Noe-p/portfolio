@@ -9,12 +9,7 @@ interface BadgeProps {
   onClick?: () => void;
 }
 
-export function Badge({
-  children,
-  className,
-  variant = 'default',
-  onClick,
-}: BadgeProps) {
+export function Badge({ children, className, variant = 'default', onClick }: BadgeProps) {
   return (
     <BadgeContainer $variant={variant} className={className} onClick={onClick}>
       <P12Styled $variant={variant}>{children}</P12Styled>

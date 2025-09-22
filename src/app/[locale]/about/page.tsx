@@ -5,9 +5,7 @@ import { PageBaseProps } from '@/types';
 import { Metadata } from 'next';
 import React from 'react';
 
-export async function generateMetadata(
-  props: PageBaseProps
-): Promise<Metadata> {
+export async function generateMetadata(props: PageBaseProps): Promise<Metadata> {
   const params = await props.params;
   const messages = await getMessages(params.locale);
 

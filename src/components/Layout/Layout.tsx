@@ -26,7 +26,7 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <Row className='hidden md:flex absolute z-40 gap-1 top-5 right-10'>
+    <Row className="hidden md:flex absolute z-40 gap-1 top-5 right-10">
       {['Fr', 'En'].map((lang) => (
         <React.Fragment key={lang}>
           <P16
@@ -34,13 +34,13 @@ const LanguageSwitcher = () => {
               'cursor-pointer transition duration-300',
               locale === lang.toLocaleLowerCase()
                 ? 'text-primary'
-                : 'text-foreground/50 hover:text-foreground/80'
+                : 'text-foreground/50 hover:text-foreground/80',
             )}
             onClick={() => handleLanguageChange(lang.toLocaleLowerCase())}
           >
             {lang}
           </P16>
-          {lang === 'Fr' && <P16 className='text-foreground/50'>{'/'}</P16>}
+          {lang === 'Fr' && <P16 className="text-foreground/50">{'/'}</P16>}
         </React.Fragment>
       ))}
     </Row>
@@ -84,15 +84,15 @@ export function Layout(props: LayoutProps): React.JSX.Element {
   return (
     <>
       <div
-        className='relative px-5 md:px-40 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove'
+        className="relative px-5 md:px-40 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove"
         style={{ '--x': '30%', '--y': '30%' } as React.CSSProperties}
       >
-        <div className='absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0'>
+        <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
           <div
             className={cn(
               'absolute w-[150vw] h-[150vw] rounded-full blur-3xl opacity-30 animate-floatingGradient',
               'md:bg-[radial-gradient(circle,rgba(136,58,255,0.8)_0%,transparent_70%)]',
-              'bg-[radial-gradient(circle,rgba(136,58,255,1)_0%,transparent_100%)]'
+              'bg-[radial-gradient(circle,rgba(136,58,255,1)_0%,transparent_100%)]',
             )}
           />
         </div>

@@ -17,29 +17,29 @@ function Item({ title, location, subtitle, year, url }: ItemProps) {
   const isMobile = useMediaQuery('(max-width: 768px)');
 
   const content = (
-    <RowBetween className='items-start w-full group hover:cursor-pointer transition duration-300'>
-      <Col className='flex-1'>
-        <P24 className='text-[14px] md:text-[16px] group-hover:text-primary transition duration-300'>
+    <RowBetween className="items-start w-full group hover:cursor-pointer transition duration-300">
+      <Col className="flex-1">
+        <P24 className="text-[14px] md:text-[16px] group-hover:text-primary transition duration-300">
           {title}
         </P24>
-        <Row className='items-center justify-start gap-1 flex-wrap mt-1'>
-          <P18 className='text-[11px] md:text-[12px] group-hover:text-primary transition duration-300'>
+        <Row className="items-center justify-start gap-1 flex-wrap mt-1">
+          <P18 className="text-[11px] md:text-[12px] group-hover:text-primary transition duration-300">
             {subtitle}
           </P18>
-          <P18 className='italic text-foreground/80 text-[10px] md:text-[13px] group-hover:text-primary transition duration-300'>
+          <P18 className="italic text-foreground/80 text-[10px] md:text-[13px] group-hover:text-primary transition duration-300">
             {' - '}
             {location}
           </P18>
         </Row>
       </Col>
-      <Col className='items-end gap-1 ml-4'>
-        <P16 className='text-[11px] md:text-[12px] group-hover:text-primary transition duration-300 whitespace-nowrap'>
+      <Col className="items-end gap-1 ml-4">
+        <P16 className="text-[11px] md:text-[12px] group-hover:text-primary transition duration-300 whitespace-nowrap">
           {year}
         </P16>
         {url && (
           <ExternalLinkIcon
             size={isMobile ? 13 : 16}
-            className='text-foreground group-hover:text-primary transition duration-300'
+            className="text-foreground group-hover:text-primary transition duration-300"
           />
         )}
       </Col>
@@ -47,12 +47,7 @@ function Item({ title, location, subtitle, year, url }: ItemProps) {
   );
 
   return url ? (
-    <a
-      href={url}
-      target='_blank'
-      rel='noopener noreferrer'
-      className='w-full block group'
-    >
+    <a href={url} target="_blank" rel="noopener noreferrer" className="w-full block group">
       {content}
     </a>
   ) : (
@@ -105,14 +100,12 @@ export function Education(): JSX.Element {
   ];
 
   return (
-    <Col className='w-full items-center justify-start'>
+    <Col className="w-full items-center justify-start">
       <Separator />
       {/* Éducation */}
-      <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 pb-10 md:pb-20 border-t border-foreground/30 pt-10 md:pt-20'>
-        <P16 className='text-[14px] md:text-[16px]'>
-          {t('about.education.title')}
-        </P16>
-        <Col className='w-full gap-4 md:gap-10 mt-6 md:mt-0'>
+      <RowBetween className="w-full flex-col md:flex-row items-start gap-5 md:gap-50 pb-10 md:pb-20 border-t border-foreground/30 pt-10 md:pt-20">
+        <P16 className="text-[14px] md:text-[16px]">{t('about.education.title')}</P16>
+        <Col className="w-full gap-4 md:gap-10 mt-6 md:mt-0">
           {educationList.map((education, i) => (
             <Item
               key={i}
@@ -128,11 +121,9 @@ export function Education(): JSX.Element {
 
       <Separator />
       {/* Expérience */}
-      <RowBetween className='w-full flex-col md:flex-row items-start gap-5 md:gap-50 border-t border-b border-foreground/30 pt-10 md:pt-20 pb-10 md:pb-20'>
-        <P16 className='text-[14px] md:text-[16px]'>
-          {t('about.experience.title')}
-        </P16>
-        <Col className='w-full gap-4 md:gap-10 mt-6 md:mt-0'>
+      <RowBetween className="w-full flex-col md:flex-row items-start gap-5 md:gap-50 border-t border-b border-foreground/30 pt-10 md:pt-20 pb-10 md:pb-20">
+        <P16 className="text-[14px] md:text-[16px]">{t('about.experience.title')}</P16>
+        <Col className="w-full gap-4 md:gap-10 mt-6 md:mt-0">
           {experienceList.map((experience, i) => (
             <Item
               key={i}

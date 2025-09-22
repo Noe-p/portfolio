@@ -45,14 +45,14 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
 
   return (
     <Main className={className} id={NavKeys.HOME}>
-      <Col className='items-center mt-25 md:mt-30 w-full'>
-        <Title className='text-[100px] md:text-[180px] translate-x-5 md:translate-x-10 leading-none'>
+      <Col className="items-center mt-25 md:mt-30 w-full">
+        <Title className="text-[100px] md:text-[180px] translate-x-5 md:translate-x-10 leading-none">
           {'Noé'}
         </Title>
         <div ref={philRef}>
           <Title
             className={cn(
-              'text-[40px] md:text-[75px] leading-none -translate-x-5 md:-translate-x-10'
+              'text-[40px] md:text-[75px] leading-none -translate-x-5 md:-translate-x-10',
             )}
           >
             {'PHILIPPE'}
@@ -61,56 +61,53 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
       </Col>
 
       {/* Mobile */}
-      <Col className='flex md:hidden mt-7 items-center px-5'>
-        <Col ref={positionRef} className='w-full items-center'>
-          <P24 className='text-foreground/80 normal-case'>{t('position')}</P24>
-          <P14 className='text-foreground/80 normal-case'>{'Freelance'}</P14>
+      <Col className="flex md:hidden mt-7 items-center px-5">
+        <Col ref={positionRef} className="w-full items-center">
+          <P24 className="text-foreground/80 normal-case">{t('position')}</P24>
+          <P14 className="text-foreground/80 normal-case">{'Freelance'}</P14>
         </Col>
-        <Row className='justify-left relative w-full mt-7'>
-          <div
-            ref={imageRef}
-            className='w-[200px] h-auto rounded overflow-hidden'
-          >
+        <Row className="justify-left relative w-full mt-7">
+          <div ref={imageRef} className="w-[200px] h-auto rounded overflow-hidden">
             <Image
-              src='/images/header.webP'
-              alt='Noé Philippe de dos sur une plage'
+              src="/images/header.webP"
+              alt="Noé Philippe de dos sur une plage"
               width={320}
               height={480}
-              fetchPriority='high'
+              fetchPriority="high"
               quality={80}
               priority
               style={{ width: 'auto', height: 'auto' }}
             />
           </div>
           <Macaron
-            className='w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28'
+            className="w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28"
             enableScrollRotation={true}
-            id='macaron-header-mobile'
+            id="macaron-header-mobile"
           />
         </Row>
         <HeaderContent onClick={handleClick} t={t} />
       </Col>
 
       {/* Desktop */}
-      <RowBetween className='mt-15 justify-around w-full hidden md:flex'>
+      <RowBetween className="mt-15 justify-around w-full hidden md:flex">
         <Macaron
-          className='top-10 left-20'
+          className="top-10 left-20"
           enableScrollRotation={true}
-          id='macaron-header-desktop'
+          id="macaron-header-desktop"
         />
         <Col>
           <RowBetween ref={positionRef}>
-            <H2 className='text-foreground/80 normal-case'>{t('position')}</H2>
-            <H2 className='text-foreground/80 normal-case'>{'Freelance'}</H2>
+            <H2 className="text-foreground/80 normal-case">{t('position')}</H2>
+            <H2 className="text-foreground/80 normal-case">{'Freelance'}</H2>
           </RowBetween>
-          <RowBetween className='mt-8 gap-5'>
-            <div ref={imageRef} className='rounded overflow-hidden'>
+          <RowBetween className="mt-8 gap-5">
+            <div ref={imageRef} className="rounded overflow-hidden">
               <Image
-                src='/images/header.webP'
-                alt='Noé Philippe de dos sur une plage'
+                src="/images/header.webP"
+                alt="Noé Philippe de dos sur une plage"
                 width={320}
                 height={426}
-                fetchPriority='high'
+                fetchPriority="high"
                 quality={80}
                 priority
                 style={{ width: 'auto', height: 'auto' }}
@@ -132,8 +129,8 @@ interface HeaderContentProps {
 function HeaderContent({ onClick, t }: HeaderContentProps) {
   return (
     <Col>
-      <P16 className='text-foreground md:w-70 mt-4'>{t('about.resume')}</P16>
-      <Button onClick={onClick} className='w-fit mt-2' variant='outline'>
+      <P16 className="text-foreground md:w-70 mt-4">{t('about.resume')}</P16>
+      <Button onClick={onClick} className="w-fit mt-2" variant="outline">
         {t('generics.seeMore')}
       </Button>
     </Col>

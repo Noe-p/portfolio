@@ -8,12 +8,7 @@ declare global {
   }
 }
 
-export const trackEvent = (
-  action: string,
-  category: string,
-  label?: string,
-  value?: number
-) => {
+export const trackEvent = (action: string, category: string, label?: string, value?: number) => {
   if (typeof window === 'undefined') return;
 
   const payload: Record<string, unknown> = {

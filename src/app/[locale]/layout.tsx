@@ -33,9 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Charge les messages en fonction de la langue détectée
-    const currentLocale = window.location.pathname.includes('/en')
-      ? 'en'
-      : 'fr';
+    const currentLocale = window.location.pathname.includes('/en') ? 'en' : 'fr';
     setLocale(currentLocale);
   }, []);
 
@@ -44,14 +42,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={locale} className={`${delaGothic.variable} ${monda.variable}`}>
       <body>
-        <IntlProvider
-          timeZone={timeZone}
-          messages={messages[locale]}
-          locale={locale}
-        >
-          <AppProvider>
-            {children}
-          </AppProvider>
+        <IntlProvider timeZone={timeZone} messages={messages[locale]} locale={locale}>
+          <AppProvider>{children}</AppProvider>
         </IntlProvider>
         <Umami />
       </body>

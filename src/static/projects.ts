@@ -9,10 +9,7 @@ export const projects: Project[] = [
     type: ProjectType.WORK,
     favorite: false,
     images: {
-      mobile: [
-        '/projects/bob/bob-mobile-1.webP',
-        '/projects/bob/bob-mobile-2.webP',
-      ],
+      mobile: ['/projects/bob/bob-mobile-1.webP', '/projects/bob/bob-mobile-2.webP'],
       desktop: [
         '/projects/bob/bob-desktop-1.webP',
         '/projects/bob/bob-desktop-2.webP',

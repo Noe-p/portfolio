@@ -34,42 +34,40 @@ export function ProjectCard({ project, onClick }: ProjectCardProps) {
           src={project.images.header}
           alt={tProjects(project.title)}
           fill
-          className='object-cover transition-transform duration-300 group-hover:scale-105 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]'
-          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+          className="object-cover transition-transform duration-300 group-hover:scale-105 [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)]"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        <HoverOverlay className='hidden md:flex'>
+        <HoverOverlay className="hidden md:flex">
           <CircleButton>
-            <span className='text-sm font-medium'>
-              {tCommon('generics.seeMore')}
-            </span>
-            <ArrowRight className='w-4 h-4 ml-1 transition-transform group-hover:translate-x-1' />
+            <span className="text-sm font-medium">{tCommon('generics.seeMore')}</span>
+            <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
           </CircleButton>
         </HoverOverlay>
       </ImageContainer>
       <Content>
         <RowBetween>
-          <P16 className='font-medium text-lg'>{tProjects(project.title)}</P16>
-          <Badge variant='primary'>{tEnums(project.type)}</Badge>
+          <P16 className="font-medium text-lg">{tProjects(project.title)}</P16>
+          <Badge variant="primary">{tEnums(project.type)}</Badge>
         </RowBetween>
-        <div className='text-foreground/70 line-clamp-4 min-h-[80px] text-[16px] font-mono font-normal leading-5'>
+        <div className="text-foreground/70 line-clamp-4 min-h-[80px] text-[16px] font-mono font-normal leading-5">
           {tProjects.rich(project.description, {
             a: (chunks) => <PurpleTextSmall>{chunks}</PurpleTextSmall>,
             br: () => <br />,
-            ul: (chunks) => <ul className='list-disc pl-5 my-2'>{chunks}</ul>,
-            li: (chunks) => <li className='mb-2'>{chunks}</li>,
-            b: (chunks) => <b className='font-semibold'>{chunks}</b>,
+            ul: (chunks) => <ul className="list-disc pl-5 my-2">{chunks}</ul>,
+            li: (chunks) => <li className="mb-2">{chunks}</li>,
+            b: (chunks) => <b className="font-semibold">{chunks}</b>,
           })}
         </div>
         <Button
-          variant='outline'
+          variant="outline"
           onClick={(e) => {
             e.stopPropagation();
             handleProjectClick();
           }}
-          className='w-full mt-4 group/button md:hidden'
+          className="w-full mt-4 group/button md:hidden"
         >
           <span>{tCommon('generics.seeMore')}</span>
-          <ArrowRight className='w-4 h-4 ml-2 transition-transform group-hover/button:translate-x-1' />
+          <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover/button:translate-x-1" />
         </Button>
       </Content>
     </Card>

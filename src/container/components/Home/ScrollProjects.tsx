@@ -22,19 +22,17 @@ interface ImageHeaderProps extends Omit<ImageProps, 'className'> {
   alt: string;
 }
 
-const ImageHeader = forwardRef<HTMLImageElement, ImageHeaderProps>(
-  (props, ref) => (
-    <Image
-      {...props}
-      ref={ref}
-      alt={props.alt || ''}
-      className={cn(
-        'absolute inset-0 object-cover transition-all duration-300 hover:opacity-80 cursor-pointer',
-        props.className
-      )}
-    />
-  )
-);
+const ImageHeader = forwardRef<HTMLImageElement, ImageHeaderProps>((props, ref) => (
+  <Image
+    {...props}
+    ref={ref}
+    alt={props.alt || ''}
+    className={cn(
+      'absolute inset-0 object-cover transition-all duration-300 hover:opacity-80 cursor-pointer',
+      props.className,
+    )}
+  />
+));
 
 ImageHeader.displayName = 'ImageHeader';
 
@@ -47,9 +45,7 @@ export function ScrollProjects(): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
   const titlesRef = useRef<HTMLDivElement>(null);
   const favoriteProjects = projects.filter((project) => project.favorite);
-  const [currentProject, setCurrentProject] = useState<Project>(
-    favoriteProjects[0]
-  );
+  const [currentProject, setCurrentProject] = useState<Project>(favoriteProjects[0]);
   const isMobile = useMediaQuery('(max-width: 768px)');
   const GAPSPACING = isMobile ? 60 : 25;
   const SLOWDOWN_FACTOR = isMobile ? 4 : 3;
@@ -112,9 +108,7 @@ export function ScrollProjects(): JSX.Element {
     initGsap();
     return () => {
       getGsap().then(({ ScrollTrigger }) => {
-        (
-          ScrollTrigger as unknown as typeof import('gsap/ScrollTrigger').ScrollTrigger
-        )
+        (ScrollTrigger as unknown as typeof import('gsap/ScrollTrigger').ScrollTrigger)
           .getAll()
           .forEach((trigger) => trigger.kill());
       });
@@ -152,9 +146,7 @@ export function ScrollProjects(): JSX.Element {
 
   // Fonction pour calculer l'opacité basée sur la distance
   const getOpacityByDistance = (projectIndex: number) => {
-    const currentIndex = favoriteProjects.findIndex(
-      (p) => p === currentProject
-    );
+    const currentIndex = favoriteProjects.findIndex((p) => p === currentProject);
     const distance = Math.abs(projectIndex - currentIndex);
 
     if (distance === 0) return 1; // Titre actuel
@@ -166,30 +158,23 @@ export function ScrollProjects(): JSX.Element {
   // Rendu Mobile
   if (isMobile) {
     return (
-      <Col className='w-full items-center mt-10'>
+      <Col className="w-full items-center mt-10">
         <Container ref={containerRef}>
-          <Title className='absolute left-0 top-20 z-20'>
-            {tCommon('generics.projects')}
-          </Title>
+          <Title className="absolute left-0 top-20 z-20">{tCommon('generics.projects')}</Title>
 
           <div
             ref={titlesRef}
-            className='absolute left-1/2 -translate-x-1/2 h-min flex flex-col items-center z-10'
+            className="absolute left-1/2 -translate-x-1/2 h-min flex flex-col items-center z-10"
             style={{ gap: `${GAPSPACING}px` }}
           >
             {favoriteProjects.map((project, i) => (
-              <div
-                key={i}
-                className='relative w-fit min-w-[300px] flex justify-center'
-              >
+              <div key={i} className="relative w-fit min-w-[300px] flex justify-center">
                 <Image
                   src={project.images.header || ''}
                   alt={tProject(project.title)}
                   width={200}
                   height={160}
-                  onClick={() =>
-                    handleClick(ROUTES.projects.project(project.slug))
-                  }
+                  onClick={() => handleClick(ROUTES.projects.project(project.slug))}
                   className={cn(
                     'absolute top-1/2 -translate-y-1/2 w-[200px] h-[160px] rounded z-10 object-cover transition-all duration-700 ease-out cursor-pointer',
                     i % 2 === 0 ? 'left-0' : 'right-0',
@@ -197,28 +182,22 @@ export function ScrollProjects(): JSX.Element {
                       ? 'opacity-100 scale-100 translate-x-0'
                       : 'opacity-0 scale-80',
                     project !== currentProject &&
-                      (i % 2 === 0 ? '-translate-x-10' : 'translate-x-10')
+                      (i % 2 === 0 ? '-translate-x-10' : 'translate-x-10'),
                   )}
                 />
                 <ProjectTitle
-                  onClick={() =>
-                    handleClick(ROUTES.projects.project(project.slug))
-                  }
+                  onClick={() => handleClick(ROUTES.projects.project(project.slug))}
                   className={cn(
                     'relative rounded px-2 transition-all z-20 duration-500 text-center',
                     project === currentProject
                       ? 'bg-background/60 cursor-pointer backdrop-blur-md animate-in zoom-in-95 duration-300'
-                      : 'bg-background/50 backdrop-blur-sm scale-90'
+                      : 'bg-background/50 backdrop-blur-sm scale-90',
                   )}
                   style={{
                     opacity: getOpacityByDistance(i),
                   }}
                 >
-                  <H1
-                    className={cn(
-                      'title text-3xl  transition-all duration-300 relative'
-                    )}
-                  >
+                  <H1 className={cn('title text-3xl  transition-all duration-300 relative')}>
                     {tProject(project.title)}
                     <ProjectType
                       className={cn(
@@ -226,9 +205,7 @@ export function ScrollProjects(): JSX.Element {
                         project === currentProject
                           ? 'opacity-100 translate-y-0'
                           : 'opacity-0 translate-y-2',
-                        i % 2 === 0
-                          ? 'right-10 left-auto'
-                          : 'right-auto left-10'
+                        i % 2 === 0 ? 'right-10 left-auto' : 'right-auto left-10',
                       )}
                     >
                       {tEnums(project.type)}
@@ -239,15 +216,15 @@ export function ScrollProjects(): JSX.Element {
             ))}
             <Button
               onClick={() => handleClick(ROUTES.projects.all)}
-              variant='outline'
-              className='w-full translate-y-10'
+              variant="outline"
+              className="w-full translate-y-10"
               style={{
                 opacity: getOpacityByDistance(favoriteProjects.length - 1),
               }}
             >
               {tCommon('projects.seeAll')}
               <ArrowUpRightSquareIcon
-                className='text-foreground/70 ml-2 group-hover:text-primary transition-colors'
+                className="text-foreground/70 ml-2 group-hover:text-primary transition-colors"
                 size={15}
               />
             </Button>
@@ -259,19 +236,17 @@ export function ScrollProjects(): JSX.Element {
 
   // Rendu Desktop
   return (
-    <Col className='w-full items-center mt-0'>
+    <Col className="w-full items-center mt-0">
       <Container ref={containerRef}>
-        <Title className='absolute left-0 top-20 z-20 md:text-3xl'>
+        <Title className="absolute left-0 top-20 z-20 md:text-3xl">
           {tCommon('generics.projects')}
         </Title>
 
         <ImageContainer
-          className='group cursor-pointer'
-          onClick={() =>
-            handleClick(ROUTES.projects.project(currentProject.slug))
-          }
+          className="group cursor-pointer"
+          onClick={() => handleClick(ROUTES.projects.project(currentProject.slug))}
         >
-          <Col className='w-full h-full relative opacity-100'>
+          <Col className="w-full h-full relative opacity-100">
             {favoriteProjects.map((project, i) => (
               <ImageHeader
                 key={project.id}
@@ -281,13 +256,11 @@ export function ScrollProjects(): JSX.Element {
                 src={project.images.header || ''}
                 alt={tProject(project.title)}
                 fill
-                sizes='50vw'
+                sizes="50vw"
                 priority={i === 0}
                 className={cn(
                   'transition-all duration-500 ease-out',
-                  project === currentProject
-                    ? 'opacity-100 scale-100'
-                    : 'opacity-0 scale-95'
+                  project === currentProject ? 'opacity-100 scale-100' : 'opacity-0 scale-95',
                 )}
               />
             ))}
@@ -295,15 +268,11 @@ export function ScrollProjects(): JSX.Element {
         </ImageContainer>
 
         <ProjectInfoBar>
-          <ProjectLink
-            onClick={() =>
-              handleClick(ROUTES.projects.project(currentProject.slug))
-            }
-          >
-            <P16 className='text-foreground'>{tCommon('projects.seeOne')}</P16>
-            <ArrowUpRightSquareIcon className='text-foreground' size={15} />
+          <ProjectLink onClick={() => handleClick(ROUTES.projects.project(currentProject.slug))}>
+            <P16 className="text-foreground">{tCommon('projects.seeOne')}</P16>
+            <ArrowUpRightSquareIcon className="text-foreground" size={15} />
           </ProjectLink>
-          <P16 className='text-[16px] font-semibold'>
+          <P16 className="text-[16px] font-semibold">
             {format.dateTime(new Date(currentProject.date), {
               year: 'numeric',
               month: 'long',
@@ -314,28 +283,24 @@ export function ScrollProjects(): JSX.Element {
 
         <div
           ref={titlesRef}
-          className='absolute left-0 ml-16 top-0 w-fit h-min flex flex-col items-start z-10'
+          className="absolute left-0 ml-16 top-0 w-fit h-min flex flex-col items-start z-10"
           style={{ gap: `${GAPSPACING}px` }}
         >
           {favoriteProjects.map((project, i) => (
-            <div key={i} className='relative'>
+            <div key={i} className="relative">
               <ProjectTitle
-                onClick={() =>
-                  handleClick(ROUTES.projects.project(project.slug))
-                }
+                onClick={() => handleClick(ROUTES.projects.project(project.slug))}
                 className={cn(
                   'relative rounded px-2 py-1 transition-all duration-500 w-auto text-left',
                   project === currentProject
                     ? 'bg-background/90 cursor-pointer backdrop-blur-lg animate-in zoom-in-95 duration-300'
-                    : 'bg-background/50'
+                    : 'bg-background/50',
                 )}
                 style={{
                   opacity: getOpacityByDistance(i),
                 }}
               >
-                <H1 className='title md:text-6xl transition-opacity'>
-                  {tProject(project.title)}
-                </H1>
+                <H1 className="title md:text-6xl transition-opacity">{tProject(project.title)}</H1>
                 <ProjectType>{tEnums(project.type)}</ProjectType>
               </ProjectTitle>
             </div>
@@ -343,13 +308,10 @@ export function ScrollProjects(): JSX.Element {
         </div>
 
         <ScrollIndicator size={60} />
-        <SeeAllButton
-          onClick={() => handleClick(ROUTES.projects.all)}
-          variant='outline'
-        >
+        <SeeAllButton onClick={() => handleClick(ROUTES.projects.all)} variant="outline">
           {tCommon('projects.seeAll')}
           <ArrowUpRightSquareIcon
-            className='text-foreground/70 group-hover:text-primary transition-colors'
+            className="text-foreground/70 group-hover:text-primary transition-colors"
             size={15}
           />
         </SeeAllButton>

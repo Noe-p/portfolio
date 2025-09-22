@@ -6,7 +6,7 @@ export const useAnalytics = () => {
     (action: string, category: string, label?: string, value?: number) => {
       trackEvent(action, category, label, value);
     },
-    []
+    [],
   );
 
   const trackButtonClick = useCallback((buttonName: string) => {

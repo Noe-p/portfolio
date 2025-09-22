@@ -24,9 +24,9 @@ export function PageLoader(props: PageLoaderProps): JSX.Element {
   return (
     <Main className={className}>
       {showLoader ? (
-        <ColCenter className='py-10 h-full justify-between'>
-          <Logo src='/icons/logo_128x128.webp' alt='logo' />
-          <P24 className='uppercase'>{'Sakana San'}</P24>
+        <ColCenter className="py-10 h-full justify-between">
+          <Logo src="/icons/logo_128x128.webp" alt="logo" />
+          <P24 className="uppercase">{'Sakana San'}</P24>
         </ColCenter>
       ) : null}
     </Main>

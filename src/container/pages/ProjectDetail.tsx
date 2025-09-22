@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-"use client";
+'use client';
 import {
   Col,
   FullPageLoader,
@@ -11,20 +11,20 @@ import {
   P14,
   P16,
   Row,
-} from "@/components";
-import { ImagesFullScreen } from "@/components/Medias/ImagesFullScreen";
-import { Badge } from "@/components/ui/Badge";
-import { Marquee } from "@/components/ui/marquee";
-import { useAppContext } from "@/contexts";
-import { useAnalytics } from "@/hooks/useAnalytics";
-import { ROUTES } from "@/routes";
-import { projects } from "@/static/projects";
-import { ArrowUpRightSquareIcon, Maximize } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import tw from "tailwind-styled-components";
+} from '@/components';
+import { ImagesFullScreen } from '@/components/Medias/ImagesFullScreen';
+import { Badge } from '@/components/ui/Badge';
+import { Marquee } from '@/components/ui/marquee';
+import { useAppContext } from '@/contexts';
+import { useAnalytics } from '@/hooks/useAnalytics';
+import { ROUTES } from '@/routes';
+import { projects } from '@/static/projects';
+import { ArrowUpRightSquareIcon, Maximize } from 'lucide-react';
+import { useFormatter, useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import tw from 'tailwind-styled-components';
 
 interface ProjectDetailProps {
   slug: string;
@@ -32,9 +32,9 @@ interface ProjectDetailProps {
 
 export function ProjectDetail({ slug }: ProjectDetailProps) {
   const project = projects.find((p) => p.slug === slug);
-  const tProjects = useTranslations("projects");
-  const tEnums = useTranslations("enums");
-  const tCommon = useTranslations("common");
+  const tProjects = useTranslations('projects');
+  const tEnums = useTranslations('enums');
+  const tCommon = useTranslations('common');
   const format = useFormatter();
   const { trackButtonClick, trackCustomEvent } = useAnalytics();
 
@@ -44,34 +44,25 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
   // État pour la galerie d'images
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [selectedImageType, setSelectedImageType] = useState<
-    "desktop" | "mobile"
-  >("desktop");
+  const [selectedImageType, setSelectedImageType] = useState<'desktop' | 'mobile'>('desktop');
 
   const handleBack = (slug: string) => {
     setIsTransitionStartOpen(true);
     setTimeout(() => router.push(slug, undefined), 700);
   };
 
-  const handleImageClick = (type: "desktop" | "mobile", index: number) => {
-    trackCustomEvent(
-      "open",
-      "project_gallery",
-      `${project?.slug}_${type}_${index + 1}`
-    );
+  const handleImageClick = (type: 'desktop' | 'mobile', index: number) => {
+    trackCustomEvent('open', 'project_gallery', `${project?.slug}_${type}_${index + 1}`);
     setSelectedImageType(type);
     setSelectedImageIndex(index);
     setIsGalleryOpen(true);
   };
 
-  const handleExternalLinkClick = (type: "github" | "website") => {
+  const handleExternalLinkClick = (type: 'github' | 'website') => {
     trackButtonClick(`${type}_link_${project?.slug}`);
   };
 
-  const allImages = [
-    ...(project?.images.desktop || []),
-    ...(project?.images.mobile || []),
-  ];
+  const allImages = [...(project?.images.desktop || []), ...(project?.images.mobile || [])];
 
   return project ? (
     <Layout isNavClose={false}>
@@ -80,16 +71,16 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
           onClick={() => handleBack(ROUTES.home)}
           className="text-foreground/80 hover:text-foreground cursor-pointer transition duration-300"
         >
-          {tEnums("HOME")}
+          {tEnums('HOME')}
         </P16>
-        <P16 className="text-foreground/80">{"/"}</P16>
+        <P16 className="text-foreground/80">{'/'}</P16>
         <P16
           onClick={() => handleBack(ROUTES.projects.all)}
           className="text-foreground/80 hover:text-foreground cursor-pointer transition duration-300"
         >
-          {tEnums("PROJECTS")}
+          {tEnums('PROJECTS')}
         </P16>
-        <P16 className="text-foreground/80">{"/"}</P16>
+        <P16 className="text-foreground/80">{'/'}</P16>
         <P16 className="w-full text-primary/70">{tProjects(project.title)}</P16>
       </Row>
       <Main>
@@ -107,10 +98,10 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => handleExternalLinkClick("github")}
+                    onClick={() => handleExternalLinkClick('github')}
                   >
                     <P16 className="text-foreground/80 group-hover:text-primary transition-colors">
-                      {tCommon("projects.seeGithub")}
+                      {tCommon('projects.seeGithub')}
                     </P16>
                     <ArrowUpRightSquareIcon
                       className="text-foreground/80 group-hover:text-primary transition-colors"
@@ -119,13 +110,8 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                   </SeeLink>
                 ) : (
                   <div className="opacity-50 cursor-not-allowed w-fit items-center flex gap-1">
-                    <P16 className="text-foreground/80">
-                      {tCommon("projects.seeGithub")}
-                    </P16>
-                    <ArrowUpRightSquareIcon
-                      className="text-foreground/80"
-                      size={15}
-                    />
+                    <P16 className="text-foreground/80">{tCommon('projects.seeGithub')}</P16>
+                    <ArrowUpRightSquareIcon className="text-foreground/80" size={15} />
                   </div>
                 )}
                 {project.link ? (
@@ -133,33 +119,21 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                     href={project.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => handleExternalLinkClick("website")}
+                    onClick={() => handleExternalLinkClick('website')}
                     className="bg-primary/75 hover:bg-primary/100 transition-colors p-3 py-2 rounded-md transition-colors group"
                   >
-                    <P16 className="text-foreground/80">
-                      {tCommon("projects.seeWeb")}
-                    </P16>
-                    <ArrowUpRightSquareIcon
-                      className="text-foreground/80 "
-                      size={15}
-                    />
+                    <P16 className="text-foreground/80">{tCommon('projects.seeWeb')}</P16>
+                    <ArrowUpRightSquareIcon className="text-foreground/80 " size={15} />
                   </SeeLink>
                 ) : (
                   <div className="opacity-50 cursor-not-allowed w-fit items-center flex gap-1">
-                    <P16 className="text-foreground/80">
-                      {tCommon("projects.seeWeb")}
-                    </P16>
-                    <ArrowUpRightSquareIcon
-                      className="text-foreground/80"
-                      size={15}
-                    />
+                    <P16 className="text-foreground/80">{tCommon('projects.seeWeb')}</P16>
+                    <ArrowUpRightSquareIcon className="text-foreground/80" size={15} />
                   </div>
                 )}
               </Row>
               <Col className="gap-2">
-                <P16 className="uppercase text-foreground/60">
-                  {tCommon("generics.tags")}
-                </P16>
+                <P16 className="uppercase text-foreground/60">{tCommon('generics.tags')}</P16>
                 <Row className="gap-1 flex-wrap">
                   {project.tags?.map((tag) => (
                     <Badge key={tag}>{tEnums(tag)}</Badge>
@@ -168,21 +142,17 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
               </Col>
               <Row className="items-start justify-between">
                 <Col className="gap-2">
-                  <P16 className="uppercase text-foreground/60">
-                    {tCommon("generics.date")}
-                  </P16>
+                  <P16 className="uppercase text-foreground/60">{tCommon('generics.date')}</P16>
                   <P14>
                     {format.dateTime(new Date(project.date), {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
                     })}
                   </P14>
                 </Col>
                 <Col className="gap-2">
-                  <P16 className="uppercase text-foreground/60">
-                    {tCommon("projects.type")}
-                  </P16>
+                  <P16 className="uppercase text-foreground/60">{tCommon('projects.type')}</P16>
                   <Badge variant="primary">{tEnums(project.type)}</Badge>
                 </Col>
               </Row>
@@ -201,14 +171,10 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                       {chunks}
                     </PurpleTextSmall>
                   ) : (
-                    <span className="font-semibold text-primary/90">
-                      {chunks}
-                    </span>
+                    <span className="font-semibold text-primary/90">{chunks}</span>
                   ),
                 br: () => <br />,
-                ul: (chunks) => (
-                  <ul className="list-disc pl-5 my-2">{chunks}</ul>
-                ),
+                ul: (chunks) => <ul className="list-disc pl-5 my-2">{chunks}</ul>,
                 li: (chunks) => <li className="mb-2">{chunks}</li>,
                 b: (chunks) => <b className="font-semibold">{chunks}</b>,
               })}
@@ -219,14 +185,14 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
           {project.images.desktop && project.images.desktop.length > 0 && (
             <div className="mb-10">
               <P16 className="uppercase text-foreground/60 ">
-                {tCommon("projects.desktopImages")}
+                {tCommon('projects.desktopImages')}
               </P16>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                 {project.images.desktop.map((image: string, index: number) => (
                   <div
                     key={`image-${index}`}
                     className="overflow-hidden rounded-md cursor-pointer relative group"
-                    onClick={() => handleImageClick("desktop", index)}
+                    onClick={() => handleImageClick('desktop', index)}
                   >
                     <Image
                       src={image}
@@ -235,7 +201,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                       width={project.images.desktop.length === 1 ? 1200 : 500}
                       height={project.images.desktop.length === 1 ? 800 : 300}
                       priority={index === 0}
-                      loading={index === 0 ? "eager" : "lazy"}
+                      loading={index === 0 ? 'eager' : 'lazy'}
                       quality={90}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
@@ -250,15 +216,13 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
 
           {project.images.mobile && project.images.mobile.length > 0 && (
             <div>
-              <P16 className="uppercase text-foreground/60">
-                {tCommon("projects.mobileImages")}
-              </P16>
+              <P16 className="uppercase text-foreground/60">{tCommon('projects.mobileImages')}</P16>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
                 {project.images.mobile.map((image: string, index: number) => (
                   <div
                     key={`image-${index}`}
                     className="overflow-hidden rounded-md cursor-pointer relative group"
-                    onClick={() => handleImageClick("mobile", index)}
+                    onClick={() => handleImageClick('mobile', index)}
                   >
                     <Image
                       src={image}
@@ -267,7 +231,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
                       width={project.images.mobile.length === 1 ? 800 : 300}
                       height={project.images.mobile.length === 1 ? 1200 : 450}
                       priority={index === 0}
-                      loading={index === 0 ? "eager" : "lazy"}
+                      loading={index === 0 ? 'eager' : 'lazy'}
                       quality={90}
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
@@ -287,7 +251,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
         isOpen={isGalleryOpen}
         onClose={() => setIsGalleryOpen(false)}
         initialIndex={
-          selectedImageType === "desktop"
+          selectedImageType === 'desktop'
             ? selectedImageIndex
             : project.images.desktop?.length + selectedImageIndex
         }

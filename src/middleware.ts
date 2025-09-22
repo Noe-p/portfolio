@@ -12,7 +12,8 @@ export default function middleware(request: NextRequest) {
   const response = intlMiddleware(request);
 
   const userAgent = request.headers.get('user-agent') || '';
-  const isChromium = /Chrome\//.test(userAgent) || /Chromium\//.test(userAgent) || /Edg\//.test(userAgent);
+  const isChromium =
+    /Chrome\//.test(userAgent) || /Chromium\//.test(userAgent) || /Edg\//.test(userAgent);
 
   if (isChromium) {
     response.headers.set('Permissions-Policy', 'browsing-topics=()');

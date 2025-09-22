@@ -71,7 +71,7 @@ export const AppProvider = ({ children }: Props): JSX.Element => {
       gsap.fromTo(
         loaderRef.current,
         { y: '100%' },
-        { y: '0%', duration: 0.7, ease: 'power2.inOut' }
+        { y: '0%', duration: 0.7, ease: 'power2.inOut' },
       );
     };
 

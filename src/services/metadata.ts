@@ -5,9 +5,7 @@ export const defaultMetadata: Metadata = {
     icon: '/logos/logo_152x152.webp',
     shortcut: '/logos/logo_152x152.webp',
   },
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, '') || ''
-  ),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, '') || ''),
   robots: {
     index: true,
     follow: true,
