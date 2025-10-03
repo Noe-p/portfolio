@@ -136,6 +136,37 @@ export const projects: Project[] = [
     customerUrl: 'https://www.kerluskellik.fr/',
   },
   {
+    id: '7g8h9i0j-1k2l-3m4n-5o6p-7q8r9s0t1u2v',
+    title: 'mt-clean.title',
+    description: 'mt-clean.description',
+    date: '2025-10-02',
+    type: ProjectType.FREELANCE,
+    favorite: true,
+    images: {
+      mobile: [
+        '/projects/mt-clean/mt-clean-mobile-1.webP',
+        '/projects/mt-clean/mt-clean-mobile-2.webP',
+        '/projects/mt-clean/mt-clean-mobile-3.webP',
+        '/projects/mt-clean/mt-clean-mobile-4.webP',
+        '/projects/mt-clean/mt-clean-mobile-5.webP',
+        '/projects/mt-clean/mt-clean-mobile-6.webP',
+      ],
+      desktop: [
+        '/projects/mt-clean/mt-clean-desktop-1.webP',
+        '/projects/mt-clean/mt-clean-desktop-2.webP',
+        '/projects/mt-clean/mt-clean-desktop-3.webP',
+        '/projects/mt-clean/mt-clean-desktop-4.webP',
+        '/projects/mt-clean/mt-clean-desktop-5.webP',
+        '/projects/mt-clean/mt-clean-desktop-6.webP',
+      ],
+      header: '/projects/mt-clean/mt-clean-desktop-1.webP',
+    },
+    tags: [ProjectTag.NEXTJS, ProjectTag.TYPESCRIPT, ProjectTag.TAILWIND],
+    slug: 'mt-clean',
+    link: 'https://mtclean.fr/',
+    customerUrl: 'https://mtclean.fr/',
+  },
+  {
     id: '3c4d5e6f-7g8h-9i0j-1k2l-3m4n5o6p7q8r',
     title: 'romane-faupin.title',
     description: 'romane-faupin.description',
@@ -168,7 +199,7 @@ export const projects: Project[] = [
     description: 'fast-foodie.description',
     date: '2024-12-06',
     type: ProjectType.PERSONAL,
-    favorite: true,
+    favorite: false,
     images: {
       mobile: [
         '/projects/fast-foodie/fast-foodie-mobile-1.webP',

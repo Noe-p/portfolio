@@ -89,7 +89,7 @@ export function ProjectDetail({ slug }: ProjectDetailProps) {
             <Text>{tProjects(project.title)}</Text>
           </Marquee>
         </div>
-        <Grid3 className="md:gap-20 mt-5">
+        <Grid3 className="md:gap-5 mt-5">
           <GridCol1>
             <Col className="w-full gap-5 md:gap-10">
               <Row className="w-full justify-between">

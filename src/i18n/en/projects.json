@@ -62,6 +62,15 @@
       "keywords": "hiking safety, mobile application, React Native, Firebase, Google Maps, Redux, Scrum, pair programming"
     }
   },
+  "mt-clean": {
+    "title": "MT Clean",
+    "description": "Freelance project for <a>MT Clean</a>, a professional cleaning company based in Pays Bigouden. I developed a modern and responsive showcase website to present their home cleaning services: vehicle cleaning, textile furniture cleaning, terrace and window cleaning. The site highlights their professionalism and 7-day availability in the region.<br></br><br></br>The project includes a clear and intuitive user interface, optimized for local searches and SEO. The focus was on ease of contact with clear information about their services and coverage area in Pays Bigouden. The site reflects the professional and reliable image of the company, established since 2023.",
+    "metas": {
+      "title": "MT Clean — Professional Cleaning Service Pays Bigouden | Noé Philippe",
+      "description": "Discover MT Clean's showcase website, professional cleaning service in Pays Bigouden. A freelance project combining modern design and local search optimization.",
+      "keywords": "Pays Bigouden cleaning, home cleaning service, freelance web development, business showcase website, local SEO optimization, Brittany"
+    }
+  },
   "bob-le-developpeur": {
     "title": "Bob le Développeur",
     "description": "Team project at <a>Bob le Développeur</a>, a Paris-based web agency specializing in custom application development for a wide range of clients. I contributed to the design and development of web and mobile platforms for major clients, both on the front-end and back-end, working closely with multidisciplinary teams.<br></br><br></br>Here are some flagship projects delivered: \n<ul>\n<li><b>Athome</b>: Digitalization of internal processes and creation of online platforms for managing energy renovation projects. Custom tools to automate and simplify client and project management.</li>\n<li><b>Racing Club de Strasbourg</b>: Collaborative application to connect local stakeholders, promote offers, and facilitate communication between partner companies around the club.</li>\n<li><b>Surge</b>: Development of analysis and visualization tools for predictive medicine, working with medical experts to turn complex business needs into innovative software solutions.</li>\n<li><b>Alfred</b>: Financial coaching platform for Groupe Pluralle, enabling users to optimize their taxes and manage financial projects with a smooth and personalized user experience.</li>\n<li><b>Allocab</b>: Complete redesign of the website for France's leading VTC network, generating thousands of static pages and optimizing the customer journey for tens of thousands of daily users.</li>\n</ul><br></br>Each project was an opportunity to work on modern architectures (Next.js, NestJS, React Native, Docker, PostgreSQL), ensuring technical quality, security, and performance, while collaborating closely with clients and teams to meet demanding business needs.",

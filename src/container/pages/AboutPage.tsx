@@ -99,7 +99,7 @@ export function AboutPage(): React.JSX.Element {
         <div className="border-b border-foreground/30" />
         <FullPageScroll />
         <Education />
-        <Col className="w-full items-start md:pt-20">
+        <Col className="w-full items-start pt-20">
           <Col className="md:w-10/12 w-full">
             <Title>{t('music.title')}</Title>
             <P16 className="text-muted-foreground mt-6">
