@@ -75,12 +75,19 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
 
   // suivi de la route active
   useEffect(() => {
-    const seg = pathname.split('/')[1].toUpperCase();
-    if (Object.values(MenuKeys).includes(seg as MenuKeys)) {
-      setSelectedMenuItem(seg);
+    const segments = pathname.split('/').filter(Boolean);
+    // Ignorer le préfixe de langue (première partie du path)
+    const routeSegment = segments.length > 1 ? segments[1].toUpperCase() : '';
+
+    if (Object.values(MenuKeys).includes(routeSegment as MenuKeys)) {
+      setSelectedMenuItem(routeSegment);
       setSelectedNavItem(null);
+    } else if (segments.length === 1 || routeSegment === '') {
+      // Page d'accueil
+      setSelectedNavItem(NavKeys.HOME);
+      setSelectedMenuItem(null);
     } else {
-      setSelectedNavItem(seg);
+      setSelectedNavItem(routeSegment);
       setSelectedMenuItem(null);
     }
   }, [pathname]);
@@ -99,11 +106,33 @@ export function NavBar({ className }: NavBarProps): React.JSX.Element {
 
   // clic sur un item de navigation principale
   const handleNavClick = (nav: string) => {
+    trackButtonClick(`nav_${nav.toLowerCase()}`);
     setSelectedNavItem(nav);
-    if (nav === NavKeys.HOME && pathname !== '/') {
-      setIsTransitionStartOpen(true);
-      setTimeout(() => router.push(`/${locale}/`), 700);
+
+    if (nav === NavKeys.HOME) {
+      const isHomePage = pathname === `/${locale}` || pathname === '/';
+      if (isHomePage) {
+        // Si on est déjà sur la page d'accueil, scroller vers le haut
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      } else {
+        // Sinon, naviguer vers la page d'accueil
+        setIsTransitionStartOpen(true);
+        setTimeout(() => router.push(`/${locale}/`), 700);
+      }
+    } else if (nav === NavKeys.CONTACT) {
+      // Scroller vers la section contact (Footer)
+      const contactElement = document.getElementById(NavKeys.CONTACT);
+      if (contactElement) {
+        contactElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }
     }
+
     setIsMenuOpen(nav === NavKeys.MENU ? !isMenuOpen : false);
   };
 
