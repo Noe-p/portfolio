@@ -4,8 +4,8 @@ import validator from 'validator';
 // Configuration de protection
 const PROTECTION_CONFIG = {
   // Rate limiting (sans Redis pour simplicité)
-  MAX_REQUESTS_PER_IP_PER_HOUR: 10,
-  MAX_REQUESTS_PER_EMAIL_PER_DAY: 5,
+  MAX_REQUESTS_PER_IP_PER_HOUR: 1,
+  MAX_REQUESTS_PER_EMAIL_PER_DAY: 2,
 
   // Validation
   MAX_NAME_LENGTH: 100,
