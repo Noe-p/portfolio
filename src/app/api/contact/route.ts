@@ -1,4 +1,5 @@
 import { getMessages, type Locale } from '@/i18n/config';
+import { SpamProtection } from '@/lib/spamProtection';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
@@ -8,8 +9,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 async function getTranslation(key: string, locale: Locale) {
   const messages = await getMessages(locale);
   const keys = key.split('.');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let value: any = messages;
 
+  // eslint-disable-next-line no-loops/no-loops
   for (const k of keys) {
     value = value?.[k];
   }
@@ -22,9 +25,18 @@ export async function POST(request: NextRequest) {
   const locale: Locale = request.headers.get('accept-language')?.startsWith('en') ? 'en' : 'fr';
 
   try {
-    const { name, email, subject, message } = await request.json();
+    const { name, email, subject, message, website } = await request.json();
 
-    // Validation des données
+    // 1. Vérification Honeypot - si le champ "website" est rempli, c'est un bot
+    if (website && website.length > 0) {
+      console.log('Bot détecté via honeypot:', {
+        ip: SpamProtection.getClientIP(request),
+        website,
+      });
+      return NextResponse.json({ error: 'Requête invalide' }, { status: 400 });
+    }
+
+    // 2. Validation des données de base
     if (!name || !email || !subject || !message) {
       return NextResponse.json(
         { error: await getTranslation('common.contact.api.errors.allFieldsRequired', locale) },
@@ -32,12 +44,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validation email simple
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    // 3. Protection anti-spam complète
+    const spamCheck = await SpamProtection.checkSpam({ name, email, subject, message }, request);
+    if (!spamCheck.allowed) {
+      console.log('Message bloqué:', {
+        reason: spamCheck.reason,
+        ip: SpamProtection.getClientIP(request),
+        email,
+      });
       return NextResponse.json(
-        { error: await getTranslation('common.contact.api.errors.invalidEmailFormat', locale) },
-        { status: 400 },
+        {
+          error:
+            spamCheck.reason ||
+            (await getTranslation('common.contact.api.errors.invalidEmailFormat', locale)),
+        },
+        { status: 429 }, // Too Many Requests
       );
     }
 

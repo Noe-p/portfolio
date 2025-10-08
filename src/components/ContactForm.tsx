@@ -25,6 +25,8 @@ const createFormSchema = (t: (key: string) => string) =>
     email: z.string().min(1, t('contact.form.emailRequired')).email(t('contact.form.emailInvalid')),
     subject: z.string().min(1, t('contact.form.subjectRequired')),
     message: z.string().min(1, t('contact.form.messageRequired')),
+    // Honeypot - doit rester vide
+    website: z.string().max(0, 'Bot détecté'),
   });
 
 type FormData = {
@@ -32,6 +34,7 @@ type FormData = {
   email: string;
   subject: string;
   message: string;
+  website: string; // Honeypot field
 };
 
 interface ContactFormProps {
@@ -46,11 +49,13 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
   const formSchema = createFormSchema(t);
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
+    mode: 'onChange', // Validation en temps réel
     defaultValues: {
       name: '',
       email: '',
       subject: '',
       message: '',
+      website: '', // Honeypot
     },
   });
 
@@ -112,6 +117,23 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
           </>
         );
       default:
+        // Affichage dynamique selon l'état du formulaire
+        if (hasEmptyRequiredFields()) {
+          return (
+            <>
+              <Send className="mr-2 w-4 h-4 opacity-50" />
+              {t('contact.form.fillAllFields')}
+            </>
+          );
+        }
+        if (hasErrors()) {
+          return (
+            <>
+              <AlertCircle className="mr-2 w-4 h-4 opacity-50" />
+              {t('contact.form.fixErrors')}
+            </>
+          );
+        }
         return (
           <>
             <Send className="mr-2 w-4 h-4" />
@@ -130,6 +152,21 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
       default:
         return 'outline';
     }
+  };
+
+  // Vérifier si le formulaire a des erreurs ou des champs vides
+  const hasErrors = () => {
+    const errors = form.formState.errors;
+    return Object.keys(errors).length > 0;
+  };
+
+  const hasEmptyRequiredFields = () => {
+    const values = form.getValues();
+    return !values.name || !values.email || !values.subject || !values.message;
+  };
+
+  const isSubmitDisabled = () => {
+    return status === 'loading' || hasErrors() || hasEmptyRequiredFields();
   };
 
   return (
@@ -192,6 +229,21 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
           )}
         />
 
+        {/* Honeypot - champ invisible pour piéger les bots */}
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => (
+            <FormItem style={{ position: 'absolute', left: '-9999px', opacity: 0 }}>
+              <FormLabel>{'Website (ne pas remplir)'}</FormLabel>
+              <FormControl>
+                <Input {...field} tabIndex={-1} autoComplete="off" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="message"
@@ -214,8 +266,12 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
         <Button
           type="submit"
           variant={getButtonVariant()}
-          className="w-full"
-          disabled={status === 'loading'}
+          className={`w-full transition-all ${
+            isSubmitDisabled() && status === 'idle'
+              ? 'opacity-60 cursor-not-allowed'
+              : 'opacity-100 '
+          }`}
+          disabled={isSubmitDisabled()}
         >
           {getButtonContent()}
         </Button>

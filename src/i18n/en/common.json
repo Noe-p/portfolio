@@ -31,6 +31,8 @@
       "sending": "Sending...",
       "success": "Message sent successfully!",
       "error": "An error occurred, please try again.",
+      "fillAllFields": "Fill all fields",
+      "fixErrors": "Fix errors",
       "nameRequired": "Name is required",
       "emailRequired": "Email is required",
       "emailInvalid": "Email is not valid",
@@ -43,7 +45,10 @@
         "invalidEmailFormat": "Invalid email format",
         "missingConfig": "Missing configuration",
         "sendError": "Error sending email",
-        "serverError": "Server error while sending email"
+        "serverError": "Server error while sending email",
+        "rateLimitExceeded": "Too many attempts, please try again later",
+        "spamDetected": "Suspicious message detected",
+        "botDetected": "Automated activity detected"
       },
       "success": "Email sent successfully",
       "email": {
