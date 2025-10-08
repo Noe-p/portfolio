@@ -1,3 +1,4 @@
+export * from './ContactForm';
 export * from './Helpers';
 export * from './Layout';
 export * from './Loaders';

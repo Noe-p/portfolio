@@ -17,6 +17,47 @@
     "customer": "Client",
     "privacyPolicy": "Politique de confidentialité"
   },
+  "contact": {
+    "form": {
+      "name": "Nom",
+      "namePlaceholder": "Votre nom",
+      "email": "Email",
+      "emailPlaceholder": "votre.email@exemple.com",
+      "subject": "Sujet",
+      "subjectPlaceholder": "Le sujet de votre message",
+      "message": "Message",
+      "messagePlaceholder": "Votre message...",
+      "send": "Envoyer",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé avec succès !",
+      "error": "Une erreur est survenue, veuillez réessayer.",
+      "nameRequired": "Le nom est requis",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "L'email n'est pas valide",
+      "subjectRequired": "Le sujet est requis",
+      "messageRequired": "Le message est requis"
+    },
+    "api": {
+      "errors": {
+        "allFieldsRequired": "Tous les champs sont requis",
+        "invalidEmailFormat": "Format d'email invalide",
+        "missingConfig": "Configuration manquante",
+        "sendError": "Erreur lors de l'envoi de l'email",
+        "serverError": "Erreur serveur lors de l'envoi de l'email"
+      },
+      "success": "Email envoyé avec succès",
+      "email": {
+        "title": "💌 Nouveau message depuis votre portfolio",
+        "contactInfoTitle": "👤 Informations du contact",
+        "nameLabel": "Nom :",
+        "emailLabel": "Email :",
+        "subjectLabel": "Sujet :",
+        "messageTitle": "💬 Message",
+        "sentOnPrefix": "📅 Envoyé le",
+        "replyText": "💡 Pour répondre, utilisez directement :"
+      }
+    }
+  },
   "status": "Prêt à travailler",
   "position": "Développeur Fullstack",
   "location": "Actuellement à Quimper, France",
