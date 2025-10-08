@@ -45,6 +45,7 @@ interface ContactFormProps {
 export function ContactForm({ onSubmit, className }: ContactFormProps) {
   const t = useTranslations('common');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const formSchema = createFormSchema(t);
   const form = useForm<FormData>({
@@ -73,7 +74,9 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de l'envoi du message");
+        // Récupérer le message d'erreur spécifique du serveur
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur lors de l'envoi du message");
       }
 
       // Callback personnalisé si fourni
@@ -85,11 +88,27 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
       form.reset();
 
       // Réinitialiser le statut après 3 secondes
-      setTimeout(() => setStatus('idle'), 3000);
+      setTimeout(() => {
+        setStatus('idle');
+        setErrorMessage('');
+      }, 3000);
     } catch (error) {
       console.error('Error sending message:', error);
+
+      // Utiliser le message d'erreur du serveur
+      let errorMessage = t('contact.form.error'); // Message par défaut
+
+      if (error instanceof Error) {
+        // Le message d'erreur contient déjà le message du serveur grâce au throw dans le !response.ok
+        errorMessage = error.message;
+      }
+
+      setErrorMessage(errorMessage);
       setStatus('error');
-      setTimeout(() => setStatus('idle'), 3000);
+      setTimeout(() => {
+        setStatus('idle');
+        setErrorMessage('');
+      }, 3000);
     }
   };
 
@@ -113,7 +132,7 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
         return (
           <>
             <AlertCircle className="mr-2 w-4 h-4" />
-            {t('contact.form.error')}
+            {errorMessage || t('contact.form.error')}
           </>
         );
       default:
