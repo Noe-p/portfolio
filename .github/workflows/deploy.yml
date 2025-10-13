@@ -47,9 +47,9 @@ jobs:
 
       - name: Inject image tag into docker-compose.yml
         run: |
-          sed -i "s|\${GHCR_REGISTRY}|${{ env.GHCR_REGISTRY }}|g" docker-compose.yml
-          sed -i "s|\${OWNER_LC}|${{ env.OWNER_LC }}|g" docker-compose.yml
-          sed -i "s|\${SHA}|${{ env.SHORT_SHA }}|g" docker-compose.yml
+          sed -i "s|\${GHCR_REGISTRY}|${GHCR_REGISTRY}|g" docker-compose.yml
+          sed -i "s|\${OWNER_LC}|${OWNER_LC}|g" docker-compose.yml
+          sed -i "s|\${SHA}|${SHORT_SHA}|g" docker-compose.yml
 
       - name: Upload deploy compose file
         uses: actions/upload-artifact@v4
