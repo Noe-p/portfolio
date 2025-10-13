@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 const createFormSchema = (t: (key: string) => string) =>
   z.object({
@@ -46,6 +47,7 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
   const t = useTranslations('common');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const { trackContactForm, trackCustomEvent } = useAnalytics();
 
   const formSchema = createFormSchema(t);
   const form = useForm<FormData>({
@@ -63,6 +65,9 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
   const handleSubmit = async (data: FormData) => {
     setStatus('loading');
 
+    // Tracker le début de tentative d'envoi
+    trackCustomEvent('attempt', 'contact_form', 'form_submit_attempt');
+
     try {
       // Envoyer les données à l'API
       const response = await fetch('/api/contact', {
@@ -76,8 +81,14 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
       if (!response.ok) {
         // Récupérer le message d'erreur spécifique du serveur
         const errorData = await response.json();
+        // Tracker l'erreur de soumission
+        trackCustomEvent('error', 'contact_form', `api_error_${response.status}`);
         throw new Error(errorData.error || "Erreur lors de l'envoi du message");
       }
+
+      // Tracker le succès de l'envoi
+      trackContactForm('contact_form_success');
+      trackCustomEvent('success', 'contact_form', 'message_sent_successfully');
 
       // Callback personnalisé si fourni
       if (onSubmit) {
@@ -95,12 +106,21 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
     } catch (error) {
       console.error('Error sending message:', error);
 
+      // Tracker l'erreur générale
+      trackCustomEvent('error', 'contact_form', 'form_submission_failed');
+
       // Utiliser le message d'erreur du serveur
       let errorMessage = t('contact.form.error'); // Message par défaut
 
       if (error instanceof Error) {
         // Le message d'erreur contient déjà le message du serveur grâce au throw dans le !response.ok
         errorMessage = error.message;
+        // Tracker le type d'erreur spécifique
+        trackCustomEvent(
+          'error',
+          'contact_form',
+          `client_error: ${error.message.substring(0, 50)}`,
+        );
       }
 
       setErrorMessage(errorMessage);
@@ -203,6 +223,7 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
                     placeholder={t('contact.form.namePlaceholder')}
                     {...field}
                     disabled={status === 'loading'}
+                    onFocus={() => trackCustomEvent('focus', 'contact_form', 'name_field')}
                   />
                 </FormControl>
                 <FormMessage />
@@ -222,6 +243,7 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
                     placeholder={t('contact.form.emailPlaceholder')}
                     {...field}
                     disabled={status === 'loading'}
+                    onFocus={() => trackCustomEvent('focus', 'contact_form', 'email_field')}
                   />
                 </FormControl>
                 <FormMessage />
@@ -241,6 +263,7 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
                   placeholder={t('contact.form.subjectPlaceholder')}
                   {...field}
                   disabled={status === 'loading'}
+                  onFocus={() => trackCustomEvent('focus', 'contact_form', 'subject_field')}
                 />
               </FormControl>
               <FormMessage />
@@ -256,7 +279,18 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
             <FormItem style={{ position: 'absolute', left: '-9999px', opacity: 0 }}>
               <FormLabel>{'Website (ne pas remplir)'}</FormLabel>
               <FormControl>
-                <Input {...field} tabIndex={-1} autoComplete="off" />
+                <Input
+                  {...field}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  onChange={(e) => {
+                    field.onChange(e);
+                    // Si quelqu'un remplit le honeypot, c'est probablement un bot
+                    if (e.target.value.length > 0) {
+                      trackCustomEvent('spam_attempt', 'contact_form', 'honeypot_filled');
+                    }
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -275,6 +309,7 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
                   className="min-h-[120px]"
                   {...field}
                   disabled={status === 'loading'}
+                  onFocus={() => trackCustomEvent('focus', 'contact_form', 'message_field')}
                 />
               </FormControl>
               <FormMessage />
@@ -291,6 +326,11 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
               : 'opacity-100 '
           }`}
           disabled={isSubmitDisabled()}
+          onClick={() => {
+            if (!isSubmitDisabled()) {
+              trackCustomEvent('click', 'contact_form', 'submit_button');
+            }
+          }}
         >
           {getButtonContent()}
         </Button>
