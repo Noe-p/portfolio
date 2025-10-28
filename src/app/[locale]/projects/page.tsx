@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable indent */
+import StructuredData from '@/components/StructuredData';
 import { ProjectsPage } from '@/container/pages/ProjectsPage';
 import { getMessages, locales } from '@/i18n/config';
-import { defaultMetadata } from '@/services/metadata';
+import { generatePageMetadata } from '@/services/metadata';
 import { PageBaseProps } from '@/types';
 import { Metadata } from 'next';
 
@@ -16,24 +17,29 @@ export async function generateMetadata(props: PageBaseProps): Promise<Metadata> 
 
   if (!messages?.metas) {
     console.error(`Messages not found for locale: ${params.locale}`);
-    return defaultMetadata;
+    return generatePageMetadata(params.locale, 'Projets', 'Mes projets web', '/projets');
   }
 
   const t = messages.metas as any;
+  const path = params.locale === 'en' ? '/en/projects' : '/projets';
 
-  return {
-    ...defaultMetadata,
-    title: t.projects.title,
-    description: t.projects.description,
-    keywords: t.projects.keywords,
-    openGraph: {
-      ...defaultMetadata.openGraph,
-      title: t.projects.title,
-      description: t.projects.description,
-    },
-  };
+  return generatePageMetadata(
+    params.locale,
+    t.projects.title,
+    t.projects.description,
+    path,
+    t.projects.keywords,
+  );
 }
 
-export default function Page(): React.JSX.Element {
-  return <ProjectsPage />;
+export default async function Page(props: PageBaseProps): Promise<React.JSX.Element> {
+  const params = await props.params;
+  const pathname = params.locale === 'en' ? '/en/projects' : '/projets';
+
+  return (
+    <>
+      <StructuredData locale={params.locale} pathname={pathname} />
+      <ProjectsPage />
+    </>
+  );
 }

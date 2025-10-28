@@ -29,7 +29,7 @@
   "plugins": ["react", "@typescript-eslint", "deprecate", "no-loops"],
   "rules": {
     "quotes": "off",
-    "indent": [2, 2, { "SwitchCase": 1 }],
+    "indent": "off",
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/no-use-before-define": "off",
     "@typescript-eslint/no-empty-interface": 0,

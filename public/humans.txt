@@ -1,0 +1,19 @@
+/* TEAM */
+Developer: Noé Philippe
+Contact: contact [at] noe-philippe.fr
+Site: https://noe-philippe.fr
+Location: Pont-l'Abbé, Finistère, France
+
+/* SITE */
+Last update: 2025/10/28
+Language: Français / English
+Doctype: HTML5
+Standards: HTML5, CSS3, ES6+
+Components: Next.js 15, React 18, TypeScript 5
+Tools: VS Code, Git, Docker
+Hosting: Vercel / VPS
+
+/* THANKS */
+Font: Dela Gothic One, Monda (Google Fonts)
+Libraries: GSAP, Tailwind CSS, Radix UI
+Icons: Lucide React
