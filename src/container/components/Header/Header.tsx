@@ -26,14 +26,19 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
   const { trackButtonClick } = useAnalytics();
 
   const imageRef = useRef<HTMLDivElement>(null);
+  const noeRef = useRef<HTMLDivElement>(null);
   const philRef = useRef<HTMLDivElement>(null);
   const positionRef = useRef<HTMLDivElement>(null);
 
-  useParallax([
-    { ref: philRef, speed: -30 },
-    { ref: imageRef, speed: -50 },
-    { ref: positionRef, speed: -20, direction: 'horizontal' },
-  ]);
+  useParallax(
+    [
+      { ref: noeRef, speed: -100, direction: 'horizontal', easing: 'easeOutQuad' },
+      { ref: philRef, speed: 100, direction: 'horizontal', easing: 'easeOutQuad' },
+      { ref: imageRef, speed: -50 },
+      { ref: positionRef, speed: -20, direction: 'horizontal' },
+    ],
+    16,
+  );
 
   const handleClick = () => {
     trackButtonClick('see_more_about');
@@ -46,9 +51,11 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
   return (
     <Main className={className} id={NavKeys.HOME}>
       <Col className="items-center mt-25 md:mt-30 w-full">
-        <Title className="text-[100px] md:text-[180px] translate-x-5 md:translate-x-10 leading-none">
-          {'Noé'}
-        </Title>
+        <div ref={noeRef}>
+          <Title className="text-[100px] md:text-[180px] translate-x-5 md:translate-x-10 leading-none">
+            {'Noé'}
+          </Title>
+        </div>
         <div ref={philRef}>
           <Title
             className={cn(
