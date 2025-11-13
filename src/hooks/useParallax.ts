@@ -35,6 +35,11 @@ export interface ParallaxConfig {
    * @default 'linear'
    */
   easing?: EasingName;
+  /**
+   * marge (px) ajoutée au viewport pour détecter la visibilité
+   * @default 200
+   */
+  viewportMargin?: number;
 }
 
 /**
@@ -70,22 +75,19 @@ export function useParallax(configs: ParallaxConfig[], throttleMs = 50) {
         const el = cfg.ref.current;
         if (!el) return;
 
-        const { speed, direction = 'vertical', easing = 'linear' } = cfg;
+        const { speed, direction = 'vertical', easing = 'linear', viewportMargin = 200 } = cfg;
         // applique easing
         const eased = EASING_FUNCTIONS[easing](prog);
         const offset = speed * eased;
 
         const rect = el.getBoundingClientRect();
-        // si visible (même partiellement)
-        if (rect.bottom >= 0 && rect.top <= vh) {
+        // si visible (avec marge)
+        if (rect.bottom >= -viewportMargin && rect.top <= vh + viewportMargin) {
           if (direction === 'horizontal') {
             el.style.transform = `translateX(${offset}px)`;
           } else {
             el.style.transform = `translateY(${offset}px)`;
           }
-        } else {
-          // reset quand hors viewport
-          el.style.transform = 'translate(0, 0)';
         }
       });
     };
