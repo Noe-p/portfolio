@@ -121,9 +121,10 @@ export function Macaron({
         newSpeed += scrollDiff * 0.02;
         newSpeed = Math.max(Math.min(newSpeed, 10), -10);
       } else {
-        newSpeed *= 0.95;
-        if (Math.abs(newSpeed) < 0.2) {
-          newSpeed = newSpeed >= 0 ? 0.2 : -0.2;
+        // Freinage progressif jusqu'à une vitesse minimale lente
+        newSpeed *= 0.85;
+        if (Math.abs(newSpeed) < 0.1) {
+          newSpeed = newSpeed >= 0 ? 0.1 : -0.1;
         }
       }
 
