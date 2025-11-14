@@ -208,6 +208,7 @@ export function ScrollProjects(): JSX.Element {
                           : 'opacity-0 translate-y-2',
                         i % 2 === 0 ? 'right-10 left-auto' : 'right-auto left-10',
                       )}
+                      aria-hidden={project !== currentProject}
                     >
                       {tEnums(project.type)}
                     </ProjectType>
@@ -303,7 +304,9 @@ export function ScrollProjects(): JSX.Element {
                 aria-hidden={project !== currentProject}
               >
                 <H1 className="title md:text-6xl transition-opacity">{tProject(project.title)}</H1>
-                <ProjectType>{tEnums(project.type)}</ProjectType>
+                <ProjectType aria-hidden={project !== currentProject}>
+                  {tEnums(project.type)}
+                </ProjectType>
               </ProjectTitle>
             </div>
           ))}
