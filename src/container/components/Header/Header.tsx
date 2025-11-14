@@ -70,8 +70,8 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
       {/* Mobile */}
       <Col className="flex md:hidden mt-7 items-center px-5">
         <Col ref={positionRef} className="w-full items-center">
-          <P24 className="text-foreground normal-case">{t('position')}</P24>
-          <P14 className="text-foreground normal-case">{'Freelance'}</P14>
+          <P24 className="text-foreground/80 normal-case">{t('position')}</P24>
+          <P14 className="text-foreground/80 normal-case">{'Freelance'}</P14>
         </Col>
         <Row className="justify-left relative w-full mt-7">
           <div ref={imageRef} className="w-[200px] h-auto rounded overflow-hidden">

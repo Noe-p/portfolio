@@ -62,37 +62,48 @@ export function Footer({ className }: FooterProps): React.JSX.Element {
 
   return (
     <Main className={className} id={NavKeys.CONTACT}>
-      <Macaron enableScrollRotation={true} id="macaron-footer" />
+      <RowBetween className="flex-col md:flex-row w-full mt-15 md:gap-6">
+        {/* Macaron - Mobile only (au-dessus du Title + Form) */}
+        <div className="md:hidden mb-6 flex justify-center order-1 mb-20 md:mb-0">
+          <Macaron enableScrollRotation={true} id="macaron-footer" />
+        </div>
 
-      <RowBetween className="flex-col md:flex-row w-full mt-15">
-        {/* Social Links */}
-        <Col className="order-2 md:order-1 justify-end mt-25 md:mt-0">
-          <Col className="flex-row md:flex-col justify-between md:justify-start md:gap-3 ">
-            {socialLinks.map(({ href, labelKey, analyticsLabel }) => (
-              <a
-                key={href}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full block group"
-                onClick={() => handleSocialLinkClick(analyticsLabel)}
-              >
-                <P16 className="group-hover:text-primary cursor-pointer text-foreground transition-all duration-300">
-                  {t(labelKey)}
-                </P16>
-              </a>
-            ))}
-          </Col>
-          <div className="mt-4">
-            <Button onClick={handleDownloadCV} className="w-full md:w-fit" variant="outline">
-              <Download className="mr-2 w-4 h-4" />
-              {t('generics.downloadCV')}
-            </Button>
+        {/* Social Links + Macaron */}
+        <div className="order-3 md:order-1 mt-25 md:mt-0 flex flex-col md:justify-between md:self-stretch">
+          {/* Macaron - Desktop only (en haut) */}
+          <div className="hidden md:block">
+            <Macaron enableScrollRotation={true} id="macaron-footer" />
           </div>
-        </Col>
+
+          {/* Social Links - Desktop (en bas) */}
+          <div>
+            <Col className="flex-row md:flex-col justify-between md:justify-start md:gap-3 ">
+              {socialLinks.map(({ href, labelKey, analyticsLabel }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full block group"
+                  onClick={() => handleSocialLinkClick(analyticsLabel)}
+                >
+                  <P16 className="group-hover:text-primary cursor-pointer text-foreground transition-all duration-300">
+                    {t(labelKey)}
+                  </P16>
+                </a>
+              ))}
+            </Col>
+            <div className="mt-4">
+              <Button onClick={handleDownloadCV} className="w-full md:w-fit" variant="outline">
+                <Download className="mr-2 w-4 h-4" />
+                {t('generics.downloadCV')}
+              </Button>
+            </div>
+          </div>
+        </div>
 
         {/* Title + Contact Form */}
-        <Col className="md:w-2/3 order-1 md:order-2">
+        <Col className="md:w-2/3 order-2 md:order-2">
           <H2 className="md:text-3xl text-2xl leading-none -translate-y-2">{t('footer.title')}</H2>
 
           {/* Contact Form */}
