@@ -200,18 +200,16 @@ export function ScrollProjects(): JSX.Element {
                 >
                   <H1 className={cn('title text-3xl  transition-all duration-300 relative')}>
                     {tProject(project.title)}
-                    <ProjectType
-                      className={cn(
-                        'absolute -bottom-8 z-10 normal-case transition-all delay-200 duration-500 ease-out',
-                        project === currentProject
-                          ? 'opacity-100 translate-y-0'
-                          : 'opacity-0 translate-y-2',
-                        i % 2 === 0 ? 'right-10 left-auto' : 'right-auto left-10',
-                      )}
-                      aria-hidden={project !== currentProject}
-                    >
-                      {tEnums(project.type)}
-                    </ProjectType>
+                    {project === currentProject && (
+                      <ProjectType
+                        className={cn(
+                          'absolute -bottom-8 z-10 normal-case transition-all delay-200 duration-500 ease-out opacity-100 translate-y-0',
+                          i % 2 === 0 ? 'right-10 left-auto' : 'right-auto left-10',
+                        )}
+                      >
+                        {tEnums(project.type)}
+                      </ProjectType>
+                    )}
                   </H1>
                 </ProjectTitle>
               </div>
@@ -304,9 +302,7 @@ export function ScrollProjects(): JSX.Element {
                 aria-hidden={project !== currentProject}
               >
                 <H1 className="title md:text-6xl transition-opacity">{tProject(project.title)}</H1>
-                <ProjectType aria-hidden={project !== currentProject}>
-                  {tEnums(project.type)}
-                </ProjectType>
+                {project === currentProject && <ProjectType>{tEnums(project.type)}</ProjectType>}
               </ProjectTitle>
             </div>
           ))}
