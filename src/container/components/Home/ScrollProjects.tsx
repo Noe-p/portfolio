@@ -196,6 +196,7 @@ export function ScrollProjects(): JSX.Element {
                   style={{
                     opacity: getOpacityByDistance(i),
                   }}
+                  aria-hidden={project !== currentProject}
                 >
                   <H1 className={cn('title text-3xl  transition-all duration-300 relative')}>
                     {tProject(project.title)}
@@ -299,6 +300,7 @@ export function ScrollProjects(): JSX.Element {
                 style={{
                   opacity: getOpacityByDistance(i),
                 }}
+                aria-hidden={project !== currentProject}
               >
                 <H1 className="title md:text-6xl transition-opacity">{tProject(project.title)}</H1>
                 <ProjectType>{tEnums(project.type)}</ProjectType>
