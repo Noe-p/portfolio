@@ -92,7 +92,7 @@
       "part3": {
         "part": "experience",
         "title": "3 years at Bob le Développeur",
-        "text": "I spent three years at Bob le Développeur, a web agency in Paris, working as a fullstack developer during my work-study program. I built custom applications using modern stacks like Next.js and Nest.js, and I got involved in the whole project process: client calls, need assessments, sprint planning… Working in a small team taught me to take on different roles and to always keep the product vision in mind."
+        "text": "I spent three years at Bob Le Développeur, a Parisian web agency where I evolved as a fullstack developer. I designed custom applications with modern stacks like Next.js and Nest.js, while participating in project management: client exchanges, needs tracking, sprint organization… <br></br><br></br>In parallel, I carried out freelance missions that allowed me to work independently, quickly adapt to different clients' needs, and strengthen my product vision."
       },
       "part4": {
         "part": "passions",
@@ -130,7 +130,7 @@
         "company": "Bob le Développeur",
         "location": "Paris, France",
         "year": "2021 - 2024",
-        "description": "Fullstack Developer (apprenticeship)",
+        "description": "Fullstack Developer",
         "url": "https://www.bob-le-developpeur.com/"
       },
       "item2": {
@@ -157,43 +157,6 @@
     "ABOUT": "About me",
     "PROJECTS": "Discover my projects",
     "MUSIC": "Listen to my music"
-  },
-  "funFacts": {
-    "fact1": "Wombats poop cubes. Yep, cubes.",
-    "fact2": "Your DNA is 60% identical to a banana’s.",
-    "fact3": "It rains metal on some planets.",
-    "fact4": "Giraffes don’t make a sound, they have no vocal cords.",
-    "fact5": "Trees talk. Slowly, underground.",
-    "fact6": "Chocolate was currency for the Aztecs.",
-    "fact7": "The Moon drifts away. 3.8 cm. Every year.",
-    "fact8": "Turtles can breathe... through their butts.",
-    "fact9": "A day on Venus is longer than a year.",
-    "fact10": "Koalas have fingerprints almost identical to humans.",
-    "fact11": "A minute of silence often lasts 61 seconds.",
-    "fact12": "The brain weighs 2% of your body, but uses 20% of its energy.",
-    "fact13": "Honey never expires. Seriously. Even after 3,000 years.",
-    "fact14": "Clouds can weigh 500 tons. And still float like nothing.",
-    "fact15": "The word “alphabet” comes from Alpha and Beta.",
-    "fact16": "Octopuses have three hearts.",
-    "fact17": "Bananas are berries. Strawberries aren’t.",
-    "fact18": "Sharks existed before trees.",
-    "fact19": "There’s a species of jellyfish that can live forever.",
-    "fact20": "Humans glow in the dark, but the light is too weak to see.",
-    "fact21": "Sloths can hold their breath longer than dolphins.",
-    "fact22": "Rain has a smell. It’s called petrichor.",
-    "fact23": "Space smells like seared steak.",
-    "fact24": "Cows have best friends and get stressed when separated.",
-    "fact25": "Water can boil and freeze at the same time.",
-    "fact26": "A teaspoon of neutron star would weigh six billion tons.",
-    "fact27": "Some turtles can live without oxygen for months.",
-    "fact28": "There are more stars in the universe than grains of sand on Earth.",
-    "fact29": "The Eiffel Tower grows taller in summer.",
-    "fact30": "Birds are the closest living relatives of dinosaurs."
-  },
-  "cookieConsent": {
-    "description": "I use cookies to analyze traffic and improve your experience. This data is anonymized and does not personally identify you.",
-    "accept": "Accept",
-    "decline": "Decline"
   },
   "footer": {
     "title": "Thinking about building something together? Don't hesitate to get in touch!"

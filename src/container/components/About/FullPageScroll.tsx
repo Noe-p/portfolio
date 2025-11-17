@@ -33,14 +33,18 @@ export function FullPageScroll() {
       title: t('about.description.part3.part'),
       content: {
         title: t('about.description.part3.title'),
-        text: t('about.description.part3.text'),
+        text: t.rich('about.description.part3.text', {
+          br: () => <br />,
+        }),
       },
     },
     {
       title: t('about.description.part4.part'),
       content: {
         title: t('about.description.part4.title'),
-        text: t('about.description.part4.text'),
+        text: t.rich('about.description.part4.text', {
+          br: () => <br />,
+        }),
       },
     },
   ];
