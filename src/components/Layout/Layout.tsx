@@ -84,7 +84,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
   return (
     <>
       <div
-        className="relative px-5 md:px-40 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove"
+        className="relative px-5 md:px-40 2xl:px-80 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove"
         style={{ '--x': '30%', '--y': '30%' } as React.CSSProperties}
       >
         <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
