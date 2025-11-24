@@ -166,7 +166,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
         <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
           <div
             ref={haloRef}
-            className="gradient-halo fixed w-[120vw] h-[120vw] md:w-[150vw] md:h-[150vw] rounded-full blur-3xl opacity-10 md:opacity-30 will-change-transform bg-[radial-gradient(circle,rgba(136,58,255,0.7)_0%,transparent_70%)]"
+            className="gradient-halo fixed w-[120vw] h-[120vw] md:w-[150vw] md:h-[150vw] rounded-full blur-3xl opacity-30 md:opacity-20 will-change-transform bg-[radial-gradient(circle,rgba(136,58,255,0.7)_0%,transparent_70%)]"
             style={
               {
                 left: 0,
