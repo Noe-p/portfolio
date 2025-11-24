@@ -171,7 +171,7 @@ const Main = tw.div`
   items-center
   w-full
   flex-col
-  mb-5 md:mb-10
+  pb-5 md:pb-10
   mt-10
 `;
 

@@ -57,7 +57,19 @@ export function Layout(props: LayoutProps): React.JSX.Element {
   const { children, className } = props;
   const { setIsTransitionStartOpen } = useAppContext();
   const [isVisible, setIsVisible] = useState(true);
+  const haloRef = useRef<HTMLDivElement>(null);
+  const mousePos = useRef({ x: 0, y: 0 });
+  const haloPos = useRef({ x: 0, y: 0 });
+  const animationFrameId = useRef<number>();
   const loaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Initialize positions on client side
+    if (typeof window !== 'undefined') {
+      mousePos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      haloPos.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    }
+  }, []);
 
   useEffect(() => {
     const animateOut = async () => {
@@ -81,21 +93,104 @@ export function Layout(props: LayoutProps): React.JSX.Element {
     }, 300);
   }, []);
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        mousePos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+    };
+
+    // Desktop: track mouse
+    if (window.innerWidth >= 768) {
+      window.addEventListener('mousemove', handleMouseMove);
+    } else {
+      // Mobile: track touch
+      window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const lerp = (start: number, end: number, factor: number) => {
+      return start + (end - start) * factor;
+    };
+
+    const isMobile = window.innerWidth < 768;
+    let time = 0;
+
+    const animate = () => {
+      if (isMobile) {
+        // Mobile: automatic circular motion with scroll offset
+        time += 0.005;
+        const scrollY = window.scrollY;
+        const viewportHeight = window.innerHeight;
+
+        // Create a smooth circular motion
+        const centerX = window.innerWidth / 2;
+        const centerY = scrollY + viewportHeight / 2;
+        const radius = Math.min(window.innerWidth, viewportHeight) * 0.3;
+
+        mousePos.current.x = centerX + Math.cos(time) * radius;
+        mousePos.current.y = centerY + Math.sin(time) * radius;
+      }
+
+      // Smooth interpolation (lerp) pour un mouvement fluide
+      haloPos.current.x = lerp(haloPos.current.x, mousePos.current.x, isMobile ? 0.05 : 0.03);
+      haloPos.current.y = lerp(haloPos.current.y, mousePos.current.y, isMobile ? 0.05 : 0.03);
+
+      // Calculate velocity based on distance
+      const dx = mousePos.current.x - haloPos.current.x;
+      const dy = mousePos.current.y - haloPos.current.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      // Deformation based on velocity
+      const velocity = Math.min(distance / 100, 1);
+      const scaleX = 1 + velocity * 0.2;
+      const scaleY = 1 - velocity * 0.1;
+
+      if (haloRef.current) {
+        haloRef.current.style.transform = `translate(${haloPos.current.x}px, ${haloPos.current.y}px) translate(-50%, -50%) scaleX(${scaleX}) scaleY(${scaleY})`;
+      }
+
+      animationFrameId.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameId.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+    };
+  }, []);
+
   return (
     <>
-      <div
-        className="relative px-5 md:px-40 2xl:px-80 overflow-hidden min-h-screen w-full bg-[#1C1C1C] animate-gradientMove"
-        style={{ '--x': '30%', '--y': '30%' } as React.CSSProperties}
-      >
-        <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0">
+      <div className="relative px-5 md:px-40 2xl:px-80 min-h-screen w-full bg-background">
+        <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
           <div
-            className={cn(
-              'absolute w-[150vw] h-[150vw] rounded-full blur-3xl opacity-30 animate-floatingGradient',
-              'md:bg-[radial-gradient(circle,rgba(136,58,255,0.8)_0%,transparent_70%)]',
-              'bg-[radial-gradient(circle,rgba(136,58,255,1)_0%,transparent_100%)]',
-            )}
+            ref={haloRef}
+            className="gradient-halo fixed w-[120vw] h-[120vw] rounded-full blur-3xl opacity-30 will-change-transform bg-[radial-gradient(circle,rgba(136,58,255,0.7)_0%,transparent_70%)]"
+            style={
+              {
+                left: 0,
+                top: 0,
+                transform: 'translate(50vw, 50vh) translate(-50%, -50%)',
+              } as React.CSSProperties
+            }
           />
         </div>
+
         {isVisible && (
           <LoaderPage ref={loaderRef}>
             <TransitionPage isEnd={true} />
@@ -116,7 +211,7 @@ const Page = tw.div`
   flex-col
   items-center
   min-h-screen
-  mb-5 md:mb-20
+  pb-5 md:pb-20
 `;
 
 const LoaderPage = tw.div`
