@@ -98,23 +98,13 @@ export function Layout(props: LayoutProps): React.JSX.Element {
       mousePos.current = { x: e.clientX, y: e.clientY };
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        mousePos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }
-    };
-
-    // Desktop: track mouse
+    // Only on desktop
     if (window.innerWidth >= 768) {
       window.addEventListener('mousemove', handleMouseMove);
-    } else {
-      // Mobile: track touch
-      window.addEventListener('touchmove', handleTouchMove, { passive: true });
     }
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
     };
   }, []);
 
@@ -130,23 +120,19 @@ export function Layout(props: LayoutProps): React.JSX.Element {
 
     const animate = () => {
       if (isMobile) {
-        // Mobile: automatic circular motion with scroll offset
-        time += 0.005;
-        const scrollY = window.scrollY;
-        const viewportHeight = window.innerHeight;
-
-        // Create a smooth circular motion
+        // Mobile: automatic circular motion
+        time += 0.003;
         const centerX = window.innerWidth / 2;
-        const centerY = scrollY + viewportHeight / 2;
-        const radius = Math.min(window.innerWidth, viewportHeight) * 0.3;
+        const centerY = window.innerHeight / 2;
+        const radius = Math.min(window.innerWidth, window.innerHeight) * 0.25;
 
         mousePos.current.x = centerX + Math.cos(time) * radius;
         mousePos.current.y = centerY + Math.sin(time) * radius;
       }
 
       // Smooth interpolation (lerp) pour un mouvement fluide
-      haloPos.current.x = lerp(haloPos.current.x, mousePos.current.x, isMobile ? 0.05 : 0.03);
-      haloPos.current.y = lerp(haloPos.current.y, mousePos.current.y, isMobile ? 0.05 : 0.03);
+      haloPos.current.x = lerp(haloPos.current.x, mousePos.current.x, isMobile ? 0.05 : 0.08);
+      haloPos.current.y = lerp(haloPos.current.y, mousePos.current.y, isMobile ? 0.05 : 0.08);
 
       // Calculate velocity based on distance
       const dx = mousePos.current.x - haloPos.current.x;
@@ -180,7 +166,7 @@ export function Layout(props: LayoutProps): React.JSX.Element {
         <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
           <div
             ref={haloRef}
-            className="gradient-halo fixed w-[120vw] h-[120vw] rounded-full blur-3xl opacity-30 will-change-transform bg-[radial-gradient(circle,rgba(136,58,255,0.7)_0%,transparent_70%)]"
+            className="gradient-halo fixed w-[120vw] h-[120vw] md:w-[150vw] md:h-[150vw] rounded-full blur-3xl opacity-10 md:opacity-30 will-change-transform bg-[radial-gradient(circle,rgba(136,58,255,0.7)_0%,transparent_70%)]"
             style={
               {
                 left: 0,
