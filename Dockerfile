@@ -38,4 +38,4 @@ COPY --from=builder /app/.next/static ./standalone/.next/static
 
 EXPOSE 3000
 
-CMD ["node", "standalone/server.js"]
+CMD ["node", "standalone/server.js", "--hostname", "0.0.0.0"]
