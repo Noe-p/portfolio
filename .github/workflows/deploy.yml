@@ -8,11 +8,13 @@ permissions:
   contents: read
   packages: write
 
+env:
+  GHCR_REGISTRY: ghcr.io
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      GHCR_REGISTRY: ghcr.io
       OWNER: ${{ github.repository_owner }}
       SHA: ${{ github.sha }}
     steps:
@@ -36,44 +38,58 @@ jobs:
 
       - name: Generate .env.production file
         run: |
-          echo "NEXT_PUBLIC_APP_URL=${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" >> .env.production
+          # create file (overwrite) then append keys
+          echo "NEXT_PUBLIC_APP_URL=${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" > .env.production
           echo "NEXT_PUBLIC_GA_ID=${{ secrets.ENV_NEXT_PUBLIC_GA_ID }}" >> .env.production
           echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env.production
 
-      - name: Upload .env.production artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: deploy-env
-          path: .env.production
+      - name: Check .env.production
+        run: |
+          echo "---- .env.production ----"
+          cat .env.production || true
+          echo "-------------------------"
 
       - name: Build & push image with short SHA tag
         run: |
           docker build -t $GHCR_REGISTRY/${OWNER_LC}/portfolio:${SHORT_SHA} .
           docker push $GHCR_REGISTRY/${OWNER_LC}/portfolio:${SHORT_SHA}
+        env:
+          OWNER_LC: ${{ env.OWNER_LC }}
+          SHORT_SHA: ${{ env.SHORT_SHA }}
 
       - name: Inject image tag into docker-compose.yml
         run: |
           sed -i "s|\${GHCR_REGISTRY}|${GHCR_REGISTRY}|g" docker-compose.yml
           sed -i "s|\${OWNER_LC}|${OWNER_LC}|g" docker-compose.yml
           sed -i "s|\${SHA}|${SHORT_SHA}|g" docker-compose.yml
+        env:
+          GHCR_REGISTRY: ${{ env.GHCR_REGISTRY }}
+          OWNER_LC: ${{ env.OWNER_LC }}
+          SHORT_SHA: ${{ env.SHORT_SHA }}
 
-      - name: Upload deploy compose file
+      - name: Upload docker-compose.yml artifact
         uses: actions/upload-artifact@v4
         with:
           name: deploy-compose
           path: docker-compose.yml
 
+      - name: Upload .env.production artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-env
+          path: ./.env.production
+
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Download deploy compose file
+      - name: Download deploy-compose file
         uses: actions/download-artifact@v4
         with:
           name: deploy-compose
           path: .
 
-      - name: Download env artifact
+      - name: Download deploy-env file
         uses: actions/download-artifact@v4
         with:
           name: deploy-env
@@ -88,26 +104,19 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             mkdir -p ~/portfolio
+            chmod 700 ~/portfolio
 
-      - name: Copy .env.production to server
+      - name: Copy Compose file + .env to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: '.env.production'
-          target: '~/portfolio/.env.production'
-
-      - name: Copy Compose file to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          source: 'docker-compose.yml'
-          target: '~/portfolio/docker-compose.yml'
+          source: |
+            docker-compose.yml
+            .env.production
+          target: '~/portfolio/'
           strip_components: 0
 
       - name: Deploy via SSH (avec login GHCR)
@@ -119,6 +128,10 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ~/portfolio
+            # login to GHCR with CR_PAT secret
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-            docker compose pull
+            # pull new image and start
+            docker compose pull || true
             docker compose up -d --remove-orphans
+            # cleanup old images (optional)
+            docker image prune -f || true
