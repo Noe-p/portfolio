@@ -18,13 +18,16 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set lowercase owner
-        run: echo "OWNER_LC=${OWNER,,}" >> $GITHUB_ENV
+        run: |
+          echo "OWNER_LC=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
       - name: Set short SHA
-        run: echo "SHORT_SHA=${SHA::8}" >> $GITHUB_ENV
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -33,16 +36,44 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Generate .env.production
+      - name: Generate .env.production (create even if secrets missing)
         run: |
-          echo "NEXT_PUBLIC_APP_URL=${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" >> .env.production
-          echo "NEXT_PUBLIC_GA_ID=${{ secrets.ENV_NEXT_PUBLIC_GA_ID }}" >> .env.production
-          echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env.production
+          echo "Generating .env.production (secrets will NOT be printed)"
+          # start empty
+          : > .env.production
+
+          if [ -n "${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" ]; then
+            echo "NEXT_PUBLIC_APP_URL=${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" >> .env.production
+          else
+            echo "NEXT_PUBLIC_APP_URL=MISSING_SECRET_ENV_NEXT_PUBLIC_APP_URL" >> .env.production
+          fi
+
+          if [ -n "${{ secrets.ENV_NEXT_PUBLIC_GA_ID }}" ]; then
+            echo "NEXT_PUBLIC_GA_ID=${{ secrets.ENV_NEXT_PUBLIC_GA_ID }}" >> .env.production
+          else
+            echo "NEXT_PUBLIC_GA_ID=MISSING_SECRET_ENV_NEXT_PUBLIC_GA_ID" >> .env.production
+          fi
+
+          if [ -n "${{ secrets.RESEND_API_KEY }}" ]; then
+            echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env.production
+          else
+            echo "RESEND_API_KEY=MISSING_SECRET_RESEND_API_KEY" >> .env.production
+          fi
+
+      - name: Check env file presence & status (no secret values printed)
+        run: |
+          ls -l .env.production || (echo ".env.production missing" && exit 1)
+          echo "Status:"
+          grep -E "MISSING_SECRET|MISSING" .env.production >/dev/null && echo "One or more keys are placeholders (missing secrets)" || echo "All keys set"
 
       - name: Build & push image
+        env:
+          GHCR_REGISTRY: ${{ env.GHCR_REGISTRY }}
+          OWNER_LC: ${{ env.OWNER_LC }}
+          SHORT_SHA: ${{ env.SHORT_SHA }}
         run: |
-          docker build -t $GHCR_REGISTRY/${OWNER_LC}/portfolio:${SHORT_SHA} .
-          docker push $GHCR_REGISTRY/${OWNER_LC}/portfolio:${SHORT_SHA}
+          docker build -t ${GHCR_REGISTRY}/${OWNER_LC}/portfolio:${SHORT_SHA} .
+          docker push ${GHCR_REGISTRY}/${OWNER_LC}/portfolio:${SHORT_SHA}
 
       - name: Inject image tag into docker-compose.yml
         run: |
@@ -71,11 +102,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: deploy-compose
+          # path defaults to working-directory; artifact will restore docker-compose.yml
 
       - name: Download env
         uses: actions/download-artifact@v4
         with:
           name: deploy-env
+          # .env.production will be restored to working-directory
 
       - name: Ensure remote folder exists
         uses: appleboy/ssh-action@v0.1.7
