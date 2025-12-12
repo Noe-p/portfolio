@@ -27,7 +27,8 @@ jobs:
       - name: Set short SHA
         env:
           GITHUB_SHA: ${{ github.sha }}
-        run: echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
+        run: |
+          echo "SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -36,35 +37,34 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Generate .env.production (create even if secrets missing)
+      - name: Generate .env.production (always create a file)
         run: |
-          echo "Generating .env.production (secrets will NOT be printed)"
-          # start empty
+          echo "Creating .env.production (placeholders used if secrets missing)"
           : > .env.production
 
           if [ -n "${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" ]; then
             echo "NEXT_PUBLIC_APP_URL=${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" >> .env.production
           else
-            echo "NEXT_PUBLIC_APP_URL=MISSING_SECRET_ENV_NEXT_PUBLIC_APP_URL" >> .env.production
+            echo "NEXT_PUBLIC_APP_URL=__MISSING_ENV_NEXT_PUBLIC_APP_URL__" >> .env.production
           fi
 
           if [ -n "${{ secrets.ENV_NEXT_PUBLIC_GA_ID }}" ]; then
             echo "NEXT_PUBLIC_GA_ID=${{ secrets.ENV_NEXT_PUBLIC_GA_ID }}" >> .env.production
           else
-            echo "NEXT_PUBLIC_GA_ID=MISSING_SECRET_ENV_NEXT_PUBLIC_GA_ID" >> .env.production
+            echo "NEXT_PUBLIC_GA_ID=__MISSING_ENV_NEXT_PUBLIC_GA_ID__" >> .env.production
           fi
 
           if [ -n "${{ secrets.RESEND_API_KEY }}" ]; then
             echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env.production
           else
-            echo "RESEND_API_KEY=MISSING_SECRET_RESEND_API_KEY" >> .env.production
+            echo "RESEND_API_KEY=__MISSING_RESEND_API_KEY__" >> .env.production
           fi
 
-      - name: Check env file presence & status (no secret values printed)
+      - name: Verify .env.production exists (debug)
         run: |
-          ls -l .env.production || (echo ".env.production missing" && exit 1)
-          echo "Status:"
-          grep -E "MISSING_SECRET|MISSING" .env.production >/dev/null && echo "One or more keys are placeholders (missing secrets)" || echo "All keys set"
+          ls -l .env.production
+          echo "Contents (placeholders masked):"
+          sed -n '1,200p' .env.production | sed -E 's/(NEXT_PUBLIC_APP_URL|NEXT_PUBLIC_GA_ID|RESEND_API_KEY)=.*/\1=***masked***/'
 
       - name: Build & push image
         env:
@@ -80,6 +80,8 @@ jobs:
           sed -i "s|\${GHCR_REGISTRY}|${GHCR_REGISTRY}|g" docker-compose.yml
           sed -i "s|\${OWNER_LC}|${OWNER_LC}|g" docker-compose.yml
           sed -i "s|\${SHA}|${SHORT_SHA}|g" docker-compose.yml
+          echo "docker-compose.yml modified:"
+          sed -n '1,200p' docker-compose.yml
 
       - name: Upload compose
         uses: actions/upload-artifact@v4
@@ -102,13 +104,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: deploy-compose
-          # path defaults to working-directory; artifact will restore docker-compose.yml
 
       - name: Download env
         uses: actions/download-artifact@v4
         with:
           name: deploy-env
-          # .env.production will be restored to working-directory
+
+      - name: Show downloaded files (debug)
+        run: |
+          echo "Files in workspace:"
+          ls -la
 
       - name: Ensure remote folder exists
         uses: appleboy/ssh-action@v0.1.7
