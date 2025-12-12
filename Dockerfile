@@ -28,11 +28,12 @@ USER nextjs
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV HOST=0.0.0.0
 
 # Copy standalone build
 COPY --from=builder /app/.next/standalone ./standalone
 COPY --from=builder /app/public ./standalone/public
 COPY --from=builder /app/.next/static ./standalone/.next/static
 
-# Bind uniquement en local
-CMD ["node", "standalone/server.js", "--hostname", "127.0.0.1"]
+# IMPORTANT : écouter sur toutes les IP dans le container
+CMD ["node", "standalone/server.js"]
