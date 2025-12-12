@@ -40,6 +40,12 @@ jobs:
           echo "NEXT_PUBLIC_GA_ID=${{ secrets.ENV_NEXT_PUBLIC_GA_ID }}" >> .env.production
           echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env.production
 
+      - name: Upload .env.production artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-env
+          path: .env.production
+
       - name: Build & push image with short SHA tag
         run: |
           docker build -t $GHCR_REGISTRY/${OWNER_LC}/portfolio:${SHORT_SHA} .
@@ -65,6 +71,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: deploy-compose
+          path: .
+
+      - name: Download env artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: deploy-env
+          path: .
 
       - name: Ensure remote directory exists
         uses: appleboy/ssh-action@v0.1.7
@@ -76,6 +89,16 @@ jobs:
           script: |
             mkdir -p ~/portfolio
 
+      - name: Copy .env.production to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: '.env.production'
+          target: '~/portfolio/.env.production'
+
       - name: Copy Compose file to server
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -84,7 +107,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: 'docker-compose.yml'
-          target: '~/portfolio/'
+          target: '~/portfolio/docker-compose.yml'
           strip_components: 0
 
       - name: Deploy via SSH (avec login GHCR)

@@ -7,11 +7,7 @@ services:
     ports:
       - '3003:3000'
     environment:
-      NODE_ENV: production
-      HOST: 127.0.0.1
-      NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
-      NEXT_PUBLIC_GA_ID: ${NEXT_PUBLIC_GA_ID}
-      RESEND_API_KEY: ${RESEND_API_KEY}
-
-    env_file:
-      - .env
+      - NODE_ENV=production
+      - HOST=127.0.0.1
+    volumes:
+      - './.env.production:/app/standalone/.env:ro'

@@ -21,26 +21,23 @@ RUN npm run build
 FROM node:18-slim AS runner
 WORKDIR /app
 
-# create non-root user (root for now)
-RUN useradd -m -u 1001 nextjs
-
-# Copy standalone build as root, then fix perms
+# Copy standalone build as root so we can set ownership
 COPY --from=builder /app/.next/standalone ./standalone
 COPY --from=builder /app/public ./standalone/public
 COPY --from=builder /app/.next/static ./standalone/.next/static
 
-# ensure dir exists and owned by nextjs
-RUN mkdir -p /app/standalone/.next/cache \
-    && chown -R nextjs:nextjs /app/standalone \
-    && chmod -R u=rwX,go=rX /app/standalone
+# Create non-root user and fix ownership & cache dir
+RUN useradd -m nextjs \
+ && mkdir -p /app/standalone/.next/cache \
+ && chown -R nextjs:nextjs /app/standalone
 
-# switch to non-root
 USER nextjs
+WORKDIR /app/standalone
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV HOST=0.0.0.0
+ENV HOST=127.0.0.1
 
-CMD ["node", "standalone/server.js"]
-
+# Start server listening only on localhost inside the container
+CMD ["node", "server.js", "--hostname", "127.0.0.1"]
