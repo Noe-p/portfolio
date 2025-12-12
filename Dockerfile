@@ -21,8 +21,20 @@ RUN npm run build
 FROM node:18-slim AS runner
 WORKDIR /app
 
-# Non-root user
-RUN useradd -m nextjs
+# create non-root user (root for now)
+RUN useradd -m -u 1001 nextjs
+
+# Copy standalone build as root, then fix perms
+COPY --from=builder /app/.next/standalone ./standalone
+COPY --from=builder /app/public ./standalone/public
+COPY --from=builder /app/.next/static ./standalone/.next/static
+
+# ensure dir exists and owned by nextjs
+RUN mkdir -p /app/standalone/.next/cache \
+    && chown -R nextjs:nextjs /app/standalone \
+    && chmod -R u=rwX,go=rX /app/standalone
+
+# switch to non-root
 USER nextjs
 
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -30,10 +42,5 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOST=0.0.0.0
 
-# Copy standalone build
-COPY --from=builder /app/.next/standalone ./standalone
-COPY --from=builder /app/public ./standalone/public
-COPY --from=builder /app/.next/static ./standalone/.next/static
-
-# IMPORTANT : écouter sur toutes les IP dans le container
 CMD ["node", "standalone/server.js"]
+
