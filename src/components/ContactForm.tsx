@@ -70,10 +70,22 @@ export function ContactForm({ onSubmit, className }: ContactFormProps) {
 
     try {
       // Envoyer les données à l'API
+      const tokenResponse = await fetch('/api/get-token', {
+        method: 'POST',
+      });
+
+      if (!tokenResponse.ok) {
+        throw new Error('Impossible de sécuriser la requête');
+      }
+
+      const { token } = await tokenResponse.json();
+
+      // 2. Envoyer les données à l'API avec le token
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
       });

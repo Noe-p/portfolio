@@ -34,10 +34,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.CR_PAT }}
 
-      - name: Generate .env.production file
+      - name: Generate .env file
         run: |
-          echo "NEXT_PUBLIC_APP_URL=${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" >> .env.production
-          echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env.production
+          echo "NEXT_PUBLIC_APP_URL=${{ secrets.ENV_NEXT_PUBLIC_APP_URL }}" >> .env
+          echo "RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}" >> .env
+          echo "FRONT_TOKEN_SECRET=${{ secrets.FRONT_TOKEN_SECRET }}" >> .env
 
       - name: Build & push image with short SHA tag
         run: |
