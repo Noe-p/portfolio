@@ -9,11 +9,18 @@ RUN bun install --frozen-lockfile
 FROM node:18-bullseye AS builder
 WORKDIR /app
 
+ARG NEXT_PUBLIC_APP_URL
+ARG RESEND_API_KEY
+ARG FRONT_TOKEN_SECRET
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+ENV RESEND_API_KEY=${RESEND_API_KEY}
+ENV FRONT_TOKEN_SECRET=${FRONT_TOKEN_SECRET}
 
 RUN npm run build
 
