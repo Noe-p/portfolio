@@ -130,14 +130,28 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
 
 interface HeaderContentProps {
   onClick: () => void;
-  t: (key: string) => string;
+  t: ReturnType<typeof useTranslations>;
 }
 
 function HeaderContent({ onClick, t }: HeaderContentProps) {
   return (
     <Col>
-      <P16 className="text-foreground md:w-70 mt-4">{t('about.resume')}</P16>
-      <Button onClick={onClick} className="w-fit mt-2" variant="outline">
+      <P16 className="text-foreground md:w-70 mt-4">
+        {t.rich('about.resume', {
+          br: () => <br />,
+          txStudio: (chunks) => (
+            <a
+              href="https://www.tx-studio.com/fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:opacity-90 hover:underline transition-all duration-200"
+            >
+              {chunks}
+            </a>
+          ),
+        })}
+      </P16>
+      <Button onClick={onClick} className="w-fit mt-4" variant="outline">
         {t('generics.seeMore')}
       </Button>
     </Col>

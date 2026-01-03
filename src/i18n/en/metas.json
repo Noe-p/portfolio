@@ -1,17 +1,17 @@
 {
   "home": {
-    "title": "Web Developer in Pont-l’Abbé — Noé Philippe",
-    "description": "Web developer in Pont-l’Abbé (Pays Bigouden, Finistère). I build fast, SEO-friendly and accessible showcase sites, e-commerce stores and web applications. Available locally (Pont-l’Abbé, Quimper, Pays Bigouden) or remote. Free quote.",
-    "keywords": "web developer Pont l'Abbé, web developer Pont-l’Abbé, web Pont-l'Abbé, fullstack developer Quimper, website creation Pont-l’Abbé, Next.js, SEO, showcase website, e-commerce, web application, maintenance"
+    "title": "Fullstack Developer in Pont-l'Abbé — Noé Philippe",
+    "description": "Fullstack developer at TX Studio, based in Pont-l'Abbé. I build modern, performant and accessible showcase sites, e-commerce stores and web applications. Specialized in Next.js and fullstack development.",
+    "keywords": "fullstack developer Pont-l'Abbé, web developer Quimper, fullstack developer, Next.js, website creation, e-commerce, web application, web development"
   },
   "about": {
-    "title": "About — Web Developer in Pont-l’Abbé",
-    "description": "I’m Noé, a fullstack developer based in Pont-l’Abbé. I support businesses, nonprofits and independents: scoping, design systems, Next.js development, performance and SEO optimization.",
-    "keywords": "developer Pont-l’Abbé, web developer Finistère, Next.js, SEO optimization, web performance, digital project manager, Pays Bigouden"
+    "title": "About — Fullstack Developer in Pont-l'Abbé",
+    "description": "I'm Noé, a fullstack developer at TX Studio, based in Pont-l'Abbé. I support ambitious projects with expertise in Next.js, web architecture and fullstack development. I enjoy collaborating with teams and creating reliable, sustainable solutions.",
+    "keywords": "fullstack developer Pont-l'Abbé, web developer Finistère, Next.js, web architecture, fullstack developer, web development"
   },
   "projects": {
-    "title": "Projects & Work — Noé Philippe’s Portfolio (Pont-l’Abbé)",
-    "description": "A selection of web projects for local and remote clients: showcase sites, e-commerce and custom apps with Next.js, with particular attention to UX, performance and SEO.",
-    "keywords": "developer portfolio, Next.js web projects, case studies, showcase websites, e-commerce, web applications, Pont-l’Abbé, Quimper"
+    "title": "Projects & Work — Noé Philippe's Portfolio",
+    "description": "A selection of web projects: showcase sites, e-commerce and custom applications with Next.js, with particular attention to UX, performance and reliability.",
+    "keywords": "developer portfolio, Next.js web projects, case studies, showcase websites, e-commerce, web applications, fullstack development"
   }
 }

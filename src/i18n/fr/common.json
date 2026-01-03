@@ -77,7 +77,7 @@
   "about": {
     "andMore": "(Mais pas que)",
     "smallDesc": "Salut ! Moi c’est Noé, développeur fullstack avec une casquette de chef de projet. Créatif, curieux, passionné d’images, de sons et de mouvements, j’aime autant concevoir que coder. Si tu veux en savoir plus sur mon parcours un peu atypique, fais défiler 👇",
-    "resume": "Développeur fullstack et chef de projet digital freelance. 3 ans en agence à Paris et de nombreuses missions en freelance. J’aide entreprises, associations et indépendants à créer des sites et applications clairs, rapides et fiables. Je propose des solutions concrètes et respecte délais et budget. Disponible pour une mission ponctuelle ou un accompagnement durable. N'hésitez pas à me contacter pour une mission.",
+    "resume": "Développeur fullstack chez <txStudio>TX Studio</txStudio>. J'ai acquis de l'expérience en agence parisienne où j'ai conçu des applications web modernes et fiables. Je crée des solutions claires, rapides et pérennes. <br></br><br></br>Récemment, j'ai pris du recul en passant un an en Nouvelle-Zélande. Cette expérience m'a apporté une nouvelle perspective et plus de motivation pour contribuer à des projets ambitieux.",
     "description": {
       "part1": {
         "part": "À propos",
@@ -91,8 +91,8 @@
       },
       "part3": {
         "part": "expérience",
-        "title": "3 ans chez Bob le Développeur",
-        "text": "J’ai passé trois années chez Bob Le Développeur, une agence web parisienne où j’ai évolué comme développeur fullstack. J’y ai conçu des applications sur-mesure avec des stacks modernes comme Next.js et Nest.js, tout en participant à la gestion de projet : échanges clients, suivi des besoins, organisation des sprints… <br></br><br></br>En parallèle, j’ai réalisé des missions freelance qui m’ont permis de travailler en autonomie, de m’adapter rapidement aux besoins de différents clients et de renforcer ma vision produit."
+        "title": "Développement en agence et en équipe",
+        "text": "J'ai eu l'opportunité de travailler dans des agences web où j'ai évolué comme développeur fullstack. J'y ai conçu des applications sur-mesure avec des stacks modernes comme Next.js et Nest.js, tout en maîtrisant les cycles projet complets : échanges clients, suivi des besoins, organisation des sprints. Ces expériences m'ont appris à coder proprement, à structurer des projets ambitieux et à collaborer efficacement en équipe."
       },
       "part4": {
         "part": "passions",
@@ -127,13 +127,20 @@
     "experience": {
       "title": "Expérience",
       "item1": {
+        "company": "TX Studio",
+        "location": "Paris, France",
+        "year": "2024 - Présent",
+        "description": "Développeur fullstack",
+        "url": "https://www.tx-studio.com/fr"
+      },
+      "item2": {
         "company": "Bob le Développeur",
         "location": "Paris, France",
         "year": "2021 - 2024",
         "description": "Développeur fullstack",
         "url": "https://www.bob-le-developpeur.com/"
       },
-      "item2": {
+      "item3": {
         "company": "Tildev",
         "location": "Rennes, France",
         "year": "2024",

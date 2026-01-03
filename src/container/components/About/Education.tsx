@@ -97,6 +97,13 @@ export function Education(): JSX.Element {
       year: t('about.experience.item2.year'),
       url: t('about.experience.item2.url'),
     },
+    {
+      title: t('about.experience.item3.company'),
+      location: t('about.experience.item3.location'),
+      subtitle: t('about.experience.item3.description'),
+      year: t('about.experience.item3.year'),
+      url: t('about.experience.item3.url'),
+    },
   ];
 
   return (
