@@ -5,8 +5,6 @@ import crypto from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY!);
-
 // ---------- Config ----------
 const ALLOWED_ORIGINS = new Set([
   'https://noe-philippe.fr',
@@ -327,6 +325,8 @@ export async function POST(request: NextRequest) {
 
     // send with Resend
     try {
+      // Initialize Resend here (lazy load, not at module level)
+      const resend = new Resend(process.env.RESEND_API_KEY);
       const { data, error } = await resend.emails.send({
         from: `Portfolio <onboarding@${new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://noe-philippe.fr').host}>`,
         to: 'noephilippe29@gmail.com',
