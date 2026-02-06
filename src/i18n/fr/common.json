@@ -77,7 +77,7 @@
   "about": {
     "andMore": "(Mais pas que)",
     "smallDesc": "Salut ! Moi c’est Noé, développeur fullstack avec une casquette de chef de projet. Créatif, curieux, passionné d’images, de sons et de mouvements, j’aime autant concevoir que coder. Si tu veux en savoir plus sur mon parcours un peu atypique, fais défiler 👇",
-    "resume": "Développeur fullstack chez <txStudio>TX Studio</txStudio>. J'ai acquis de l'expérience en agence parisienne où j'ai conçu des applications web modernes et fiables. Je crée des solutions claires, rapides et pérennes. <br></br><br></br>Récemment, j'ai pris du recul en passant un an en Nouvelle-Zélande. Cette expérience m'a apporté une nouvelle perspective et plus de motivation pour contribuer à des projets ambitieux.",
+    "resume": "Développeur fullstack, j'ai acquis de l'expérience en agence parisienne où j'ai conçu des applications web modernes et fiables. Je crée des solutions claires, rapides et pérennes. <br></br><br></br>Récemment, j'ai pris du recul en passant un an en Nouvelle-Zélande. Cette expérience m'a apporté une nouvelle perspective et plus de motivation pour contribuer à des projets ambitieux.",
     "description": {
       "part1": {
         "part": "À propos",
@@ -129,7 +129,7 @@
       "item1": {
         "company": "TX Studio",
         "location": "Paris, France",
-        "year": "2024 - Présent",
+        "year": "2024 - 2026",
         "description": "Développeur fullstack",
         "url": "https://www.tx-studio.com/fr"
       },

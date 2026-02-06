@@ -77,7 +77,7 @@
   "about": {
     "andMore": "(But not only)",
     "smallDesc": "Hi! I’m Noé, a fullstack developer with a bit of a project manager mindset. I’m passionate about visuals, sound and movement,  always ready to learn and build things. Scroll down if you want to know more about my slightly offbeat journey 👇",
-    "resume": "Fullstack developer at <txStudio>TX Studio</txStudio>. I've gained experience in a Parisian agency where I designed modern and reliable web applications. I create clear, fast and sustainable solutions. <br></br><br></br>Recently, I took a step back by spending a year in New Zealand. This experience gave me fresh perspective and more motivation to contribute to ambitious projects.",
+    "resume": "Fullstack developer, I've gained experience in a Parisian agency where I designed modern and reliable web applications. I create clear, fast and sustainable solutions. <br></br><br></br>Recently, I took a step back by spending a year in New Zealand. This experience gave me fresh perspective and more motivation to contribute to ambitious projects.",
     "description": {
       "part1": {
         "part": "About",
@@ -129,7 +129,7 @@
       "item1": {
         "company": "TX Studio",
         "location": "Paris, France",
-        "year": "2024 - Present",
+        "year": "2025 - 2026",
         "description": "Fullstack Developer",
         "url": "https://www.txstudio.fr/"
       },
