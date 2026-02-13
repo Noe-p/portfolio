@@ -328,7 +328,7 @@ export async function POST(request: NextRequest) {
       // Initialize Resend here (lazy load, not at module level)
       const resend = new Resend(process.env.RESEND_API_KEY);
       const { data, error } = await resend.emails.send({
-        from: `Portfolio <onboarding@${new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://noe-philippe.fr').host}>`,
+        from: 'Portfolio <hello@noe-philippe.fr>',
         to: 'noephilippe29@gmail.com',
         subject: `[Portfolio] ${safeSubject}`,
         html,

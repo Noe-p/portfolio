@@ -19,5 +19,6 @@
   "DOCKER": "Docker",
   "POSTGRESQL": "PostgreSQL",
   "GSAP": "GSAP",
-  "PROG_WEB_APP": "Progressive Web App"
+  "PROG_WEB_APP": "Progressive Web App",
+  "MONGODB": "MongoDB"
 }

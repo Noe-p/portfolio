@@ -16,6 +16,8 @@ export enum ProjectTag {
   DOCKER = 'DOCKER',
   POSTGRESQL = 'POSTGRESQL',
   PROG_WEB_APP = 'PROG_WEB_APP',
+  MONGODB = 'MONGODB',
+  GSAP = 'GSAP',
 }
 
 export interface ImageProps {

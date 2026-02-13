@@ -1,4 +1,13 @@
 {
+  "shopping-list": {
+    "title": "Shopping List",
+    "description": "Marre de passer des heures à décider quoi cuisiner pour la semaine, puis à refaire votre liste de courses ? 🍽️<br></br><br></br>J’ai construit une webapp pour régler exactement ce problème.<br></br><br></br>Le principe est simple :Vous créez vos plats une fois, vous planifiez votre semaine, et la liste de courses se génère automatiquement en temps réel.<br></br><br></br>En plus :<br></br>• Vous gardez l’historique des plats déjà réalisés pour trouver facilement de nouvelles idées<br></br>• Vous pouvez partager la liste en temps réel avec d’autres personnes<br></br><br></br>Je l’utilise depuis plusieurs semaines et ça me fait gagner un temps fou.<br></br>L’application est gratuite et vous pouvez créer un compte en quelques secondes.",
+    "metas": {
+      "title": "Shopping List — Application de Gestion des Repas | Noé Philippe",
+      "description": "Découvre Shopping List, une application web moderne pour la gestion des repas et des courses. Un projet combinant design mobile-first et fonctionnalités pratiques.",
+      "keywords": "gestion des repas, liste de courses, application web, Next.js, TypeScript, TailwindCSS, PostgreSQL, design mobile-first"
+    }
+  },
   "sakana-san": {
     "title": "Sakana San",
     "description": "Projet réalisé en freelance pour <a>Sakana San</a> (Louis Renier), artiste tatoueur basé à Pont l'Abbé, dans le Finistère. L'objectif était de concevoir un site vitrine moderne, responsive et bilingue, permettant de valoriser ses créations (tatouages, dessins, t-shirts, musique) tout en affirmant son identité artistique. Le projet comprend également un backoffice personnalisé et minimaliste, accessible depuis mobile, lui permettant de gérer de manière autonome ses contenus, ses événements et les mises à jour de sa page d'accueil.<br></br><br></br>Le site a été pensé mobile-first et optimisé pour le référencement naturel. L'ensemble a été déployé sur un serveur VPS via Docker Compose, et intègre un suivi de fréquentation via Google Analytics.",

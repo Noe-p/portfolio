@@ -1,4 +1,13 @@
 {
+  "shopping-list": {
+    "title": "Shopping List",
+    "description": "Tired of spending hours deciding what to cook for the week, then redoing your grocery list? The app solves exactly that problem.<br></br><br></br>The idea is simple: you create your dishes once, plan your week, and the grocery list is generated automatically in real time.<br></br><br></br>Plus:<br></br>• You keep a history of dishes already cooked to find new ideas easily<br></br>• You can share the list in real time with other people<br></br><br></br>I have been using it for weeks and it saves me a ton of time. The app is free and you can create an account in seconds.",
+    "metas": {
+      "title": "Shopping List — Meal Management App | Noe Philippe",
+      "description": "Discover Shopping List, a modern web app for meal planning and grocery management. A project combining mobile-first design and practical features.",
+      "keywords": "meal management, grocery list, web app, Next.js, TypeScript, TailwindCSS, PostgreSQL, mobile-first design"
+    }
+  },
   "sakana-san": {
     "title": "Sakana San",
     "description": "Freelance project for <a>Sakana San</a> (Louis Renier), a tattoo artist based in Pont l'Abbé, Brittany. The goal was to design a modern, responsive, and bilingual showcase website to highlight his creations (tattoos, drawings, t-shirts, music) while reflecting his unique artistic identity. The project also includes a minimalist, mobile-friendly backoffice, allowing him to manage his content, events, and homepage updates independently.<br></br><br></br>The site was designed mobile-first and optimized for SEO. It was deployed on a VPS using Docker Compose, and includes traffic tracking via Google Analytics.",

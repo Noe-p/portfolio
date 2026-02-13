@@ -2,6 +2,37 @@ import { Project, ProjectTag, ProjectType } from '@/types/project';
 
 export const projects: Project[] = [
   {
+    id: '01234567-89ab-cdef-0123-456789abcdef',
+    title: 'shopping-list.title',
+    description: 'shopping-list.description',
+    date: '2026-02-13',
+    type: ProjectType.PERSONAL,
+    favorite: false,
+    images: {
+      mobile: [
+        '/projects/shopping-list/shopping-list-mobile-1.webP',
+        '/projects/shopping-list/shopping-list-mobile-2.webP',
+        '/projects/shopping-list/shopping-list-mobile-3.webP',
+        '/projects/shopping-list/shopping-list-mobile-4.webP',
+        '/projects/shopping-list/shopping-list-mobile-5.webP',
+      ],
+      desktop: [],
+      header: '/projects/shopping-list/shopping-list-mobile-1.webP',
+    },
+    tags: [
+      ProjectTag.NEXTJS,
+      ProjectTag.TYPESCRIPT,
+      ProjectTag.TAILWIND,
+      ProjectTag.MONGODB,
+      ProjectTag.DOCKER,
+      ProjectTag.PROG_WEB_APP,
+      ProjectTag.GSAP,
+    ],
+    slug: 'shopping-list',
+    github: 'https://github.com/Noe-p/shopping',
+    link: 'https://shopping.noe-philippe.fr/settings/shopping-list/69787a87b907e7f3962df395',
+  },
+  {
     id: '08347cc0-e16c-49d4-bd10-31ae7c341b52',
     title: 'sakana-san.title',
     description: 'sakana-san.description',
