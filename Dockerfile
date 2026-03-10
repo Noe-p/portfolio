@@ -29,6 +29,9 @@ COPY --from=builder /app/.next/standalone ./standalone
 COPY --from=builder /app/public ./standalone/public
 COPY --from=builder /app/.next/static ./standalone/.next/static
 
+# Install curl for healthcheck
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 # Create non-root user and fix ownership & cache dir
 RUN useradd -m nextjs \
  && mkdir -p /app/standalone/.next/cache \
@@ -40,7 +43,7 @@ WORKDIR /app/standalone
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 ENV PORT=3000
-ENV HOST=127.0.0.1
+ENV HOST=0.0.0.0
 
-# Start server listening only on localhost inside the container
-CMD ["node", "server.js", "--hostname", "127.0.0.1"]
+# Start server listening on all interfaces inside the container (external access is restricted via docker-compose port binding)
+CMD ["node", "server.js", "--hostname", "0.0.0.0"]

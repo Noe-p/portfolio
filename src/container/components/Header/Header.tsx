@@ -8,9 +8,9 @@ import { useParallax } from '@/hooks/useParallax';
 import { ROUTES } from '@/routes';
 import { cn } from '@/services/utils';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useRef } from 'react';
+import { Volume2, VolumeX } from 'lucide-react';
+import React, { useRef, useState } from 'react';
 import tw from 'tailwind-styled-components';
 import { Macaron } from '../Macaron';
 import { NavKeys } from '../Navbar';
@@ -74,17 +74,12 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
           <P14 className="text-foreground/80 normal-case">{'Freelance'}</P14>
         </Col>
         <Row className="justify-left relative w-full mt-7">
-          <div ref={imageRef} className="w-[200px] h-auto rounded overflow-hidden">
-            <Image
-              src="/images/header.webP"
-              alt="Noé Philippe de dos sur une plage"
-              width={320}
-              height={480}
-              fetchPriority="high"
-              quality={80}
-              priority
-              style={{ width: 'auto', height: 'auto' }}
-            />
+          <div
+            ref={imageRef}
+            className="rounded overflow-hidden flex-shrink-0"
+            style={{ width: 200, height: 330 }}
+          >
+            <CvVideo width={200} height={330} />
           </div>
           <Macaron
             className="w-52 h-52 absolute top-1/2 -translate-y-1/2 right-0 translate-x-28"
@@ -108,23 +103,69 @@ export function Header({ className }: HeaderProps): React.JSX.Element {
             <H2 className="text-foreground normal-case">{'Freelance'}</H2>
           </RowBetween>
           <RowBetween className="mt-8 gap-5">
-            <div ref={imageRef} className="rounded overflow-hidden">
-              <Image
-                src="/images/header.webP"
-                alt="Noé Philippe de dos sur une plage"
-                width={320}
-                height={426}
-                fetchPriority="high"
-                quality={80}
-                priority
-                style={{ width: 'auto', height: 'auto' }}
-              />
+            <div
+              ref={imageRef}
+              className="rounded overflow-hidden flex-shrink-0"
+              style={{ width: 320, height: 426 }}
+            >
+              <CvVideo width={320} height={426} />
             </div>
             <HeaderContent onClick={handleClick} t={t} />
           </RowBetween>
         </Col>
       </RowBetween>
     </Main>
+  );
+}
+
+function CvVideo({
+  className,
+  width,
+  height,
+}: {
+  className?: string;
+  width?: number;
+  height?: number;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const toggleSound = () => {
+    if (!videoRef.current) return;
+    const next = !isMuted;
+    videoRef.current.muted = next;
+    setIsMuted(next);
+  };
+
+  return (
+    <div className={cn('relative', className)} style={{ width, height }}>
+      <div className="w-full h-full overflow-hidden rounded">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="w-full h-full object-cover"
+        >
+          <source src="/cv-video.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      {/* Sound toggle button */}
+      <button
+        onClick={toggleSound}
+        aria-label={isMuted ? 'Activer le son' : 'Couper le son'}
+        className={cn(
+          'absolute bottom-2 right-2 flex items-center justify-center',
+          'w-8 h-8 rounded-full backdrop-blur-md bg-black/40 border border-white/20',
+          'text-white transition-all duration-300 cursor-pointer',
+          'hover:bg-black/60 hover:scale-110 hover:border-white/40',
+        )}
+      >
+        {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+      </button>
+    </div>
   );
 }
 
