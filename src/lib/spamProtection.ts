@@ -148,6 +148,20 @@ export class SpamProtection {
     request: NextRequest,
   ): Promise<{ allowed: boolean; reason?: string }> {
     const ip = this.getClientIP(request);
+    const userAgent = request.headers.get('user-agent') || '';
+    const origin = request.headers.get('origin') || request.headers.get('referer') || '';
+
+    if (!userAgent || userAgent.length < 10) {
+      return { allowed: false, reason: 'User agent suspect' };
+    }
+
+    if (
+      !origin ||
+      (!origin.startsWith('https://noe-philippe.fr') &&
+        !origin.startsWith('https://www.noe-philippe.fr'))
+    ) {
+      return { allowed: false, reason: 'Origine non autorisée' };
+    }
 
     // 1. Rate limiting par IP
     if (!this.checkRateLimit(`ip:${ip}`, PROTECTION_CONFIG.MAX_REQUESTS_PER_IP_PER_HOUR)) {

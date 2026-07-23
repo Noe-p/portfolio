@@ -116,17 +116,14 @@ function verifyFrontToken(req: NextRequest): boolean {
   const [payloadB64, sigHex] = parts;
 
   if (!process.env.FRONT_TOKEN_SECRET) {
-    // safety: if secret not configured, reject
     console.error('FRONT_TOKEN_SECRET not set');
     return false;
   }
 
-  // compute expected sig
   const h = crypto.createHmac('sha256', process.env.FRONT_TOKEN_SECRET);
   h.update(payloadB64);
   const expected = h.digest('hex');
 
-  // timing safe compare if same length
   try {
     const a = Buffer.from(sigHex, 'hex');
     const b = Buffer.from(expected, 'hex');
@@ -136,19 +133,34 @@ function verifyFrontToken(req: NextRequest): boolean {
     return false;
   }
 
-  // verify payload expiry
   try {
     const payloadBuf = base64urlDecode(payloadB64);
-    const payload = JSON.parse(payloadBuf.toString('utf8')) as { exp?: number; scope?: string };
+    const payload = JSON.parse(payloadBuf.toString('utf8')) as {
+      exp?: number;
+      scope?: string;
+      clientHash?: string;
+    };
     if (!payload.exp || typeof payload.exp !== 'number') return false;
     if (Date.now() > payload.exp) return false;
-    // optional: check scope if you issue scope-limited tokens (e.g. 'contact')
     if (payload.scope && payload.scope !== 'contact') return false;
+    if (!payload.clientHash || typeof payload.clientHash !== 'string') return false;
+
+    const expectedClientHash = createClientHash(req);
+    if (expectedClientHash !== payload.clientHash) return false;
   } catch {
     return false;
   }
 
   return true;
+}
+
+function createClientHash(req: NextRequest): string {
+  const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+  const userAgent = req.headers.get('user-agent') || 'unknown';
+  return crypto
+    .createHmac('sha256', process.env.FRONT_TOKEN_SECRET || '')
+    .update(`${ip}|${userAgent}`)
+    .digest('hex');
 }
 
 // ---------- POST handler ----------
@@ -193,6 +205,14 @@ export async function POST(request: NextRequest) {
     const ip =
       SpamProtection.getClientIP(request) ||
       (request.headers.get('x-forwarded-for') || 'unknown').split(',')[0].trim();
+    const userAgent = request.headers.get('user-agent') || '';
+    if (!userAgent || userAgent.length < 10) {
+      return NextResponse.json(
+        { error: await getTranslation('common.contact.api.errors.unauthorized', locale) },
+        { status: 403 },
+      );
+    }
+
     const now = Date.now();
     cleanupRateMap(now);
     const entry = ipRateMap.get(ip);
