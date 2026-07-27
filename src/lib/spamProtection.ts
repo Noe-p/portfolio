@@ -209,12 +209,6 @@ export class SpamProtection {
       return { allowed: false, reason: `Message: ${messageCheck.reason}` };
     }
 
-    // 6. Vérification de la vitesse de frappe (honeypot temporel)
-    const userAgent = request.headers.get('user-agent') || '';
-    if (!userAgent || userAgent.length < 10) {
-      return { allowed: false, reason: 'User agent suspect' };
-    }
-
     return { allowed: true };
   }
 
