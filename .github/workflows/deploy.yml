@@ -98,9 +98,9 @@ jobs:
           script: |
             cd ~/portfolio
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
-            export NEXT_PUBLIC_APP_URL="${NEXT_PUBLIC_APP_URL}"
-            export RESEND_API_KEY="${RESEND_API_KEY}"
-            export FRONT_TOKEN_SECRET="${FRONT_TOKEN_SECRET}"
+            umask 077
+            printf 'NEXT_PUBLIC_APP_URL=%s\nRESEND_API_KEY=%s\nFRONT_TOKEN_SECRET=%s\n' \
+              "${NEXT_PUBLIC_APP_URL}" "${RESEND_API_KEY}" "${FRONT_TOKEN_SECRET}" > .env
             docker compose pull
             docker compose up -d --remove-orphans
             docker image prune -a -f

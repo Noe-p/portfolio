@@ -6,7 +6,7 @@ COPY package.json bun.lockb ./
 RUN bun install --frozen-lockfile
 
 # 2 - Build Next.js
-FROM node:18-bullseye AS builder
+FROM node:22-bookworm AS builder
 WORKDIR /app
 
 ARG NEXT_PUBLIC_APP_URL
@@ -21,7 +21,7 @@ ENV NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
 RUN npm run build
 
 # 3 - Runtime image
-FROM node:18-slim AS runner
+FROM node:22-slim AS runner
 WORKDIR /app
 
 # Copy standalone build as root so we can set ownership
